@@ -1,5 +1,22 @@
+// import React, { useState } from 'react';
+import React from 'react';
 function PizzaBlock({ title, price }) {
 	// function PizzaBlock(props) {
+
+	// Объявляем переменную (pizzaCount), функцию,которая будет ее изменять (setPizzaCount), и говорим какой к этому массиву применить хук (useState(0)). И задаем начальное значение хуку.
+	
+	// const [pizzaCount, setPizzaCount] = useState(0);
+// Также можно не делать деструктуризацию вначале файла, а просто:
+// import React from 'react';
+// Но тогда, если мы хотим присвоить хук, сначала нужно будет обраться к переменной, в которой содержится весь реакт
+const [pizzaCount, setPizzaCount] = React.useState(0);
+
+// Мы навесили прослушку onClickBtn на button ниже в коде, и теперь говорим : Фукция (setPizzaCount), меняющая pizzaCount, возьми pizzaCount добавь к ней 1.
+	const onClickBtn = () => {
+		setPizzaCount(pizzaCount+1);
+
+	};
+
 	return (
 		<div className="pizza-block">
 			<img
@@ -23,7 +40,11 @@ function PizzaBlock({ title, price }) {
 			<div className="pizza-block__bottom">
 				<div className="pizza-block__price">от {price} ₽</div>
 				{/* 				<div className="pizza-block__price">от {props.price} ₽</div> */}
-				<div className="button button--outline button--add">
+				<button
+				// Чтобы навесить прослушку используем атрибут onClick-и присваиваем функцию (в нашем случае onClickBtn), для обработки этого события
+					onClick={onClickBtn}
+					className="button button--outline button--add"
+				>
 					<svg
 						width="12"
 						height="12"
@@ -37,8 +58,9 @@ function PizzaBlock({ title, price }) {
 						/>
 					</svg>
 					<span>Добавить</span>
-					<i>2</i>
-				</div>
+					{/* Тут мы используем полученную переменную */}
+					<i>{pizzaCount}</i>
+				</button>
 			</div>
 		</div>
 	);

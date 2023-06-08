@@ -1,47 +1,71 @@
 // import React, { useState } from 'react';
 import React from 'react';
-function PizzaBlock({ title, price,url }) {
+function PizzaBlock({ title, price, imageUrl, sizes, types }) {
 	// function PizzaBlock(props) {
 
 	// Объявляем переменную (pizzaCount), функцию,которая будет ее изменять (setPizzaCount), и говорим какой к этому массиву применить хук (useState(0)). И задаем начальное значение хуку.
-	
+
 	// const [pizzaCount, setPizzaCount] = useState(0);
-// Также можно не делать деструктуризацию вначале файла, а просто:
-// import React from 'react';
-// Но тогда, если мы хотим присвоить хук, сначала нужно будет обраться к переменной, в которой содержится весь реакт
-const [pizzaCount, setPizzaCount] = React.useState(0);
+	// Также можно не делать деструктуризацию вначале файла, а просто:
+	// import React from 'react';
+	// Но тогда, если мы хотим присвоить хук, сначала нужно будет обраться к переменной, в которой содержится весь реакт
+	const [pizzaCount, setPizzaCount] = React.useState(0);
 
-// Мы навесили прослушку onClickBtn на button ниже в коде, и теперь говорим : Фукция (setPizzaCount), меняющая pizzaCount, возьми pizzaCount добавь к ней 1.
+	// Мы навесили прослушку onClickBtn на button ниже в коде, и теперь говорим : Фукция (setPizzaCount), меняющая pizzaCount, возьми pizzaCount добавь к ней 1.
 	const onClickBtn = () => {
-		setPizzaCount(pizzaCount+1);
-
+		setPizzaCount(pizzaCount + 1);
 	};
+	const typeNames = ['тонкое', 'традиционное'];
+	const [activeType, setActiveType] = React.useState(0);
+	const onClickType = (index) => {
+		setActiveType(index);
+	};
+	const [activeSize, setActiveSize] = React.useState(0);
 
 	return (
 		<div className="pizza-block">
 			<img
 				className="pizza-block__image"
-				src={url}
+				src={imageUrl}
 				alt="Pizza"
 			/>
 			<h4 className="pizza-block__title">{title}</h4>
 			{/* 		<h4 className="pizza-block__title">{props.title}</h4> */}
 			<div className="pizza-block__selector">
 				<ul>
-					<li className="active">тонкое</li>
-					<li>традиционное</li>
+					{types.map((type, index) => {
+						return (
+							<li
+								onClick={() => onClickType(index)}
+								className={activeType === index ? 'active' : ''}
+							>
+								{typeNames[type]}
+							</li>
+						);
+					})}
+
+					{/* <li className="active">тонкое</li>
+					<li>традиционное</li> */}
 				</ul>
 				<ul>
-					<li className="active">26 см.</li>
-					<li>30 см.</li>
-					<li>40 см.</li>
+					{/* Обращаемся к массиву sizes, который мы вытащили из пропса в PizzaBlock(), применяем к нему метод map, вытаскиваем каждый элемент массива sizes и рендерим его внутри тэга li столько же раз, какова длинна массива sizes. */}
+					{sizes.map((size, index) => {
+						return (
+							<li
+								onClick={() => setActiveSize(index)}
+								className={activeSize === index ? 'active' : ''}
+							>
+								{size} см.
+							</li>
+						);
+					})}
 				</ul>
 			</div>
 			<div className="pizza-block__bottom">
 				<div className="pizza-block__price">от {price} ₽</div>
 				{/* 				<div className="pizza-block__price">от {props.price} ₽</div> */}
 				<button
-				// Чтобы навесить прослушку используем атрибут onClick-и присваиваем функцию (в нашем случае onClickBtn), для обработки этого события
+					// Чтобы навесить прослушку используем атрибут onClick-и присваиваем функцию (в нашем случае onClickBtn), для обработки этого события
 					onClick={onClickBtn}
 					className="button button--outline button--add"
 				>

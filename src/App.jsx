@@ -17,12 +17,22 @@ function App() {
 					</div>
 					<h2 className="content__title">Все пиццы</h2>
 					<div className="content__items">
-						{pizzas.map((obj) => {return(
-							<PizzaBlock
-								title={obj.title}
-								price={obj.price}
-								url={obj.imageUrl}
-							/>)
+						{pizzas.map((obj) => {
+							return (
+								// Спрэд-оператор. Он самостояетельно раскрывает объект и помещает все свойства в пропс этого компонента.
+								// Если ВСЕ названия "атрибутов", которые мы вытаскиваем из пропса будут совпадать с названиями ключей объекта, из которого мы достаем данные, то можно просто передать объект с тремя точками. Вот так:
+								<PizzaBlock {...obj} />
+
+								// И можно не расписывать, как ниже:
+								// <PizzaBlock
+								// 	title={obj.title}
+								// 	price={obj.price}
+								// 	imageUrl={obj.imageUrl}
+								// 	sizes={obj.sizes}
+								// 	types={obj.types}
+								// />
+
+							);
 						})}
 						{/* <PizzaBlock title="Туапсинская" price="700"/> */}
 						{/* То что мы передаем в jsx как атрибуты в html добвляется в объект props, который мы можем передать в качестве аргумента в первом параметре функционального компонента, во время его создания  */}

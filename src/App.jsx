@@ -1,9 +1,10 @@
-
 import './scss/app.scss';
 import Header from './components/Header';
 import Categories from './components/Categories';
 import Sort from './components/Sort';
 import PizzaBlock from './components/PizzaBlock';
+import pizzas from './assets/pizzas.json';
+console.log(pizzas);
 function App() {
 	return (
 		<div className="wrapper">
@@ -16,16 +17,23 @@ function App() {
 					</div>
 					<h2 className="content__title">Все пиццы</h2>
 					<div className="content__items">
-						<PizzaBlock title="Туапсинская" price="700"/>
+						{pizzas.map((obj) => {return(
+							<PizzaBlock
+								title={obj.title}
+								price={obj.price}
+								url={obj.imageUrl}
+							/>)
+						})}
+						{/* <PizzaBlock title="Туапсинская" price="700"/> */}
 						{/* То что мы передаем в jsx как атрибуты в html добвляется в объект props, который мы можем передать в качестве аргумента в первом параметре функционального компонента, во время его создания  */}
-						<PizzaBlock title="Краснодарская" price={800}/>
+						{/* <PizzaBlock title="Краснодарская" price={800}/> */}
+						{/* <PizzaBlock />
 						<PizzaBlock />
 						<PizzaBlock />
 						<PizzaBlock />
 						<PizzaBlock />
 						<PizzaBlock />
-						<PizzaBlock />
-						<PizzaBlock />
+						<PizzaBlock /> */}
 						{/* <div className="pizza-block">
 							<img
 								className="pizza-block__image"

@@ -1,11 +1,12 @@
-import React from "react";
-
+import React from 'react';
 
 function Categories() {
-	const [activeIndex, setActiveIndex] = React.useState(0)
+	const [activeIndex, setActiveIndex] = React.useState(0);
 
-	const onClickCategory = (index) => { setActiveIndex(index) }
-	const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые",]
+	const onClickCategory = (index) => {
+		setActiveIndex(index);
+	};
+	const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 	return (
 		<div className="categories">
 			<ul>
@@ -29,7 +30,19 @@ function Categories() {
 				
 				При такой записи родитель не отрендерится, его дочерние элементы поднимутся на его уроверь. Но при этом обертка для реакта сохранится и он будет корректно работать.
 				*/}
-				{categories.map((value,index) => {return <li onClick={() => { onClickCategory(index) }} className={activeIndex === index ? "active" : ""}>{value}</li>})}
+				{categories.map((value, index) => {
+					return (
+						<li
+							key={index}
+							onClick={() => {
+								onClickCategory(index);
+							}}
+							className={activeIndex === index ? 'active' : ''}
+						>
+							{value}
+						</li>
+					);
+				})}
 			</ul>
 		</div>
 	);
@@ -54,6 +67,3 @@ function Categories() {
 // }
 
 export default Categories;
-
-
-

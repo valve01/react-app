@@ -1,8 +1,12 @@
 import React from 'react';
 function Sort() {
 	const [isShow, setIsShow] = React.useState(false);
-
-
+	const [activelistElement, setActivelistElement] = React.useState(false);
+	const list = ['популярности', 'цене', 'алфавиту'];
+	const onClickSetActEl = (listElement) => {
+		setActivelistElement(listElement);
+		setIsShow(!isShow);
+	};
 	return (
 		<div className="sort">
 			<div className="sort__label">
@@ -20,10 +24,30 @@ function Sort() {
 				</svg>
 				<b>Сортировка по:</b>
 				{/* Тут setIsShow(!isShow) автоматически берет протовоположное значение isShow и присваивает его isShow. Как бы делает isShow=!isShow */}
-				<span onClick={() => setIsShow(!isShow)}>популярности</span>
+				<span onClick={() => setIsShow(!isShow)}>{activelistElement}</span>
 			</div>
-			{/* Условный рендеринг */}
+			{/* Условный рендеринг. Можно его делать с помощью &&, можно с помощью тернарного оператора. Главное условие - условие должно быть однострочное. (if - else -это многострочное условие) */}
 			{isShow && (
+				<div className="sort__popup">
+					<ul>
+						{list.map((listElement) => {
+							return (
+								<li
+									key={listElement}
+									onClick={() => onClickSetActEl(listElement)}
+									className={activelistElement === listElement ? 'active' : ''}
+								>
+									{listElement}
+								</li>
+							);
+						})}
+						{/* <li className="active">популярности</li>
+						<li>цене</li>
+						<li>алфавиту</li> */}
+					</ul>
+				</div>
+			)}
+			{/* {isShow ? (
 				<div className="sort__popup">
 					<ul>
 						<li className="active">популярности</li>
@@ -31,7 +55,8 @@ function Sort() {
 						<li>алфавиту</li>
 					</ul>
 				</div>
-			)}
+			) : ("Попап скрыт"
+			)} */}
 		</div>
 	);
 }

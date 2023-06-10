@@ -1,11 +1,25 @@
+import React from 'react';
 import './scss/app.scss';
 import Header from './components/Header';
 import Categories from './components/Categories';
 import Sort from './components/Sort';
 import PizzaBlock from './components/PizzaBlock';
-import pizzas from './assets/pizzas.json';
-console.log(pizzas);
+// import pizzas from './assets/pizzas.json';
+
 function App() {
+	const [items, setItems] = React.useState([]);
+	React.useEffect(() => {
+		// Далаем запрос на сервак, как если бы файл pizzas.json был только на сервере.
+		fetch('https://64845cf9ee799e3216269459.mockapi.io/items')
+			.then((res) => {
+				return res.json();
+			})
+			.then((arr) => {
+				console.log(arr);
+				setItems(arr);
+			});
+	}, []);
+
 	return (
 		<div className="wrapper">
 			<Header />
@@ -17,13 +31,15 @@ function App() {
 					</div>
 					<h2 className="content__title">Все пиццы</h2>
 					<div className="content__items">
-						{pizzas.map((obj) => {
+						{items.map((obj) => {
 							return (
 								// Спрэд-оператор. Он самостояетельно раскрывает объект и помещает все свойства в пропс этого компонента.
 								// Если ВСЕ названия "атрибутов", которые мы вытаскиваем из пропса будут совпадать с названиями ключей объекта, из которого мы достаем данные, то можно просто передать объект с тремя точками. Вот так:
-								<PizzaBlock key={obj.id} {...obj} />
+								<PizzaBlock
+									key={obj.id}
+									{...obj}
+								/>
 								// т.к. obj -это массив из pizza.json, то обратившись к нему можно использовать id его элементов
-
 
 								// И можно не расписывать, как ниже:
 								// <PizzaBlock
@@ -33,7 +49,6 @@ function App() {
 								// 	sizes={obj.sizes}
 								// 	types={obj.types}
 								// />
-
 							);
 						})}
 						{/* <PizzaBlock title="Туапсинская" price="700"/> */}

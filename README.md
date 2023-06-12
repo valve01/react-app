@@ -63,6 +63,9 @@ console.log(a,b,c)
 <!-- Чтобы воспользоваться скелетоном нужно установить библиотеку react-content-loader -->
 <!-- npm i react-content-loader -->
 
+<!-- Ставим реакт роутер -->
+<!-- npm install react-router-dom localforage match-sorter sort-by -->
+
 
 
 

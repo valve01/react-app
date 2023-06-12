@@ -1,8 +1,8 @@
 import React from 'react';
 function Sort() {
 	const [isShow, setIsShow] = React.useState(false);
-	const [activelistElement, setActivelistElement] = React.useState(false);
 	const list = ['популярности', 'цене', 'алфавиту'];
+	const [activelistElement, setActivelistElement] = React.useState(list[0]);
 	const onClickSetActEl = (listElement) => {
 		setActivelistElement(listElement);
 		setIsShow(!isShow);

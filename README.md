@@ -65,6 +65,7 @@ console.log(a,b,c)
 
 <!-- Ставим реакт роутер -->
 <!-- npm install react-router-dom localforage match-sorter sort-by -->
+<!-- Чтобы наглядно применить реакт роутер разделим приложение на части и положим его в папку pages -->
 
 
 

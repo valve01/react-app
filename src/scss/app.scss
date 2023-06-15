@@ -22,6 +22,8 @@ body {
 
 	&__title {
 		margin: 35px 0;
+		font-weight: 900;
+		font-size: 50px;
 	}
 
 	&__items {
@@ -49,11 +51,11 @@ body {
 		justify-content: space-between;
 
 		@media (max-width: 1300px) {
-				flex-direction: column;
-			
-				.categories {
-					margin-bottom: 30px;
-				}
+			flex-direction: column;
+
+			.categories {
+				margin-bottom: 30px;
+			}
 		}
 	}
 }
@@ -72,6 +74,10 @@ body {
 }
 
 .cart {
+	.content__items {
+		display: block;
+	}
+	
 	&__top {
 		display: flex;
 		justify-content: space-between;

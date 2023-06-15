@@ -24,28 +24,31 @@ const Home = () => {
 				// Устанавливаем флаг загрузки в false, когда мы уже получили массив данных с сервера
 				setIsLoading(false);
 			});
+			// Чтобы при рендере автоматически страница вверх прокрутилась
+			window.scrollTo(0,0)
 	}, []);
 	return (
 		<>
-			<div className="content__top">
-				<Categories />
-				<Sort />
-			</div>
-			<h2 className="content__title">Все пиццы</h2>
-			<div className="content__items">
-				{isLoading
-					? // Скелетону тоже нужно key задавать, но т.к. obj.id у нас нет, до получения ответа от сервака, будем использовать индексы фейкового массива. Т.к. мы не собираеся использовать первый аргумент в стрелочной функции, назовем его _ . Кроме того в фейковом массиве нет значений и js будет ругаться, что мы из undefined хотим получить данные в первый аргумент.
-					  [...new Array(9)].map((_, index) => <SkeletonPizzaBlock key={index} />)
-					: items.map((obj) => {
-							return (
-								<PizzaBlock
-									key={obj.id}
-									{...obj}
-								/>
-							);
-					  })}
+			<div className="container">
+				<div className="content__top">
+					<Categories />
+					<Sort />
+				</div>
+				<h2 className="content__title">Все пиццы</h2>
+				<div className="content__items">
+					{isLoading
+						? // Скелетону тоже нужно key задавать, но т.к. obj.id у нас нет, до получения ответа от сервака, будем использовать индексы фейкового массива. Т.к. мы не собираеся использовать первый аргумент в стрелочной функции, назовем его _ . Кроме того в фейковом массиве нет значений и js будет ругаться, что мы из undefined хотим получить данные в первый аргумент.
+						  [...new Array(9)].map((_, index) => <SkeletonPizzaBlock key={index} />)
+						: items.map((obj) => {
+								return (
+									<PizzaBlock
+										key={obj.id}
+										{...obj}
+									/>
+								);
+						  })}
 
-				{/* {items.map(
+					{/* {items.map(
 	(obj) => {
 		// Используем наш флаг, для условия на рендер. Но пока данные не получены с сервера в items по умолчанию записа []-пустой массив, значит map не отработает и скелетоны не отобразятся. Нужен специальный фейковый массив для скелетона. Поэтому мы все переписали, результат выше ^
 		return isLoading ? (
@@ -79,17 +82,17 @@ const Home = () => {
 	// Или можно чтобы наш скелетон имел те же стили, что и конечный контент- добавим ему тот же класс, что и у контента не внутри компонента, а сюда
 	// <SkeletonPizzaBlock className="pizza-block"/>
 )} */}
-				{/* <PizzaBlock title="Туапсинская" price="700"/> */}
-				{/* То что мы передаем в jsx как атрибуты в html добвляется в объект props, который мы можем передать в качестве аргумента в первом параметре функционального компонента, во время его создания  */}
-				{/* <PizzaBlock title="Краснодарская" price={800}/> */}
-				{/* <PizzaBlock />
+					{/* <PizzaBlock title="Туапсинская" price="700"/> */}
+					{/* То что мы передаем в jsx как атрибуты в html добвляется в объект props, который мы можем передать в качестве аргумента в первом параметре функционального компонента, во время его создания  */}
+					{/* <PizzaBlock title="Краснодарская" price={800}/> */}
+					{/* <PizzaBlock />
 <PizzaBlock />
 <PizzaBlock />
 <PizzaBlock />
 <PizzaBlock />
 <PizzaBlock />
 <PizzaBlock /> */}
-				{/* <div className="pizza-block">
+					{/* <div className="pizza-block">
 	<img
 		className="pizza-block__image"
 		src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
@@ -431,6 +434,7 @@ const Home = () => {
 		</div>
 	</div>
 </div> */}
+				</div>
 			</div>
 		</>
 	);

@@ -21,7 +21,7 @@ function Header() {
 							alt="Pizza logo"
 						/>
 
-						<div>
+						<div className="header__logo_text">
 							<h1>React Pizza</h1>
 							<p>самая вкусная пицца во вселенной</p>
 						</div>

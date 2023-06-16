@@ -1,10 +1,11 @@
 import React from 'react';
-function Sort() {
+function Sort({ activeSort, setActiveSort }) {
+	console.log(activeSort)
 	const [isShow, setIsShow] = React.useState(false);
 	const list = ['популярности', 'цене', 'алфавиту'];
-	const [activelistElement, setActivelistElement] = React.useState(list[0]);
+	// const [activelistElement, setActivelistElement] = React.useState(list[0]);
 	const onClickSetActEl = (listElement) => {
-		setActivelistElement(listElement);
+		setActiveSort(listElement);
 		setIsShow(!isShow);
 	};
 	return (
@@ -24,7 +25,7 @@ function Sort() {
 				</svg>
 				<b>Сортировка по:</b>
 				{/* Тут setIsShow(!isShow) автоматически берет протовоположное значение isShow и присваивает его isShow. Как бы делает isShow=!isShow */}
-				<span onClick={() => setIsShow(!isShow)}>{activelistElement}</span>
+				<span onClick={() => setIsShow(!isShow)}>{activeSort}</span>
 			</div>
 			{/* Условный рендеринг. Можно его делать с помощью &&, можно с помощью тернарного оператора. Главное условие - условие должно быть однострочное. (if - else -это многострочное условие) */}
 			{isShow && (
@@ -35,7 +36,7 @@ function Sort() {
 								<li
 									key={listElement}
 									onClick={() => onClickSetActEl(listElement)}
-									className={activelistElement === listElement ? 'active' : ''}
+									className={activeSort === listElement ? 'active' : ''}
 								>
 									{listElement}
 								</li>

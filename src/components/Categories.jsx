@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Categories() {
-	const [activeIndex, setActiveIndex] = React.useState(0);
+// 1. Вытаскиваем из пропса переменную activeCategory и функцию для ее изменения onClickSetActiveCategory
+function Categories({ activeCategory, onClickSetActiveCategory }) {
+	// const [activeIndex, setActiveIndex] = React.useState(0);
+	// 2. Проверяем что мы вытащили
+	console.log(activeCategory);
 
-	const onClickCategory = (index) => {
-		setActiveIndex(index);
-	};
 	const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 	return (
 		<div className="categories">
@@ -35,9 +35,14 @@ function Categories() {
 						<li
 							key={index}
 							onClick={() => {
-								onClickCategory(index);
+								// 3 Меняем функцию, вызывающуюся по клику на категорию на ту, что вытащили из пропса. 
+								//4 !ВАЖНО! Причем аргумент с которым мы эту функцию вызываем пойдет в Home.jsx и там подствится в стрелочную ф-цию, которую мы передаем в пропс в атрибуте onClickSetActiveCategory (Подробнее ReactPizza #9 таймкод 27:00 - 30:00)
+								onClickSetActiveCategory(index);
+								// setActiveIndex(index);
 							}}
-							className={activeIndex === index ? 'active' : ''}
+							// 4 Заменяем переменную, на ту, что вытащили из пропса
+							className={activeCategory === index ? 'active' : ''}
+							// className={activeIndex === index ? 'active' : ''}
 						>
 							{value}
 						</li>

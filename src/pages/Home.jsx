@@ -13,7 +13,10 @@ const Home = () => {
 
 	//1 Переносим States из Categories.jsx и Sort.jsx. Эти параметры нам нужно будет передавать в url для fetch. Займемся Categories.jsx. Для начала вытащим эти стейты и прокинем их в соответствующие дочерние элементы.  Для этого помещаем переменные в пропс дочернего элемента ((2) <Categories>).
 	const [activeCategory, setActiveCategory] = React.useState(0);
-	const [activeSort, setActiveSort] = React.useState('популярности');
+	const [activeSort, setActiveSort] = React.useState({
+		name: 'популярности',
+		sortProperty: 'rating',
+	});
 
 	// хук useEffect дает возможность выполнять действия во время событий жизненного цикла компонента. Первое появление на странице, изменение, удаление со страницы. Первым аргументом он принимает анонимную функцию. Вторым - массив, отслеживаемых переменных. Если массив пуст, то код из первого аргумента отработает только во время первичного рендера (componentWillMount). Если в массиве переменные, код сработает каждый раз, при изменении отслеживаемых переменных (componentWillUpdate). Если не указывать второй аргумент, то код будет отрабатывать на каждое событие, изменяющее компонент (добавление/удаление/изменение любых данных). Если внутри первого аргумента сделать return и указать ему еще одну анонимную функцию, - это будет та функция, которая будет вызываться непосредственно перед удалением компонента (componentWillUnmount).
 	React.useEffect(() => {
@@ -25,16 +28,23 @@ const Home = () => {
 		// fetch('https://64845cf9ee799e3216269459.mockapi.io/items')
 		// 5. Сделаем, чтобы запрос менялся в зависимости от выбранной категории
 		fetch(
-			activeCategory == 0
-				? 'https://64845cf9ee799e3216269459.mockapi.io/items'
-				: 'https://64845cf9ee799e3216269459.mockapi.io/items?category=' +
-						activeCategory +
-						'&' +
-						'sortBy=' +
-						activeSort +
-						'&' +
-						'order=' +
-						'desc',
+			// activeCategory ===
+			// 	0 ? 'https://64845cf9ee799e3216269459.mockapi.io/items'
+			// 	 : 'https://64845cf9ee799e3216269459.mockapi.io/items?category=' +
+			// 	 		activeCategory +
+			// 	 		'&' +
+			// 	 		'sortBy=' +
+			// 	 		activeSort.sortProperty +
+			// 	 		'&' +
+			// 	 		'order=' +
+			// 	 		'desc',
+
+			// Можно использовать шаблонную строку внутри другой шаблонной строки
+			`https://64845cf9ee799e3216269459.mockapi.io/items?${
+				activeCategory > 0 ? `category=${activeCategory}` : ''
+			}&sortBy=${activeSort.sortProperty}&order=desc`,
+
+
 		)
 			// 6. Дальше нам нужно сделать, чтобы useEffect перезапускался (и соответсвенно перерисовывал контент при изменении states, для этого нужно включить ослеживание переменной для хука useEffect. Прописываем в массив (во второй аргумент useEffect) - activeCategory.
 			// 7. Теперь все работает, но у нас отвалился скелетон. Это потому что в конце первой прорисовки у нас устанавливается setIsLoading(false). Просто добавим setIsLoading(true) перед fetch, так при каждом запуске useEffect будет устанавливаться флаг IsLoading(true), а в конце работы useEffect - обратно будет выставляться флаг IsLoading(false)
@@ -69,7 +79,7 @@ const Home = () => {
 					/>
 					<Sort
 						activeSort={activeSort}
-						setActiveSort={(listElement) => setActiveSort(listElement)}
+						onClickSetActiveSort={(listObj) => setActiveSort(listObj)}
 					/>
 				</div>
 				<h2 className="content__title">Все пиццы</h2>

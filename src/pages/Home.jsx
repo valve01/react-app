@@ -25,14 +25,16 @@ const Home = () => {
 		// fetch('https://64845cf9ee799e3216269459.mockapi.io/items')
 		// 5. Сделаем, чтобы запрос менялся в зависимости от выбранной категории
 		fetch(
-			'https://64845cf9ee799e3216269459.mockapi.io/items?category=' +
-				activeCategory +
-				'&' +
-				'sortBy=' +
-				activeSort +
-				'&' +
-				'order=' +
-				'desc',
+			activeCategory == 0
+				? 'https://64845cf9ee799e3216269459.mockapi.io/items'
+				: 'https://64845cf9ee799e3216269459.mockapi.io/items?category=' +
+						activeCategory +
+						'&' +
+						'sortBy=' +
+						activeSort +
+						'&' +
+						'order=' +
+						'desc',
 		)
 			// 6. Дальше нам нужно сделать, чтобы useEffect перезапускался (и соответсвенно перерисовывал контент при изменении states, для этого нужно включить ослеживание переменной для хука useEffect. Прописываем в массив (во второй аргумент useEffect) - activeCategory.
 			// 7. Теперь все работает, но у нас отвалился скелетон. Это потому что в конце первой прорисовки у нас устанавливается setIsLoading(false). Просто добавим setIsLoading(true) перед fetch, так при каждом запуске useEffect будет устанавливаться флаг IsLoading(true), а в конце работы useEffect - обратно будет выставляться флаг IsLoading(false)

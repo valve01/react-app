@@ -1,11 +1,16 @@
 import React from 'react';
+// Т.к. в activeSort теперь объект listObj, придется переписать код ниже, вытасткивая из listObj нужные свойства
 function Sort({ activeSort, onClickSetActiveSort }) {
 	// console.log(activeSort)
 	const [isShow, setIsShow] = React.useState(false);
 	const list = [
-		{ name: 'популярности', sortProperty: 'rating' },
-		{ name: 'цене', sortProperty: 'price' },
-		{ name: 'алфавиту', sortProperty: 'title' },
+		// Чтобы прикрутить логику, что если выбираем "популярности"- сортировать по полю rating, "цене" - по полю price, "алфавиту" - title. Создаем массив объектов и исправляем весь код ниже в соответствии с этими объектами -->
+		{ name: 'популярности (сначала популярные)', sortProperty: 'rating' },
+		{ name: 'популярности (сначала непопулярные)', sortProperty: '-rating' },
+		{ name: 'цене (сначала дороже)', sortProperty: 'price' },
+		{ name: 'цене (сначала дешевле)', sortProperty: '-price' },
+		{ name: 'алфавиту (А-Я)', sortProperty: '-title' },
+		{ name: 'алфавиту (Я-А)', sortProperty: 'title' },
 	];
 	// const [activelistElement, setActivelistElement] = React.useState(list[0]);
 	const onClickSetActEl = (listObj) => {
@@ -39,6 +44,7 @@ function Sort({ activeSort, onClickSetActiveSort }) {
 							return (
 								<li
 									key={listObj.name}
+									// В Home.jsx при помощи onClickSetActEl(listObj) и далее onClickSetActiveSort(listObj) на каждой итерации map отравляется весь объект listObj, который мы берем из list
 									onClick={() => onClickSetActEl(listObj)}
 									className={activeSort.name === listObj.name ? 'active' : ''}
 								>

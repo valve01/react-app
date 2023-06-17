@@ -14,7 +14,8 @@ const Home = () => {
 	//1 Переносим States из Categories.jsx и Sort.jsx. Эти параметры нам нужно будет передавать в url для fetch. Займемся Categories.jsx. Для начала вытащим эти стейты и прокинем их в соответствующие дочерние элементы.  Для этого помещаем переменные в пропс дочернего элемента ((2) <Categories>).
 	const [activeCategory, setActiveCategory] = React.useState(0);
 	const [activeSort, setActiveSort] = React.useState({
-		name: 'популярности',
+		// Задаем параметры сортировки при первой отрисовке
+		name: 'популярности (сначала популярные)',
 		sortProperty: 'rating',
 	});
 
@@ -42,9 +43,11 @@ const Home = () => {
 			// Можно использовать шаблонную строку внутри другой шаблонной строки
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${
 				activeCategory > 0 ? `category=${activeCategory}` : ''
-			}&sortBy=${activeSort.sortProperty}&order=desc`,
-
-
+				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
+			}&sortBy=${activeSort.sortProperty.replace('-', '')}&order=${
+				// В зависимости от того есть "-" или нет меняем тип сотрировки: по убыванию или возрастанию
+				activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
+			}`,
 		)
 			// 6. Дальше нам нужно сделать, чтобы useEffect перезапускался (и соответсвенно перерисовывал контент при изменении states, для этого нужно включить ослеживание переменной для хука useEffect. Прописываем в массив (во второй аргумент useEffect) - activeCategory.
 			// 7. Теперь все работает, но у нас отвалился скелетон. Это потому что в конце первой прорисовки у нас устанавливается setIsLoading(false). Просто добавим setIsLoading(true) перед fetch, так при каждом запуске useEffect будет устанавливаться флаг IsLoading(true), а в конце работы useEffect - обратно будет выставляться флаг IsLoading(false)
@@ -60,6 +63,7 @@ const Home = () => {
 			});
 		// Чтобы при рендере автоматически страница вверх прокрутилась
 		window.scrollTo(0, 0);
+		// Включаем слежение: если меняются категории или/и сортировка - useEffect => делай запрос на сервак
 	}, [activeCategory, activeSort]);
 	return (
 		<>
@@ -79,6 +83,7 @@ const Home = () => {
 					/>
 					<Sort
 						activeSort={activeSort}
+						// Теперь setActiveSort записывает в activeSort объект listObj, который мы берем из list. Переходим в fetch и там вытаскиваем из него sortProperty
 						onClickSetActiveSort={(listObj) => setActiveSort(listObj)}
 					/>
 				</div>

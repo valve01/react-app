@@ -109,6 +109,18 @@ url.searchParams.append('order', 'asc');
 <!-- Ставим библиотеку для пагинации -->
 <!-- npm install react-paginate --save -->
 
+<!-- Ставим редакс тулкит -->
+<!-- npm install @reduxjs/toolkit -->
+
+<!-- Ставим перемычку между реактом и редаксом -->
+<!-- npm i react-redux -->
+
+
+
+
+
+
+
 
 
 

@@ -1,18 +1,18 @@
 import React from 'react';
 import styles from './Search.module.scss';
-import searchLogo from '../../assets/img/search.svg';
-
+import searchIcon from '../../assets/img/search.svg';
+import close from '../../assets/img/close.svg';
 const Search = ({ searchValue, setSearchValue }) => {
 	return (
 		<div className={styles.root}>
 			<img
 				className={styles.icon}
-				src={searchLogo}
-				alt="searcLogo"
+				src={searchIcon}
+				alt="searcIcon"
 			/>
 
 			<input
-			// В реакте рекомендуется прописывать в домЭлементе значение, которое мы изменяем при помощи хуков. Получается такой динамический value в html.
+				// В реакте рекомендуется прописывать в домЭлементе значение инпута, которое мы изменяем. Если мы хотим как-то с этим инпутом взаимодействовать. Получается такой динамический value в html. Без этой строчки инпут не будет контролируемым и очистка по крестику не будет работать.
 				value={searchValue}
 				className={styles.input}
 				// По событию изменения значения в инпуте - записываем это значение в с помощью хука в переменную SearchValue
@@ -22,6 +22,17 @@ const Search = ({ searchValue, setSearchValue }) => {
 				type="text"
 				placeholder="Поиск пицц..."
 			/>
+			{/* Добавляем кресткик и Делаем очистку инпута по клику на крестик */}
+			{/* Строчка ниже позволяет отображать крестик, только если в инпуте что-то есть */}
+			{searchValue && (
+				<img
+				// Чтобы функция не вызывалась автоматически по открытию скобок - оборачиваем ее в стрелочную функцию
+					onClick={()=>setSearchValue('')}
+					className={styles.close}
+					src={close}
+					alt="closeIcon"
+				/>
+			)}
 		</div>
 	);
 };

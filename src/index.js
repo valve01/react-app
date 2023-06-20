@@ -8,8 +8,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	// Все наше приложение должно быть обернуто в <BrowserRouter></BrowserRouter>, так все приложение получает доступ к возможностям react-router и к его логике
 	<BrowserRouter>
-		<React.StrictMode>
+		{/* <React.StrictMode> */}
 			<App />
-		</React.StrictMode>
+		{/* </React.StrictMode> */}
 	</BrowserRouter>,
 );

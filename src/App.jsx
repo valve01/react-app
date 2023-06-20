@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -12,15 +12,28 @@ import './scss/app.scss';
 
 // import pizzas from './assets/pizzas.json';
 
+
+
 function App() {
+	const [searchValue, setSearchValue] = useState('');
+	// Прокинув useState по цепочке аж до search.jsx проверяем. Изменяя значение инпута в дочернем компоненте, в родителе перезаписывается значение переменной из хука useState.
+	console.log(searchValue, 'input changed')
 	return (
 		<div className="wrapper">
-			<Header />
+			<Header
+				searchValue={searchValue}
+				setSearchValue={setSearchValue}
+			/>
 			<div className="content">
 				<Routes>
 					<Route
 						path="/"
-						element={<Home />}
+						element={
+							<Home
+								searchValue={searchValue}
+								setSearchValue={setSearchValue}
+							/>
+						}
 					/>
 					{/* / Для главной можно и не указывать в пути */}
 					{/* <Route

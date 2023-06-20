@@ -5,7 +5,7 @@ import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 
-const Home = () => {
+const Home = ({ searchValue, setSearchValue }) => {
 	// Используем хук useState и т.к. мы хотим в item записать массив, то по умолчанию зададим пустой массив.
 	const [items, setItems] = React.useState([]);
 	// Создаем флаг, который будет сигнализировать о процессе загрузке и  НЕготовности отображения данных с сервера

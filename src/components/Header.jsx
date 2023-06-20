@@ -10,7 +10,7 @@ import Search from './Search';
 
 // Сделаем то же самое для /cart
 
-function Header() {
+function Header({ searchValue, setSearchValue }) {
 	return (
 		<div className="header">
 			<div className="container">
@@ -27,9 +27,11 @@ function Header() {
 							<p>самая вкусная пицца во вселенной</p>
 						</div>
 					</div>
-
 				</Link>
-				<Search />
+				<Search
+					searchValue={searchValue}
+					setSearchValue={setSearchValue}
+				/>
 				<div className="header__cart">
 					<Link
 						to="/cart"

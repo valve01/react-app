@@ -1,10 +1,11 @@
 import logo from '../assets/img/logo.svg';
 import { Link } from 'react-router-dom';
+import Search from './Search';
 // Чтобы воспользоваться роутером без перезагрузки страницы целиком-импоритруем Link из react-router-dom
 // Теперь оборачиваем элемент, по которому мы ожидаем клик в компонент Link
-{
-	/*<Link to="/">...</Link> */
-}
+
+/*<Link to="/">...</Link> */
+
 // Теперь переход на / происходит без перезагрузки страницы
 
 // Сделаем то же самое для /cart
@@ -26,7 +27,9 @@ function Header() {
 							<p>самая вкусная пицца во вселенной</p>
 						</div>
 					</div>
+
 				</Link>
+				<Search />
 				<div className="header__cart">
 					<Link
 						to="/cart"

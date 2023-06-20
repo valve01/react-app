@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
+
 // Можно просто прописать путь до папки, без указания файла, но при условии, что файл будет называться index.jsx/index.js
 
 import './scss/app.scss';

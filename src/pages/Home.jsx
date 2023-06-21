@@ -20,7 +20,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 		sortProperty: 'rating',
 	});
 
-	const skeleton = [...new Array(9)].map((_, index) => <SkeletonPizzaBlock key={index} />);
+	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 	const pizzas = items.map((obj) => {
 		return (
 			<PizzaBlock
@@ -70,7 +70,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 			// 	 		'desc',
 
 			// Можно использовать шаблонную строку внутри другой шаблонной строки
-			`https://64845cf9ee799e3216269459.mockapi.io/items?${
+			`https://64845cf9ee799e3216269459.mockapi.io/items?page=1&limit=4&${
 				activeCategory > 0 ? `category=${activeCategory}` : ''
 				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
 			}&sortBy=${activeSort.sortProperty.replace('-', '')}&order=${

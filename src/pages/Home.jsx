@@ -1,10 +1,11 @@
 import React from 'react';
 
+
 import PizzaBlock from '../components/PizzaBlock';
 import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
-
+import Pagination from '../components/Pagination';
 const Home = ({ searchValue, setSearchValue }) => {
 	// Используем хук useState и т.к. мы хотим в item записать массив, то по умолчанию зададим пустой массив.
 	const [items, setItems] = React.useState([]);
@@ -508,6 +509,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 	</div>
 </div> */}
 				</div>
+				<Pagination />
 			</div>
 		</>
 	);

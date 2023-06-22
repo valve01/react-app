@@ -70,15 +70,18 @@ const Home = ({ searchValue, setSearchValue }) => {
 			// 	 		'order=' +
 			// 	 		'desc',
 
-			// Можно использовать шаблонную строку внутри другой шаблонной строки. Имеет значение в каком месте прописано уточнение запроса, пагинация не сработала в конце
-			`https://64845cf9ee799e3216269459.mockapi.io/items?page=${currentPage}&limit=3&${
+			// Можно использовать шаблонную строку внутри другой шаблонной строки. Не имеет значение в каком месте прописано уточнение запроса
+			`https://64845cf9ee799e3216269459.mockapi.io/items?${
 				activeCategory > 0 ? `category=${activeCategory}` : ''
 				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
 			}&sortBy=${activeSort.sortProperty.replace('-', '')}&order=${
 				// В зависимости от того есть "-" или нет меняем тип сотрировки: по убыванию или возрастанию
 				activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
 				// Пишем условие для фильтрации. Если что-то есть в инпуте - присваивам это параметру filter
-			}&filter=${searchValue ? searchValue : ''}`,
+			}&filter=${
+				searchValue ? searchValue : ''
+				// Пишем пагинацию
+			}&page=${currentPage}&limit=4`,
 		)
 			// 6. Дальше нам нужно сделать, чтобы useEffect перезапускался (и соответсвенно перерисовывал контент при изменении states, для этого нужно включить ослеживание переменной для хука useEffect. Прописываем в массив (во второй аргумент useEffect) - activeCategory.
 			// 7. Теперь все работает, но у нас отвалился скелетон. Это потому что в конце первой прорисовки у нас устанавливается setIsLoading(false). Просто добавим setIsLoading(true) перед fetch, так при каждом запуске useEffect будет устанавливаться флаг IsLoading(true), а в конце работы useEffect - обратно будет выставляться флаг IsLoading(false)
@@ -512,7 +515,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 				</div>
 				<Pagination
 					currentPage={currentPage}
-					// setPage={setCurrentPage}
+					// Номер активной страницы будет зависеть от того что вернет этот компонент
 					onChangePage={(value) => {
 						setCurrentPage(value);
 					}}

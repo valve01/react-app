@@ -121,8 +121,8 @@ url.searchParams.append('order', 'asc');
 
 <!-- React Context предоставляет возможность обращаться и прокидывать пропсы напрямую от одного компонента к другому. (Помогает избежать Props Drilling ) Покажем как он работает на примере поиска. -->
 <!-- Полное описание как использовать context -->
-<!-- Создаем объект context в App.jsx. т.к. он является общим родителем для компонента Search.jsx и Home.jsx -->
-<!-- const SearchContext = React.createContext(''); -->
+<!-- Создаем объект context в App.jsx. т.к. он является общим родителем для компонента Search.jsx и Home.jsx.  -->
+<!-- const SearchContext = React.createContext(); -->
 <!-- Объект SearchContext содержит в себе компоненты Consumer и Provider -->
 <!-- Подобно тому как мы оборачивали все наше приложение в ReactRouter. Aналогично чтобы подключить логику ReactContext нам нужно обернуть содержимое div className="wrapper" в компонент объекта context - Provider. Т.е. в <SearchContext.Provider>...</SearchContext.Provider> -->
 <!-- И присвоим значение для нашего context - передадим туда объект с переменными из useState: {searchValue, setSearchValue} -->
@@ -134,19 +134,29 @@ url.searchParams.append('order', 'asc');
 <!-- const value = useContext(MyContext);  Принимает объект контекста (значение, возвращённое из React.createContext) и возвращает текущее значение контекста для этого контекста. Текущее значение контекста определяется пропом value ближайшего <MyContext.Provider> над вызывающим компонентом в дереве. -->
 
 <!-- Вытаскиваем то что нам нужно context в том месте где нам нужно получить доступ к содержимому context  -->
-<!-- В нашем случае мы вытаскиваем весь объект (можем быть и просто переменной, массивом) внутри Search.jsx-->
+<!-- В нашем случае мы вытаскиваем весь объект, поэтому и указываем объект {} (можем вытаскивать и просто переменную, массив) внутри Search.jsx-->
 <!-- 	const {}= React.useContext(SearchContext) -->
 <!-- Получается, что хук useContext внутри Search.jsx ссылается на переменную SearchContext, которая является объектом контекста и определена в Аpp.jsx. А значению этой переменной с помощью компонента Provider в Аpp.jsx мы присвоили объект value={{searchValue, setSearchValue}} -->
 <!-- И теперь мы можем вытащить наши переменные с помощью useContext, просто вписав их внуть только что созданной const в Search.jsx  -->
 <!-- 	const {searchValue, setSearchValue}= React.useContext(SearchContext) -->
 <!-- Теперь Search.jsx не может найти SearchContext. Нужно его туда экспортировать. Но нельзя писать export default дважды. Чтобы экспортировать отдельные куски кода, достаточно перед ключевым словом объявления сущности (const, let, function) приписать export  -->
 <!-- В App.jsx дописываем export -->
-<!-- export const SearchContext = React.createContext(''); -->
+<!-- export const SearchContext = React.createContext(); -->
 <!-- Теперь в том месте, где нам нужно вытащить (нашем случае это Search.jsx) импортируем context-->
 <!-- import { SearchContext } from '../../App'; -->
 <!-- Обращаем внимание что мы вытаскиваем через деструктуризацию, иначе нам вернется jsx компонент, который через export default экспортирован (т.е. App.jsx в нашем случае) а не переменная значение SearchContext-->
 
 <!-- Готово! Теперь у нас работает поиск с помощью ReactContext при этом мы избежали Props Drilling -->
+
+<!-- Теперь разбираемся что мы сделали -->
+<!-- По смыслу const SearchContext = React.createContext() это создание глобальной переменной -->
+<!-- Дальше в этой строчке -->
+<!-- 			 <SearchContext.Provider value={{searchValue, setSearchValue}}>...</SearchContext.Provider> -->
+<!-- Мы говорим Provider оповести все компоненты, которые ты обернул, что переменной SearchContext мы присвоили значение value={{searchValue, setSearchValue}} -->
+<!-- Теперь экспортируем SearchContext из App.jsx и импортируем в Search.jsx -->
+<!-- И теперь мы можем извлечь записанные в переменную данные с помощью деструктурицазии и использования хука useContext в любом дочернем компоненте, компонента где мы мы context создавали  -->
+<!-- const { searchValue, setSearchValue } = React.useContext(SearchContext); -->
+<!-- Т.о useContext(SearchContext) вернет нам то, что хранится в value в SearchContext.Provider, а у нас там value={{searchValue, setSearchValue}}  -->
 
 <!-- Ставим редакс тулкит -->
 <!-- npm install @reduxjs/toolkit -->

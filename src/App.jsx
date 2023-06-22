@@ -17,7 +17,7 @@ import './scss/app.scss';
 function App() {
 	const [searchValue, setSearchValue] = useState('');
 	// Прокинув useState по цепочке аж до search.jsx проверяем. Изменяя значение инпута в дочернем компоненте, в родителе перезаписывается значение переменной из хука useState.
-	console.log(searchValue, 'input changed')
+	// console.log(searchValue, 'input changed')
 	return (
 		<div className="wrapper">
 			<Header

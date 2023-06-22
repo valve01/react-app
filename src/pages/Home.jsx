@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import PizzaBlock from '../components/PizzaBlock';
 import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
@@ -19,6 +18,8 @@ const Home = ({ searchValue, setSearchValue }) => {
 		name: 'популярности (сначала популярные)',
 		sortProperty: 'rating',
 	});
+
+	const [currentPage, setCurrentPage] = React.useState(1);
 
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 	const pizzas = items.map((obj) => {
@@ -69,8 +70,8 @@ const Home = ({ searchValue, setSearchValue }) => {
 			// 	 		'order=' +
 			// 	 		'desc',
 
-			// Можно использовать шаблонную строку внутри другой шаблонной строки
-			`https://64845cf9ee799e3216269459.mockapi.io/items?page=1&limit=4&${
+			// Можно использовать шаблонную строку внутри другой шаблонной строки. Имеет значение в каком месте прописано уточнение запроса, пагинация не сработала в конце
+			`https://64845cf9ee799e3216269459.mockapi.io/items?page=${currentPage}&limit=3&${
 				activeCategory > 0 ? `category=${activeCategory}` : ''
 				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
 			}&sortBy=${activeSort.sortProperty.replace('-', '')}&order=${
@@ -94,7 +95,7 @@ const Home = ({ searchValue, setSearchValue }) => {
 		// Чтобы при рендере автоматически страница вверх прокрутилась
 		window.scrollTo(0, 0);
 		// Включаем слежение: если меняются категории или/и сортировка - useEffect => делай запрос на сервак. Добавляя функционал фильтрации не забываем добавить отслеживание переменной searchValue.
-	}, [activeCategory, activeSort, searchValue]);
+	}, [activeCategory, activeSort, searchValue, currentPage]);
 	return (
 		<>
 			<div className="container">
@@ -509,7 +510,13 @@ const Home = ({ searchValue, setSearchValue }) => {
 	</div>
 </div> */}
 				</div>
-				<Pagination />
+				<Pagination
+					currentPage={currentPage}
+					// setPage={setCurrentPage}
+					onChangePage={(value) => {
+						setCurrentPage(value);
+					}}
+				/>
 			</div>
 		</>
 	);

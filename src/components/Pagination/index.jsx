@@ -11,22 +11,22 @@ const theme = createTheme({
 		},
 	},
 });
-const PaginationBlock = () => {
-	const [page, setPage] = React.useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+const PaginationBlock = ({onChangePage,currentPage}) => {
+	// const [page, setPage] = React.useState(1);
+	const handleChange = (event, value) => {
+		onChangePage(value);
+	};
 	return (
 		<div>
 			<Stack spacing={2}>
-				<Typography>Page: {page}</Typography>
+				<Typography>Page: {currentPage}</Typography>
 				<ThemeProvider theme={theme}>
 					<Pagination
 						count={3}
 						color="primary"
-						page={page}
+						page={currentPage}
 						onChange={handleChange}
-
+						// onChange={event =>console.log(event)}
 					/>
 				</ThemeProvider>
 			</Stack>

@@ -2,7 +2,7 @@ import React from 'react';
 import Pagination from '@mui/material/Pagination';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 
 const theme = createTheme({
 	palette: {
@@ -19,7 +19,7 @@ const PaginationBlock = ({ onChangePage, currentPage }) => {
 	return (
 		<div>
 			<Stack spacing={2}>
-				<Typography>Page: {currentPage}</Typography>
+				{/* <Typography>Page: {currentPage}</Typography> */}
 				<ThemeProvider theme={theme}>
 					<Pagination
 					// По хорошему в атрибуте ниже должна быть переменная, которую будет отдавать нам бэкенд, в которой скажет сколько всего доступно страниц с установленным лимитом (в запросе "limit=") по данному запросу (fetch).

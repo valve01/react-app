@@ -12,7 +12,11 @@ import './scss/app.scss';
 
 // import pizzas from './assets/pizzas.json';
 
+// const SearchContext = React.createContext('');
+// Объект SearchContext содержит в себе компоненты Consumer и Provider
+// console.log(SearchContext)
 
+export const SearchContext = React.createContext();
 
 function App() {
 	const [searchValue, setSearchValue] = useState('');
@@ -20,50 +24,55 @@ function App() {
 	// console.log(searchValue, 'input changed')
 	return (
 		<div className="wrapper">
-			<Header
-				searchValue={searchValue}
-				setSearchValue={setSearchValue}
-			/>
-			<div className="content">
-				<Routes>
-					<Route
-						path="/"
-						element={
-							<Home
-								searchValue={searchValue}
-								setSearchValue={setSearchValue}
-							/>
-						}
-					/>
-					{/* / Для главной можно и не указывать в пути */}
-					{/* <Route
+			{/* <!-- Подобно тому как мы оборачивали все наше приложение в ReactRouter. Aналогично чтобы подключить логику ReactContext нам нужно обернуть содержимое div className="wrapper" в компонент объекта context - Provider. Т.е. в <SearchContext.Provider>...</SearchContext.Provider> --> */}
+			{/* И присвоим значение для нашего context - передадим туда объект с переменными из useState: {searchValue, setSearchValue}*/}
+			 <SearchContext.Provider value={{searchValue, setSearchValue}}>
+				<Header
+				// Теперь не нужно прокидывать в Header переменные из useState, будем доставать их там из SearchContext. Комментим их
+					// searchValue={searchValue}
+					// setSearchValue={setSearchValue}
+				/>
+				<div className="content">
+					<Routes>
+						<Route
+							path="/"
+							element={
+								<Home
+									searchValue={searchValue}
+									setSearchValue={setSearchValue}
+								/>
+							}
+						/>
+						{/* / Для главной можно и не указывать в пути */}
+						{/* <Route
 							path=""
 							element={<Home />}
 						/> */}
-					<Route
-						path="/123"
-						element={<h1>123</h1>}
-					/>
-					<Route
-						path="/cart"
-						element={<Cart />}
-					/>
-					{/* <Route
+						<Route
+							path="/123"
+							element={<h1>123</h1>}
+						/>
+						<Route
+							path="/cart"
+							element={<Cart />}
+						/>
+						{/* <Route
 							path="/not-found"
 							element={<NotFound />}
 						/> */}
-					{/* Конкрено в случае 404 страницы ее указывают для всех остальных путей, в конце перечня страниц. Так Routes пройдется по всему перечню Route, при изменении адресной строки, и если найдет совпадения адресной строки и path - отобразит соответствующий контент. */}
-					<Route
-						path="*"
-						element={<NotFound />}
-					/>
-					{/* Можно не просто вшивать значения, а использовать маски. В данном случае, если будут какие-то символы после pizzas/ то отрендерится указанный компонент */}
-					{/* <Route
+						{/* Конкрено в случае 404 страницы ее указывают для всех остальных путей, в конце перечня страниц. Так Routes пройдется по всему перечню Route, при изменении адресной строки, и если найдет совпадения адресной строки и path - отобразит соответствующий контент. */}
+						<Route
+							path="*"
+							element={<NotFound />}
+						/>
+						{/* Можно не просто вшивать значения, а использовать маски. В данном случае, если будут какие-то символы после pizzas/ то отрендерится указанный компонент */}
+						{/* <Route
 							path="/pizzas/:id"
 							element={<NotFound />}
 						/> */}
-				</Routes>
-			</div>
+					</Routes>
+				</div>
+			</SearchContext.Provider>
 		</div>
 	);
 }

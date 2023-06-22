@@ -2,7 +2,10 @@ import React from 'react';
 import styles from './Search.module.scss';
 import searchIcon from '../../assets/img/search.svg';
 import close from '../../assets/img/close.svg';
-const Search = ({ searchValue, setSearchValue }) => {
+import { SearchContext } from '../../App';
+// Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов
+const Search = () => {
+	const { searchValue, setSearchValue } = React.useContext(SearchContext);
 	return (
 		<div className={styles.root}>
 			<img
@@ -26,8 +29,8 @@ const Search = ({ searchValue, setSearchValue }) => {
 			{/* Строчка ниже позволяет отображать крестик, только если в инпуте что-то есть */}
 			{searchValue && (
 				<img
-				// Чтобы функция не вызывалась автоматически по открытию скобок - оборачиваем ее в стрелочную функцию
-					onClick={()=>setSearchValue('')}
+					// Чтобы функция не вызывалась автоматически по открытию скобок - оборачиваем ее в стрелочную функцию
+					onClick={() => setSearchValue('')}
 					className={styles.close}
 					src={close}
 					alt="closeIcon"

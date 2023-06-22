@@ -121,7 +121,15 @@ const Home = ({ searchValue, setSearchValue }) => {
 						onClickSetActiveSort={(listObj) => setActiveSort(listObj)}
 					/>
 				</div>
+	
 				<h2 className="content__title">Все пиццы</h2>
+				<Pagination
+					currentPage={currentPage}
+					// Номер активной страницы будет зависеть от того что вернет этот компонент
+					onChangePage={(value) => {
+						setCurrentPage(value);
+					}}
+				/>
 				<div className="content__items">
 					{/* Скелетону тоже нужно key задавать, но т.к. obj.id у нас нет, до получения ответа от сервака, будем использовать индексы фейкового массива. Т.к. мы не собираеся использовать первый аргумент в стрелочной функции, назовем его _ . Кроме того в фейковом массиве нет значений и js будет ругаться, что мы из undefined хотим получить данные в первый аргумент. */}
 					{isLoading ? skeleton : pizzas}
@@ -513,13 +521,6 @@ const Home = ({ searchValue, setSearchValue }) => {
 	</div>
 </div> */}
 				</div>
-				<Pagination
-					currentPage={currentPage}
-					// Номер активной страницы будет зависеть от того что вернет этот компонент
-					onChangePage={(value) => {
-						setCurrentPage(value);
-					}}
-				/>
 			</div>
 		</>
 	);

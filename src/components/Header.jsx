@@ -10,7 +10,10 @@ import Search from './Search';
 
 // Сделаем то же самое для /cart
 
-function Header({ searchValue, setSearchValue }) {
+// Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов. И не нужно дальше передавать их в Search.jsx
+// function Header({ searchValue, setSearchValue }) {
+
+function Header() {
 	return (
 		<div className="header">
 			<div className="container">
@@ -29,8 +32,7 @@ function Header({ searchValue, setSearchValue }) {
 					</div>
 				</Link>
 				<Search
-					searchValue={searchValue}
-					setSearchValue={setSearchValue}
+
 				/>
 				<div className="header__cart">
 					<Link

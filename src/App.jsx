@@ -38,8 +38,8 @@ function App() {
 							path="/"
 							element={
 								<Home
-									searchValue={searchValue}
-									setSearchValue={setSearchValue}
+									// searchValue={searchValue}
+									// setSearchValue={setSearchValue}
 								/>
 							}
 						/>

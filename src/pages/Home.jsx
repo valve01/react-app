@@ -5,7 +5,8 @@ import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
-const Home = ({ searchValue, setSearchValue }) => {
+import { SearchContext } from '../App';
+const Home = () => {
 	// Используем хук useState и т.к. мы хотим в item записать массив, то по умолчанию зададим пустой массив.
 	const [items, setItems] = React.useState([]);
 	// Создаем флаг, который будет сигнализировать о процессе загрузке и  НЕготовности отображения данных с сервера
@@ -18,6 +19,8 @@ const Home = ({ searchValue, setSearchValue }) => {
 		name: 'популярности (сначала популярные)',
 		sortProperty: 'rating',
 	});
+
+	const { searchValue } = React.useContext(SearchContext);
 
 	const [currentPage, setCurrentPage] = React.useState(1);
 

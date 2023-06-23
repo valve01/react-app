@@ -219,9 +219,52 @@ root.render(
  - filterSlice.js - логика для категорий и сортировки, ну и наверное поиска
   -->
 
+<!-- Для начала, для примера сделаем счетчик -->
+
 <!-- Создаем их в папке slices и копируем туда код из документации -->
 
+<!-- Экспортируем экшены для изменения state, чтобы потом воспользоваться ими в нужном нам файле -->
+<!-- export const { increment, decrement, incrementByAmount } = counterSlice.actions -->
+<!-- Экспортируем из filterSlice.js в store.js функцию - counterReducer -->
+<!-- В filterSlice.js пишем -->
+<!-- export default counterSlice.reducer -->
+<!-- В store.js пишем -->
+<!-- import counterReducer from "./slices/filterSlice" -->
+<!-- Теперь у нас есть доступ в store.js к counterReducer -->
+<!-- Передаем ее в reducer в store.js -> Меняем значение reducer в store.js с пустого объекта на { counter: counterReducer }. В данном случае мы назвали наше состояние - counter и вся логика, которая будет менять это состояение находится в counterReducer -->
 
+<!-- Slice создан и подключен. -->
+<!-- Теперь мы можем использовать хуки React-Redux, чтобы позволить компонентам React взаимодействовать с хранилищем Redux. Мы можем считывать данные из хранилища с помощью useSelector и отправлять действия с помощью useDispatch.  -->
+
+<!-- Идем в файл, где хотим использовать хуки и импортируем их. Мы будем их использовать в Арр.jsx -->
+<!-- import { useSelector, useDispatch } from 'react-redux' -->
+<!-- В этот же файл импортируем экшены, которыми мы хотим воспользоваться из нашего слайса -->
+<!-- import { decrement, increment } from './redux/slices/filterSlice' -->
+<!-- Создаем переменные в нашем компоненте для использованию хуков -->
+<!-- 	
+const count = useSelector((state) => state.counter.count);
+const dispatch = useDispatch(); 
+	-->
+<!-- Теперь можно вставить кусок разметки ниже в наш компонент (у нас это Арр.jsx) и убедиться в работоспособности кода -->
+<!--
+ 			<button
+				aria-label="Increment value"
+				onClick={() => dispatch(increment())}
+			>
+				Increment
+			</button>
+			<span>{count}</span>
+			<button
+				aria-label="Decrement value"
+				onClick={() => dispatch(decrement())}
+			>
+				Decrement
+			</button>
+-->
+
+<!-- Готово! -->
+
+<!-- Теперь разбираемся как мы создали счетчик. 1:18:50 -->
 
 
 

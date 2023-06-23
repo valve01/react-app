@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Header from './components/Header';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
-
+import { decrement, increment } from './redux/slices/filterSlice';
 // Можно просто прописать путь до папки, без указания файла, но при условии, что файл будет называться index.jsx/index.js
 
 import './scss/app.scss';
@@ -22,15 +23,39 @@ function App() {
 	const [searchValue, setSearchValue] = useState('');
 	// Прокинув useState по цепочке аж до search.jsx проверяем. Изменяя значение инпута в дочернем компоненте, в родителе перезаписывается значение переменной из хука useState.
 	// console.log(searchValue, 'input changed')
+
+	// Тут в state.counter.count - count - должен называться так же как и свойство в объекте в initialState в slice.js. В нашем случае это в filterSlice.js
+	// const initialState = {
+	// 	count: 0,
+	// }
+
+	const count = useSelector((state) => state.counter.count);
+	const dispatch = useDispatch();
+
 	return (
 		<div className="wrapper">
+			
+			<button
+				aria-label="Increment value"
+				onClick={() => dispatch(increment())}
+			>
+				Increment
+			</button>
+			<span>{count}</span>
+			<button
+				aria-label="Decrement value"
+				onClick={() => dispatch(decrement())}
+			>
+				Decrement
+			</button>
+
 			{/* <!-- Подобно тому как мы оборачивали все наше приложение в ReactRouter. Aналогично чтобы подключить логику ReactContext нам нужно обернуть содержимое div className="wrapper" в компонент объекта context - Provider. Т.е. в <SearchContext.Provider>...</SearchContext.Provider> --> */}
 			{/* И присвоим значение для нашего context - передадим туда объект с переменными из useState: {searchValue, setSearchValue}*/}
-			 <SearchContext.Provider value={{searchValue, setSearchValue}}>
+			<SearchContext.Provider value={{ searchValue, setSearchValue }}>
 				<Header
 				// Теперь не нужно прокидывать в Header переменные из useState, будем доставать их там из SearchContext. Комментим их
-					// searchValue={searchValue}
-					// setSearchValue={setSearchValue}
+				// searchValue={searchValue}
+				// setSearchValue={setSearchValue}
 				/>
 				<div className="content">
 					<Routes>
@@ -38,8 +63,8 @@ function App() {
 							path="/"
 							element={
 								<Home
-									// searchValue={searchValue}
-									// setSearchValue={setSearchValue}
+								// searchValue={searchValue}
+								// setSearchValue={setSearchValue}
 								/>
 							}
 						/>

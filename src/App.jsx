@@ -28,6 +28,8 @@ function App() {
 	// const initialState = {
 	// 	count: 0,
 	// }
+// А counter - должен называться также как свойство данного state в свойстве reducer в store.js
+
 
 	const count = useSelector((state) => state.counter.count);
 	const dispatch = useDispatch();

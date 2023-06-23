@@ -4,7 +4,7 @@ import React from 'react';
 function Categories({ activeCategory, onClickSetActiveCategory }) {
 	// const [activeIndex, setActiveIndex] = React.useState(0);
 	// 2. Проверяем что мы вытащили
-	console.log(activeCategory);
+	// console.log(activeCategory);
 
 	const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 	return (

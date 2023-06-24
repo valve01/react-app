@@ -313,6 +313,8 @@ const initialState = {
  <!-- Просто прописать onClick={() => increment()}  - нельзя , работать не будет. Потому что increment() - вернет нам объект со свойствами payload и type, который передав в dispatch() выполнит заданное в increment() действие. Функция, записанная в dispatch сама сделает все что нужно.  -->
 <!-- ============================================================================================================= -->
 
+<!-- 23:40 -->
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

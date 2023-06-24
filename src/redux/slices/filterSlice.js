@@ -1,29 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
-
-// В объект initialState можно записать любые данные в любом количестве
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
-  count: 0,
-}
+	sortType: { name: ' популярности (сначала популярные)', sortProperty: 'rating' },
+	activeCategory: 0,
+};
+export const filterSlice = createSlice({
+	name: 'filters',
+	initialState,
+	reducers: {
+		// Можно сразу вот так методы тут создавать
+		setActiveCategory(state, action) {
+			// При вызове нашего метода в нужных компонентах в него будет передан неявно объект action, который содержит в себе type - тип действия, и payload - остальные данные, обычно какое-то значение. А мы его в принимает тут, этот action.
+			console.log(action)
+			state.activeCategory = action.payload;
+		},
+	},
+});
 
-export const counterSlice = createSlice({
-  name: 'counter',
-  initialState,
-	// reducers содержит объект state, в котором начальное значение == initialState. Передаем state в стрелочную ф-цию и методы могут спокойно обращаться теперь к свойствам state
-  reducers: {
-    increment: (state) => {
-      state.count += 1
-    },
-    decrement: (state) => {
-      state.count -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.count += action.payload
-    },
-  },
-})
+export const {setActiveCategory,} = filterSlice.actions;
 
-// Action creators are generated for each case reducer function
-// Экспортируем экшены для изменения state
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
-
-export default counterSlice.reducer
+export default filterSlice.reducer;

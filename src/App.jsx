@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 
 import Header from './components/Header';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
-import { decrement, increment } from './redux/slices/filterSlice';
+
 // Можно просто прописать путь до папки, без указания файла, но при условии, что файл будет называться index.jsx/index.js
 
 import './scss/app.scss';
@@ -31,13 +31,13 @@ function App() {
 // А counter - должен называться также как свойство данного state в свойстве reducer в store.js
 
 
-	const count = useSelector((state) => state.counter.count);
-	const dispatch = useDispatch();
+	// const count = useSelector((state) => state.counter.count);
+	// const dispatch = useDispatch();
 
 	return (
 		<div className="wrapper">
 			
-			<button
+			{/* <button
 				aria-label="Increment value"
 				onClick={() => dispatch(increment())}
 			>
@@ -49,7 +49,7 @@ function App() {
 				onClick={() => dispatch(decrement())}
 			>
 				Decrement
-			</button>
+			</button> */}
 
 			{/* <!-- Подобно тому как мы оборачивали все наше приложение в ReactRouter. Aналогично чтобы подключить логику ReactContext нам нужно обернуть содержимое div className="wrapper" в компонент объекта context - Provider. Т.е. в <SearchContext.Provider>...</SearchContext.Provider> --> */}
 			{/* И присвоим значение для нашего context - передадим туда объект с переменными из useState: {searchValue, setSearchValue}*/}

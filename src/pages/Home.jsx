@@ -1,4 +1,6 @@
 import React from 'react';
+// ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux или react
+import { useSelector, useDispatch } from 'react-redux';
 
 import PizzaBlock from '../components/PizzaBlock';
 import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
@@ -6,6 +8,7 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
+import { setActiveCategory } from '../redux/slices/filterSlice';
 const Home = () => {
 	// Используем хук useState и т.к. мы хотим в item записать массив, то по умолчанию зададим пустой массив.
 	const [items, setItems] = React.useState([]);
@@ -13,7 +16,7 @@ const Home = () => {
 	const [isLoading, setIsLoading] = React.useState(true);
 
 	//1 Переносим States из Categories.jsx и Sort.jsx. Эти параметры нам нужно будет передавать в url для fetch. Займемся Categories.jsx. Для начала вытащим эти стейты и прокинем их в соответствующие дочерние элементы.  Для этого помещаем переменные в пропс дочернего элемента ((2) <Categories>).
-	const [activeCategory, setActiveCategory] = React.useState(0);
+	// const [activeCategory, setActiveCategory] = React.useState(0);
 	const [activeSort, setActiveSort] = React.useState({
 		// Задаем параметры сортировки при первой отрисовке
 		name: 'популярности (сначала популярные)',
@@ -23,6 +26,16 @@ const Home = () => {
 	const { searchValue } = React.useContext(SearchContext);
 
 	const [currentPage, setCurrentPage] = React.useState(1);
+
+	// Вытаскиваем activeCategory из Redux слайса. Этим хуком можно вообще все данные из хранилища вытащить (оно все записано в state. Получается наш state === store.reducer).
+	const activeCategory = useSelector((state) => state.filter.activeCategory);
+
+	const onClickSetActiveCategory = (index) => {
+		// Этот index мы передали ещё в Categories.jsx в onClick
+		// console.log(index);
+	};
+
+	console.log("activeCategory:", activeCategory)
 
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 	const pizzas = items.map((obj) => {
@@ -113,10 +126,7 @@ const Home = () => {
 						activeCategory={activeCategory}
 						// 4 index - в стрелочной ф-ции ниже получен из
 						// Categories.jsx в строке onClick={() => {onClickSetActiveCategory(index)}}
-						onClickSetActiveCategory={(index) => {
-							setActiveCategory(index);
-							// alert(index);
-						}}
+						onClickSetActiveCategory={onClickSetActiveCategory}
 					/>
 					<Sort
 						activeSort={activeSort}
@@ -124,7 +134,7 @@ const Home = () => {
 						onClickSetActiveSort={(listObj) => setActiveSort(listObj)}
 					/>
 				</div>
-	
+
 				<h2 className="content__title">Все пиццы</h2>
 				<Pagination
 					currentPage={currentPage}

@@ -19,6 +19,7 @@ function Sort() {
 	// const [activelistElement, setActivelistElement] = React.useState(list[0]);
 	const onClickSetActEl = (listObj) => {
 		dispatch(setActiveSortType(listObj));
+		console.log(listObj);
 		setIsShow(!isShow);
 	};
 
@@ -46,11 +47,12 @@ function Sort() {
 				<div className="sort__popup">
 					<ul>
 						{list.map((listObj) => {
+							// console.log(listObj);
 							return (
 								<li
 									key={listObj.name}
 									// В Home.jsx при помощи onClickSetActEl(listObj) и далее onClickSetActiveSort(listObj) на каждой итерации map отравляется весь объект listObj, который мы берем из list
-									onClick={onClickSetActEl}
+									onClick={(listObj) => onClickSetActEl(listObj.target)}
 									className={activeSort.name === listObj.name ? 'active' : ''}
 								>
 									{listObj.name}

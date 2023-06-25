@@ -8,28 +8,28 @@ import filterReducer from './slices/filterSlice';
 export const store = configureStore({
 	// Наше глобальное хранилище может содержать много разных редюсеров из разных слайсов
 	reducer: {
-
 		filter: filterReducer,
-		
+
 		// counterReducer:counterReducer
 		// counterReducer
-		// 
+		//
 		// counter1: counterReducer1,
 		// counter2: counterReducer2,
 		// counter3: counterReducer3,
 		// counter4: counterReducer4
 	},
 	middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types
-        ignoredActions: ['your/action/type'],
-        // Ignore these field paths in all actions
-        ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
-        // Ignore these paths in the state
-        ignoredPaths: ['items.dates'],
-      },
-    }),
+		getDefaultMiddleware({
+			serializableCheck: false,
+			// {
+			// // Ignore these action types
+			// ignoredActions: ['filters/setActiveSortType'],
+			// // Ignore these field paths in all actions
+			// ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+			// // Ignore these paths in the state
+			// ignoredPaths: ['items.dates'],
+			// },
+		}),
 });
 // Импоритровали store в index.js и теперь смотрим что в нем. Всякие методы в нем. Нам пока понадобится только dispatch
 // console.log(store);

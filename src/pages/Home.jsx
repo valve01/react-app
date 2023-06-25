@@ -37,8 +37,8 @@ const Home = () => {
 	};
 	// console.log('activeCategory:', activeCategory);
 
-	const activeSort = useSelector((state) => state.filter.sortType.sortProperty);
-console.log(activeSort)
+	const activeSort = useSelector((state) => state.filter.sortType);
+	console.log(activeSort);
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 	const pizzas = items.map((obj) => {
 		return (
@@ -51,14 +51,15 @@ console.log(activeSort)
 
 	React.useEffect(() => {
 		setIsLoading(true);
+		console.log(activeSort);
 		fetch(
 			// Можно использовать шаблонную строку внутри другой шаблонной строки. Не имеет значение в каком месте прописано уточнение запроса
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${
 				activeCategory > 0 ? `category=${activeCategory}` : ''
 				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
-			}&sortBy=${activeSort.replace('-', '')}&order=${
+			}&sortBy=${activeSort.sortProperty.replace('-', '')}&order=${
 				// В зависимости от того есть "-" или нет меняем тип сотрировки: по убыванию или возрастанию
-				activeSort.includes('-') ? 'asc' : 'desc'
+				activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
 				// Пишем условие для фильтрации. Если что-то есть в инпуте - присваивам это параметру filter
 			}&filter=${
 				searchValue ? searchValue : ''
@@ -87,8 +88,8 @@ console.log(activeSort)
 						onClickSetActiveCategory={onClickSetActiveCategory}
 					/>
 					<Sort
-						// activeSort={activeSort}
-						// onClickSetActiveSort={(listObj) => setActiveSort(listObj)}
+					// activeSort={activeSort}
+					// onClickSetActiveSort={(listObj) => setActiveSort(listObj)}
 					/>
 				</div>
 				<h2 className="content__title">Все пиццы</h2>

@@ -9,13 +9,13 @@ export const filterSlice = createSlice({
 	reducers: {
 		// Можно сразу вот так методы тут создавать
 		setActiveCategory(state, action) {
-			// При вызове нашего метода в нужных компонентах в него будет передан неявно объект action, который содержит в себе type - тип действия, и payload - то что мы передали, обычно какое-то значение. А мы его принимаем тут, этот action.
+			// При вызове нашего метода в нужных компонентах в него будет передан неявно объект action, который содержит в себе type - тип действия (это самому редаксу нужно), и payload - то что мы передали, обычно какое-то значение. А мы его принимаем тут, этот action и извлекаем из него переданное значение
 			console.log(action)
 			state.activeCategory = action.payload;
 		},
 	},
 });
 
-export const {setActiveCategory,} = filterSlice.actions;
+export const {setActiveCategory} = filterSlice.actions;
 
 export default filterSlice.reducer;

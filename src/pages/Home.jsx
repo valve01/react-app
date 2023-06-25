@@ -8,6 +8,7 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
+
 import { setActiveCategory } from '../redux/slices/filterSlice';
 const Home = () => {
 	const [items, setItems] = React.useState([]);
@@ -35,6 +36,9 @@ const Home = () => {
 		// Теперь setActiveCategory(index) - вернет тот же объект типа, (что и console.log(action) в слайсе): {type: 'filters/setActiveCategory', payload: {index}}, а потом мы с помощью dispatch присваиваем значение ключа payload нашему стейту и сохраняем это изменение в store
 	};
 	// console.log('activeCategory:', activeCategory);
+
+	const activeSort = useSelector((state) => state.filter.sortType.sortProperty);
+console.log(activeSort)
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 	const pizzas = items.map((obj) => {
 		return (
@@ -52,9 +56,9 @@ const Home = () => {
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${
 				activeCategory > 0 ? `category=${activeCategory}` : ''
 				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
-			}&sortBy=${activeSort.sortProperty.replace('-', '')}&order=${
+			}&sortBy=${activeSort.replace('-', '')}&order=${
 				// В зависимости от того есть "-" или нет меняем тип сотрировки: по убыванию или возрастанию
-				activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
+				activeSort.includes('-') ? 'asc' : 'desc'
 				// Пишем условие для фильтрации. Если что-то есть в инпуте - присваивам это параметру filter
 			}&filter=${
 				searchValue ? searchValue : ''

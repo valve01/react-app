@@ -1,6 +1,10 @@
 import React from 'react';
-// Т.к. в activeSort теперь объект listObj, придется переписать код ниже, вытасткивая из listObj нужные свойства
-function Sort({ activeSort, onClickSetActiveSort }) {
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setActiveSortType } from '../redux/slices/filterSlice';
+function Sort() {
+	const activeSort = useSelector((state) => state.filter.sortType);
+	const dispatch = useDispatch();
 	// console.log(activeSort)
 	const [isShow, setIsShow] = React.useState(false);
 	const list = [
@@ -14,9 +18,10 @@ function Sort({ activeSort, onClickSetActiveSort }) {
 	];
 	// const [activelistElement, setActivelistElement] = React.useState(list[0]);
 	const onClickSetActEl = (listObj) => {
-		onClickSetActiveSort(listObj);
+		dispatch(setActiveSortType(listObj));
 		setIsShow(!isShow);
 	};
+
 	return (
 		<div className="sort">
 			<div className="sort__label">
@@ -45,7 +50,7 @@ function Sort({ activeSort, onClickSetActiveSort }) {
 								<li
 									key={listObj.name}
 									// В Home.jsx при помощи onClickSetActEl(listObj) и далее onClickSetActiveSort(listObj) на каждой итерации map отравляется весь объект listObj, который мы берем из list
-									onClick={() => onClickSetActEl(listObj)}
+									onClick={onClickSetActEl}
 									className={activeSort.name === listObj.name ? 'active' : ''}
 								>
 									{listObj.name}

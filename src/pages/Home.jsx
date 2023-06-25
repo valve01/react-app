@@ -21,7 +21,7 @@ const Home = () => {
 	const [currentPage, setCurrentPage] = React.useState(1);
 	// Вытаскиваем activeCategory из Redux слайса. Этим хуком можно вообще все данные из хранилища вытащить (оно все записано в state. Получается наш state === store.reducer).
 	// В слайсах только логика хранится и начальное состояния стейтов, а значания стейтов лежат все в store. И достам мы их из store, обращаясь к его названиям слайсов и их свойствам, как в каталоге, а не напряму лезем в слайс
-	const activeCategory = useSelector((state) => state.filter.activeCategory);
+	// const activeCategory = useSelector((state) => state.filter.activeCategory);
 	// Достаем функцию, которая будет изменение нашего стейта сохранять/записывать и помещать его в store. Как в мегафон будет кричать, чтобы state изменился
 	const dispatch = useDispatch();
 	// Функция, которую предоставляет нам хук useDispatch хранится также в store. store.dispatch===dispatch. Только store тогда вытащить нужно из store.js.
@@ -37,8 +37,11 @@ const Home = () => {
 	};
 	// console.log('activeCategory:', activeCategory);
 
-	const activeSort = useSelector((state) => state.filter.sortType);
-	console.log(activeSort);
+	// const activeSort = useSelector((state) => state.filter.sortType);
+	const { sortType, activeCategory } = useSelector((state) => state.filter);
+	// const activeSort = sortType.sortProperty;
+
+	// console.log(activeSort);
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 	const pizzas = items.map((obj) => {
 		return (
@@ -51,15 +54,15 @@ const Home = () => {
 
 	React.useEffect(() => {
 		setIsLoading(true);
-		console.log(activeSort);
+		// console.log(activeSort);
 		fetch(
 			// Можно использовать шаблонную строку внутри другой шаблонной строки. Не имеет значение в каком месте прописано уточнение запроса
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${
 				activeCategory > 0 ? `category=${activeCategory}` : ''
 				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
-			}&sortBy=${activeSort.sortProperty.replace('-', '')}&order=${
+			}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
 				// В зависимости от того есть "-" или нет меняем тип сотрировки: по убыванию или возрастанию
-				activeSort.sortProperty.includes('-') ? 'asc' : 'desc'
+				sortType.sortProperty.includes('-') ? 'asc' : 'desc'
 				// Пишем условие для фильтрации. Если что-то есть в инпуте - присваивам это параметру filter
 			}&filter=${
 				searchValue ? searchValue : ''
@@ -76,7 +79,7 @@ const Home = () => {
 			});
 		// Чтобы при рендере автоматически страница вверх прокрутилась
 		window.scrollTo(0, 0);
-	}, [activeCategory, activeSort, searchValue, currentPage]);
+	}, [activeCategory, sortType, searchValue, currentPage]);
 	return (
 		<>
 			<div className="container">

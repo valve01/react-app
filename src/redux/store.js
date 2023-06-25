@@ -20,7 +20,7 @@ export const store = configureStore({
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
-			serializableCheck: false,
+			// serializableCheck: false,
 			// {
 			// // Ignore these action types
 			// ignoredActions: ['filters/setActiveSortType'],

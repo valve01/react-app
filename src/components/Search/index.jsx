@@ -6,7 +6,29 @@ import { SearchContext } from '../../App';
 import debounce from 'lodash.debounce';
 // Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов
 
+// const testDebounce = () => {
+// 	console.log('Написал сразу');
+// 	debounce((console.log('Сделал паузу и написал это')), 1000)
+// };
+// testDebounce();
+
+// const testDebounce = debounce(() => {
+// 	console.log('Сделал паузу и написал это');
+// },2000);
+// const testDebounceStart = () => {
+// 	console.log('Написал сразу');
+// 	testDebounce();
+// };
+// testDebounceStart()
+
 const Search = () => {
+	const testDebounce = React.useCallback(
+		debounce(() => {
+			console.log('Сделал паузу и написал это');
+		}, 2000),
+		[],
+	);
+
 	const { searchValue, setSearchValue } = React.useContext(SearchContext);
 	//1 Создаем переменную, которая будет хранить ссылку на дом-элемент инпута
 	const inputRef = React.useRef();
@@ -19,6 +41,11 @@ const Search = () => {
 	const clearInput = () => {
 		setSearchValue('');
 		inputRef.current.focus();
+	};
+
+	const onChangeInput = (event) => {
+		setSearchValue(event.target.value);
+		testDebounce();
 	};
 
 	return (
@@ -36,9 +63,7 @@ const Search = () => {
 				value={searchValue}
 				className={styles.input}
 				// По событию изменения значения в инпуте - записываем это значение в с помощью хука в переменную SearchValue
-				onChange={debounce((event) => {
-					setSearchValue(event.target.value);
-				}, 1000)}
+				onChange={onChangeInput}
 				type="text"
 				placeholder="Поиск пицц..."
 			/>

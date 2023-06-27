@@ -1,6 +1,7 @@
 import React from 'react';
 // ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux. Чтобы пользовать хуками из react их не нужно импортировать
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import PizzaBlock from '../components/PizzaBlock';
 import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
@@ -54,29 +55,34 @@ const Home = () => {
 
 	React.useEffect(() => {
 		setIsLoading(true);
-		// console.log(activeSort);
-		fetch(
-			// Можно использовать шаблонную строку внутри другой шаблонной строки. Не имеет значение в каком месте прописано уточнение запроса
-			`https://64845cf9ee799e3216269459.mockapi.io/items?${
-				activeCategory > 0 ? `category=${activeCategory}` : ''
-				// Если у нас "-" в sortProperty - то вырезаем его, чтобы он не пошел в запрос
-			}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-				// В зависимости от того есть "-" или нет меняем тип сотрировки: по убыванию или возрастанию
-				sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-				// Пишем условие для фильтрации. Если что-то есть в инпуте - присваивам это параметру filter
-			}&filter=${
-				searchValue ? searchValue : ''
-				// Пишем пагинацию
-			}&page=${currentPage}&limit=4`,
-		)
-			.then((res) => res.json())
-			// Потребляем промис, извлекая из него нужный нам массив объектов
-			.then((arr) => {
-				// Присваиваем переменной items массив, полученный с сервера
-				setItems(arr);
-				// Устанавливаем флаг загрузки в false, когда мы уже получили массив данных с сервера
-				setIsLoading(false);
-			});
+
+		// fetch(
+		// 	`https://64845cf9ee799e3216269459.mockapi.io/items?${
+		// 		activeCategory > 0 ? `category=${activeCategory}` : ''
+		// 	}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
+		// 		sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+		// 	}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+		// )
+		// 	.then((res) => res.json())
+		// 	.then((arr) => {
+		// 		setItems(arr);
+		// 		setIsLoading(false);
+		// 	});
+
+		// Используя axios для запроса, нужно дописать сам метод get
+			axios.get(
+				`https://64845cf9ee799e3216269459.mockapi.io/items?${
+					activeCategory > 0 ? `category=${activeCategory}` : ''
+				}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
+					sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+				}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+			)
+			// При использовании axios в response будут данные уже в js формате, а не в json, как при fetch, но они будут в виде объекта. Сама же основа будет храниться в свойстве data, обращаясь к нему мы пожемо пользоваться данными
+				.then((res) => {
+					setItems(res.data);
+					setIsLoading(false);
+				});
+
 		// Чтобы при рендере автоматически страница вверх прокрутилась
 		window.scrollTo(0, 0);
 	}, [activeCategory, sortType, searchValue, currentPage]);

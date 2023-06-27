@@ -22,9 +22,10 @@ import debounce from 'lodash.debounce';
 // testDebounceStart()
 
 const Search = () => {
-	const testDebounce = React.useCallback(
-		debounce(() => {
-			console.log('Сделал паузу и написал это');
+	
+	const onChangeInput = React.useCallback(
+		debounce((event) => {
+			setSearchValue(event.target.value);
 		}, 2000),
 		[],
 	);
@@ -43,10 +44,10 @@ const Search = () => {
 		inputRef.current.focus();
 	};
 
-	const onChangeInput = (event) => {
-		setSearchValue(event.target.value);
-		testDebounce();
-	};
+	// const onChangeInput = (event) => {
+	// 	setSearchValue(event.target.value);
+	// 	testDebounce();
+	// };
 
 	return (
 		<div className={styles.root}>

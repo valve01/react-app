@@ -361,7 +361,6 @@ ref={inputRef}
 <!-- Вся она нам не нужна, а только debounce в ней -->
 <!-- Синтаксис такой же как у setTimeout, но в первый аргумент можно передавать только функцию, react сам не будет из других форматов функцию делать -->
 
-
 <!-- 	const testDebounce = debounce(() => {
 		console.log('Сделал паузу и написал это');
 	},2000);
@@ -381,7 +380,7 @@ ref={inputRef}
 -->
 
 <!-- Применим useCallback и debounce к нашей функции, вызываемой при изменении инпута -->
-<!-- 
+<!--
     const onChangeInput = React.useCallback(
 		debounce((event) => {
 			setSearchValue(event.target.value);
@@ -393,10 +392,52 @@ ref={inputRef}
 <!-- При попытке писать тепрь не появляется в инпуте ничего -->
 <!-- Получилось следующее: у нас принудительно value у инпута задано value={searchValue}, а оно у нас == '' по умолчанию. event-это событие и оно не вызывается сразу, в момент изменения инпута. И у нас висит задержка на event в 2000ms через debounce. Новое значение searchValue должно присвоиться через ms, причем получить его должно из инпута, но т.к. через ms в инпуте по прежнему '', то новое значение searchValue остается ''. Замкнутый круг. -->
 <!-- Чтобы это исправить теперь нам нужно создать дополнительно локальный state, чтобы иметь возможность писать в инпут, чтобы потом взять из него данные и на их основе изменить searchValue через время, указанное в debounce-->
+<!-- Пишем внутри Search -->
+<!-- 	const [value,setValue]=React.useState('') -->
+
+<!-- меняем в инпуте и в иконке крестика searchValue на value -->
+
+
+<!-- Изменим и переименуем функцию с debounce на updateSearchValue -->
+<!-- сделаем, чтобы вызывался updateSearchValue при изменении value -->
+
+<!--
+     const updateSearchValue = React.useCallback(
+	 	debounce((value) => {
+	 		setSearchValue(value);
+	 	}, 2000),
+	 	[],
+	 ); -->
+
+<!-- Функцию onChangeInput меняем -->
+
+<!-- 	
+const onChangeInput = (event) => {
+		// Вот это действие выполняется сразу: value - присваивается значение event.target.value (т.е. то что мы ввели в инпут)
+setValue(event.target.value);
+		// А это только через 2000мс. Т.к. в функции updateSearchValue записана функция оберннутая в debounce с таймером 2000мс
+updateSearchValue(event.target.value);
+	}; 
+	-->
+<!-- Теперь можно писать в инпут и setSearchValue будет отрабатывать как положено; -->
+<!-- Обновим функцию для очистки поля инпута -->
+<!-- 
+	const clearInput = () => {
+		setSearchValue('');
+		setValue('');
+		inputRef.current.focus();
+	};
+ -->
+<!-- Получилось так: мы моментально меняем значение инпута, получаем это значение, а потом мы создали новую ф-цию, которая будет менять searchValue, но с задержкой (updateSearchValue()), ссылку на эту функцию мы сохраняем с помощью useCallback, чтобы она не пересоздавалась и не перезапускалась, а запускалась лишь при первом рендере -->
+<!-- !Извлекать searchValue из  React.useContext(SearchContext) нам больше не нужно -->
+<!-- Дальше при запуске updateSearchValue() происоходим изменение searchValue, новое значение попадает в context, а оттуда его берет Home.jsx и там уже попадает в useEffect и меняется запрос на сервер-->
+
+
 
 
 
 <!-- ================================================================================================================ -->
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

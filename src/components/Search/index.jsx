@@ -22,15 +22,30 @@ import debounce from 'lodash.debounce';
 // testDebounceStart()
 
 const Search = () => {
-	
-	const onChangeInput = React.useCallback(
-		debounce((event) => {
-			setSearchValue(event.target.value);
+	// const updateSearchValue = React.useCallback(
+	// 	debounce((event) => {
+	// 		setSearchValue(event.target.value);
+	// 	}, 2000),
+	// 	[],
+	// );
+
+	const [value, setValue] = React.useState('');
+
+	const updateSearchValue = React.useCallback(
+		debounce((value) => {
+			// console.log(value)
+			setSearchValue(value);
 		}, 2000),
 		[],
 	);
+	const onChangeInput = (event) => {
+		// Вот это действие выполняется сразу: value - присваивается значение event.target.value (т.е. то что мы ввели в инпут)
+		setValue(event.target.value);
+		// А это только через 2000мс. Т.к. в функции updateSearchValue записана функция оберннутая в debounce с таймером 2000мс
+		updateSearchValue(event.target.value);
+	};
 
-	const { searchValue, setSearchValue } = React.useContext(SearchContext);
+	const { setSearchValue } = React.useContext(SearchContext);
 	//1 Создаем переменную, которая будет хранить ссылку на дом-элемент инпута
 	const inputRef = React.useRef();
 	// inputRef - вернет нам объект
@@ -41,6 +56,7 @@ const Search = () => {
 	// Сделаем ф-цию, которая будет одноверменно очищать и оставлять фокус на инпуте
 	const clearInput = () => {
 		setSearchValue('');
+		setValue('');
 		inputRef.current.focus();
 	};
 
@@ -61,7 +77,7 @@ const Search = () => {
 				// 2 Теперь в нужном элементе в атрибуте ref указываю внутри {} в качестве ссылки нашу переменную
 				ref={inputRef}
 				// В реакте рекомендуется прописывать в домЭлементе значение инпута, которое мы изменяем. Если мы хотим как-то с этим инпутом взаимодействовать. Получается такой динамический value в html. Без этой строчки инпут не будет контролируемым и очистка по крестику не будет работать.
-				value={searchValue}
+				value={value}
 				className={styles.input}
 				// По событию изменения значения в инпуте - записываем это значение в с помощью хука в переменную SearchValue
 				onChange={onChangeInput}
@@ -70,7 +86,7 @@ const Search = () => {
 			/>
 			{/* Добавляем кресткик и Делаем очистку инпута по клику на крестик */}
 			{/* Строчка ниже позволяет отображать крестик, только если в инпуте что-то есть */}
-			{searchValue && (
+			{value && (
 				<img
 					// Чтобы функция не вызывалась автоматически по открытию скобок - оборачиваем ее в стрелочную функцию
 					onClick={clearInput}

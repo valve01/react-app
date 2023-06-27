@@ -4,8 +4,22 @@ import searchIcon from '../../assets/img/search.svg';
 import close from '../../assets/img/close.svg';
 import { SearchContext } from '../../App';
 // Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов
+
 const Search = () => {
 	const { searchValue, setSearchValue } = React.useContext(SearchContext);
+	//1 Создаем переменную, которая будет хранить ссылку на дом-элемент инпута
+	const inputRef = React.useRef();
+	// inputRef - вернет нам объект
+	// inputRef.current - сам дом-элемент
+	// Значение дом элемента, если это инпут например
+	// console.log(inputRef.current.value);
+
+	// Сделаем ф-цию, которая будет одноверменно очищать и оставлять фокус на инпуте
+	const clearInput = () => {
+		setSearchValue('');
+		inputRef.current.focus();
+	};
+
 	return (
 		<div className={styles.root}>
 			<img
@@ -15,6 +29,8 @@ const Search = () => {
 			/>
 
 			<input
+				// 2 Теперь в нужном элементе в атрибуте ref указываю внутри {} в качестве ссылки нашу переменную
+				ref={inputRef}
 				// В реакте рекомендуется прописывать в домЭлементе значение инпута, которое мы изменяем. Если мы хотим как-то с этим инпутом взаимодействовать. Получается такой динамический value в html. Без этой строчки инпут не будет контролируемым и очистка по крестику не будет работать.
 				value={searchValue}
 				className={styles.input}
@@ -30,7 +46,7 @@ const Search = () => {
 			{searchValue && (
 				<img
 					// Чтобы функция не вызывалась автоматически по открытию скобок - оборачиваем ее в стрелочную функцию
-					onClick={() => setSearchValue('')}
+					onClick={clearInput}
 					className={styles.close}
 					src={close}
 					alt="closeIcon"

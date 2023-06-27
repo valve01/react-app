@@ -3,6 +3,7 @@ import styles from './Search.module.scss';
 import searchIcon from '../../assets/img/search.svg';
 import close from '../../assets/img/close.svg';
 import { SearchContext } from '../../App';
+import debounce from 'lodash.debounce';
 // Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов
 
 const Search = () => {
@@ -35,9 +36,9 @@ const Search = () => {
 				value={searchValue}
 				className={styles.input}
 				// По событию изменения значения в инпуте - записываем это значение в с помощью хука в переменную SearchValue
-				onChange={(event) => {
+				onChange={debounce((event) => {
 					setSearchValue(event.target.value);
-				}}
+				}, 1000)}
 				type="text"
 				placeholder="Поиск пицц..."
 			/>

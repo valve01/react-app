@@ -77,7 +77,7 @@ const Home = () => {
 					sortType.sortProperty.includes('-') ? 'asc' : 'desc'
 				}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
 			)
-			// При использовании axios в response будут данные уже в js формате, а не в json, как при fetch, но они будут в виде объекта. Сама же основа будет храниться в свойстве data, обращаясь к нему мы пожемо пользоваться данными
+			// При использовании axios в response будут данные уже в js формате, а не в json, как при fetch, но они будут в виде объекта. Сама же основа будет храниться в свойстве data, обращаясь к нему мы пожемо пользоваться данными.
 				.then((res) => {
 					setItems(res.data);
 					setIsLoading(false);

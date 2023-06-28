@@ -397,7 +397,6 @@ ref={inputRef}
 
 <!-- меняем в инпуте и в иконке крестика searchValue на value -->
 
-
 <!-- Изменим и переименуем функцию с debounce на updateSearchValue -->
 <!-- сделаем, чтобы вызывался updateSearchValue при изменении value -->
 
@@ -411,17 +410,17 @@ ref={inputRef}
 
 <!-- Функцию onChangeInput меняем -->
 
-<!-- 	
+<!--
 const onChangeInput = (event) => {
 		// Вот это действие выполняется сразу: value - присваивается значение event.target.value (т.е. то что мы ввели в инпут)
 setValue(event.target.value);
 		// А это только через 2000мс. Т.к. в функции updateSearchValue записана функция оберннутая в debounce с таймером 2000мс
 updateSearchValue(event.target.value);
-	}; 
+	};
 	-->
 <!-- Теперь можно писать в инпут и setSearchValue будет отрабатывать как положено; -->
 <!-- Обновим функцию для очистки поля инпута -->
-<!-- 
+<!--
 	const clearInput = () => {
 		setSearchValue('');
 		setValue('');
@@ -431,12 +430,62 @@ updateSearchValue(event.target.value);
 <!-- Получилось так: мы моментально меняем значение инпута, получаем это значение, а потом мы создали новую ф-цию, которая будет менять searchValue, но с задержкой (updateSearchValue()), ссылку на эту функцию мы сохраняем с помощью useCallback, чтобы она не пересоздавалась и не перезапускалась, а запускалась лишь при первом рендере -->
 <!-- !Извлекать searchValue из  React.useContext(SearchContext) нам больше не нужно -->
 <!-- Дальше при запуске updateSearchValue() происоходим изменение searchValue, новое значение попадает в context, а оттуда его берет Home.jsx и там уже попадает в useEffect и меняется запрос на сервер-->
-
-
-
-
-
 <!-- ================================================================================================================ -->
+<!-- Делаем пагинацию на Redux -->
+<!-- Работаем в filterSlice.jsx -->
+<!-- Добавляем в initialState  -->
+<!-- currentPage:1 -->
+<!-- Добавляем в reducers метод для изменения currentPage -->
+<!--
+		setCurrentPage(state, action) {
+			state.currentPage = action.payload;
+		},
+ -->
+
+ <!-- И добавляем его в перечень экспортируемых -->
+ <!-- export const { setActiveCategory, setActiveSortType, setCurrentPage } = filterSlice.actions; -->
+
+<!-- Импортируем хук из 'react-redux' в Pagination.jsx-->
+<!-- import { useSelector } from 'react-redux'; -->
+ <!-- Добавляем к импортируемым из filterSlice методам метод setCurrentPage в Home.jsx-->
+<!-- import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice'; -->
+
+<!-- Старый стейт нам не нужен=> удаляем: -->
+<!-- const [currentPage, setCurrentPage] = React.useState(1); -->
+
+<!-- Добавляем currentPage к перечню переменных, доставаемых из слайса через useSelector -->
+<!-- 	const { sortType, activeCategory, currentPage } = useSelector((state) => state.filter); -->
+
+<!-- dispatch мы уже достали заранее -->
+<!-- 	const dispatch = useDispatch(); -->
+
+<!-- Создаем новую функцию, которая будет менять стейт текущей страницы по событию -->
+<!--
+	const onChangePage = (value) => {
+		dispatch(setCurrentPage(value));
+	};
+ -->
+ <!-- В атрибутах компонента Pagination в Home.jsx прописываем новую функцию на выполнение по событию   -->
+ <!-- onChangePage={onChangePage} -->
+ <!-- И убирам оттуда и из пропсов в PaginationBlock в Pagination.jsx currentPage-->
+ <!-- currentPage={currentPage} -->
+
+<!-- Достаем currentPage из store в Pagination.jsx-->
+ <!-- 	const { currentPage } = useSelector((state) => state.filter); -->
+
+ <!-- В принципе нет разницы: передать в проспсы в Home.jsx в компонент Pagination currentPage={currentPage} или достать currentPage из store в Pagination.jsx -->
+
+ <!-- В атрибутах в PaginationBlock в Pagination.jsx уже прописано -->
+ <!-- 
+page={currentPage}
+onChange={handleChange} 
+-->
+<!-- И handleChange уже написана -->
+<!-- 
+	const handleChange = (event, value) => {
+		onChangePage(value);
+	};
+ -->
 
 # Getting Started with Create React App
 

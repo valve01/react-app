@@ -1,7 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import Pagination from '@mui/material/Pagination';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
+
 // import Typography from '@mui/material/Typography';
 
 const theme = createTheme({
@@ -11,11 +14,13 @@ const theme = createTheme({
 		},
 	},
 });
-const PaginationBlock = ({ onChangePage, currentPage }) => {
-	// const [currentPage, setCurrentPage] = React.useState(1);
+const PaginationBlock = ({ onChangePage }) => {
+	// Помним что в value будет помещен номер страницы, это сделала библиотека '@mui/material/styles', потому что мы пользуемся ее компонентном Pagination
 	const handleChange = (event, value) => {
 		onChangePage(value);
 	};
+	const { currentPage } = useSelector((state) => state.filter);
+	// console.log(currentPage)
 	return (
 		<div>
 			<Stack spacing={2}>

@@ -9,8 +9,7 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
-
-import { setActiveCategory } from '../redux/slices/filterSlice';
+import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice';
 const Home = () => {
 	const [items, setItems] = React.useState([]);
 	const [isLoading, setIsLoading] = React.useState(true);
@@ -19,7 +18,8 @@ const Home = () => {
 	// 	sortProperty: 'rating',
 	// });
 	const { searchValue } = React.useContext(SearchContext);
-	const [currentPage, setCurrentPage] = React.useState(1);
+	// const [currentPage, setCurrentPage] = React.useState(1);
+
 	// Вытаскиваем activeCategory из Redux слайса. Этим хуком можно вообще все данные из хранилища вытащить (оно все записано в state. Получается наш state === store.reducer).
 	// В слайсах только логика хранится и начальное состояния стейтов, а значания стейтов лежат все в store. И достам мы их из store, обращаясь к его названиям слайсов и их свойствам, как в каталоге, а не напряму лезем в слайс
 	// const activeCategory = useSelector((state) => state.filter.activeCategory);
@@ -38,8 +38,12 @@ const Home = () => {
 	};
 	// console.log('activeCategory:', activeCategory);
 
+	const onChangePage = (value) => {
+		dispatch(setCurrentPage(value));
+	};
+
 	// const activeSort = useSelector((state) => state.filter.sortType);
-	const { sortType, activeCategory } = useSelector((state) => state.filter);
+	const { sortType, activeCategory, currentPage } = useSelector((state) => state.filter);
 	// const activeSort = sortType.sortProperty;
 
 	// console.log(activeSort);
@@ -70,7 +74,8 @@ const Home = () => {
 		// 	});
 
 		// Используя axios для запроса, нужно дописать сам метод get
-			axios.get(
+		axios
+			.get(
 				`https://64845cf9ee799e3216269459.mockapi.io/items?${
 					activeCategory > 0 ? `category=${activeCategory}` : ''
 				}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
@@ -78,10 +83,10 @@ const Home = () => {
 				}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
 			)
 			// При использовании axios в response будут данные уже в js формате, а не в json, как при fetch, но они будут в виде объекта. Сама же основа будет храниться в свойстве data, обращаясь к нему мы пожемо пользоваться данными.
-				.then((res) => {
-					setItems(res.data);
-					setIsLoading(false);
-				});
+			.then((res) => {
+				setItems(res.data);
+				setIsLoading(false);
+			});
 
 		// Чтобы при рендере автоматически страница вверх прокрутилась
 		window.scrollTo(0, 0);
@@ -103,10 +108,8 @@ const Home = () => {
 				</div>
 				<h2 className="content__title">Все пиццы</h2>
 				<Pagination
-					currentPage={currentPage}
-					onChangePage={(value) => {
-						setCurrentPage(value);
-					}}
+					
+					onChangePage={onChangePage}
 				/>
 				<div className="content__items">{isLoading ? skeleton : pizzas}</div>
 			</div>

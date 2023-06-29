@@ -2,7 +2,7 @@ import React from 'react';
 // ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux. Чтобы пользовать хуками из react их не нужно импортировать
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import qs from 'qs';
+// import qs from 'qs';
 
 import PizzaBlock from '../components/PizzaBlock';
 import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';

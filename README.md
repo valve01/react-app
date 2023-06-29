@@ -493,7 +493,46 @@ onChange={handleChange}
 <!-- Сохраняем параметры фильтрации в URL -->
 <!-- Ставим библиотеку QS (querystring)-->
 <!-- npm i qs -->
+<!-- Позволяет спарсить или сгенерировать параметры запроса -->
 <!-- Парсер строки запроса, поддерживающий вложенность и массивы, с ограничением глубины.. -->
+<!-- Импортируем qs в Home.jsx -->
+<!-- import qs from 'qs'; -->
+<!-- Создаем отдельный useEffect,который будет отвечать за парсинг запросов и вшивание их в адресную строку -->
+
+<!-- 
+React.useEffect=(()=>{
+
+},[activeCategory, sortType, searchValue, currentPage])
+ -->
+
+<!-- Пишем логику: если к нам пришли какие-то параметры - то мы должный превратить их в одну целую строчку -->
+<!-- Воспользуемся методом библиотеки qs qs.stringify - он преобразовывает переданный объект в строку-->
+
+<!-- 
+React.useEffect=(()=>{
+const queryString = qs.stringify({
+
+})
+},[activeCategory, sortType, searchValue, currentPage])
+ -->
+
+ <!-- Передали в этот объект наши данные из store -->
+
+ <!-- 
+ 	React.useEffect =
+		(() => {
+			const queryString = qs.stringify({
+				sortProperty: sortType.sortProperty,
+				activeCategory: activeCategory,
+				currentPage: currentPage,
+			});
+		},
+		[activeCategory, sortType, searchValue, currentPage]);
+  -->
+<!-- Сморим что вернет нам 		console.log(queryString) -->
+<!-- Вернемся к этому уроку позже. Чего-то не хватает -->
+
+
 <!-- ========================================================================================================================================== -->
 # Getting Started with Create React App
 

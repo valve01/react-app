@@ -2,6 +2,7 @@ import React from 'react';
 // ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux. Чтобы пользовать хуками из react их не нужно импортировать
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import qs from 'qs';
 
 import PizzaBlock from '../components/PizzaBlock';
 import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
@@ -91,6 +92,19 @@ const Home = () => {
 		// Чтобы при рендере автоматически страница вверх прокрутилась
 		window.scrollTo(0, 0);
 	}, [activeCategory, sortType, searchValue, currentPage]);
+
+	// React.useEffect =
+	// 	(() => {
+	// 		const queryString = qs.stringify({
+	// 			sortProperty: sortType.sortProperty,
+	// 			activeCategory: activeCategory,
+	// 			currentPage: currentPage,
+	// 		});
+	// 		console.log(queryString)
+	// 	},
+
+	// 	[activeCategory, sortType, searchValue, currentPage]);
+
 	return (
 		<>
 			<div className="container">
@@ -107,10 +121,7 @@ const Home = () => {
 					/>
 				</div>
 				<h2 className="content__title">Все пиццы</h2>
-				<Pagination
-					
-					onChangePage={onChangePage}
-				/>
+				<Pagination onChangePage={onChangePage} />
 				<div className="content__items">{isLoading ? skeleton : pizzas}</div>
 			</div>
 		</>

@@ -585,7 +585,69 @@ const queryString = qs.stringify({
 <!-- Сделаем группировку только по id -->
 <!-- Создаем новый слайс cartSlice.js -->
 
-<!--  -->
+<!-- 
+import { createSlice } from '@reduxjs/toolkit';
+const initialState = {
+	items: [],
+	totalPrice: 0,
+};
+export const cartSlice = createSlice({
+	name: 'cart',
+	initialState,
+	reducers: {
+		// Добавление в корзину в главном меню
+		addItem(state, action) {
+			state.items.push(action.payload);
+		},
+		// Удаление всех товаров данного типа из корзины(Крестик напротив элемента в корзине)
+		removeItem(state, action) {
+			state.items = state.items.filter((obj) => obj.id !== action.payload);
+		},
+		// Полная очистка корзины
+		clearItems(state) {
+			state.items = [];
+		},
+		// Общая стоимость товаров в корзине
+		setTotalPrice(state, action) {
+			state.totalPrice = action.payload;
+		},
+	},
+});
+
+export const { addItem, removeItem, clearItems, setTotalPrice } = cartSlice.actions;
+
+export default cartSlice.reducer;
+ -->
+ <!-- Добавляем в store новый слайс cartSlice -->
+
+ <!-- 
+import cartReducer from './slices/cartSlice';
+export const store = configureStore({
+ 	reducer: {
+		filter: filterReducer,
+		cart: cartReducer,
+	},})
+  -->
+
+
+<!-- Переходим в Header.jsx -->
+<!-- Имптортируем хук -->
+<!-- import { useSelector} from 'react-redux'; -->
+<!-- Вытаскиваем states -->
+
+<!-- 	const { totalPrice, items } = useSelector((state) => state.cart); -->
+
+<!-- Вставляем значения стейтов в поля компонента -->
+
+<!-- Элемент с общей ценой товаров в корзине -->
+<!-- <span>{totalPrice} ₽</span> -->
+
+<!-- Элемент с количеством товаров в корзине -->
+<!-- <span>{items.length}</span> -->
+
+<!-- Делаем добавление товара в корзину. Переходим в pizzaBlock -->
+<!-- 26:50 -->
+
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

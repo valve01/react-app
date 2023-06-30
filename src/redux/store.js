@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import filterReducer from './slices/filterSlice';
+import cartReducer from './slices/cartSlice';
 // import counterReducer1 from "./slices/filterSlice1";
 // import counterReducer2 from "./slices/filterSlice2";
 // import counterReducer3 from "./slices/filterSlice3";
@@ -9,6 +10,7 @@ export const store = configureStore({
 	// Наше глобальное хранилище может содержать много разных редюсеров из разных слайсов
 	reducer: {
 		filter: filterReducer,
+		cart: cartReducer,
 
 		// counterReducer:counterReducer
 		// counterReducer

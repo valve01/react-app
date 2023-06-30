@@ -1,6 +1,7 @@
 import logo from '../assets/img/logo.svg';
 import { Link } from 'react-router-dom';
 import Search from './Search';
+import { useSelector} from 'react-redux';
 // Чтобы воспользоваться роутером без перезагрузки страницы целиком-импоритруем Link из react-router-dom
 // Теперь оборачиваем элемент, по которому мы ожидаем клик в компонент Link
 
@@ -13,7 +14,10 @@ import Search from './Search';
 // Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов. И не нужно дальше передавать их в Search.jsx
 // function Header({ searchValue, setSearchValue }) {
 
+
+
 function Header() {
+	const { totalPrice, items } = useSelector((state) => state.cart);
 	return (
 		<div className="header">
 			<div className="container">
@@ -31,15 +35,13 @@ function Header() {
 						</div>
 					</div>
 				</Link>
-				<Search
-
-				/>
+				<Search />
 				<div className="header__cart">
 					<Link
 						to="/cart"
 						className="button button--cart"
 					>
-						<span>520 ₽</span>
+						<span>{totalPrice} ₽</span>
 						<div className="button__delimiter"></div>
 						<svg
 							width="18"
@@ -70,7 +72,7 @@ function Header() {
 								strokeLinejoin="round"
 							/>
 						</svg>
-						<span>3</span>
+						<span>{items.length}</span>
 					</Link>
 				</div>
 			</div>

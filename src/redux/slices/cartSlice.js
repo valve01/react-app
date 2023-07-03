@@ -12,9 +12,10 @@ export const cartSlice = createSlice({
 			state.items.push(action.payload);
 			// При добавлении товара сразу вычисляем общую стоимость товаров в корзине, используем для этого метод reduce
 			state.totalPrice = state.items.reduce((sum, obj) => {
-				return obj.price + sum;
+				return sum + obj.price;
 			}, 0);
 		},
+
 		// Удаление всех товаров данного типа из корзины(Крестик напротив элемента в корзине)
 		removeItem(state, action) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);

@@ -25,10 +25,12 @@ export const cartSlice = createSlice({
 			if (findItem) {
 				findItem.count++;
 			} else {
-				state.items.push({...action.payload, count: 1 });
+				// Не просто пушим объект из action.payload, а Берем все что нам пришло с компонента и в конец добавляем count:1 и пушим уже дополненный объект
+				// ...action.payload - содержит весь объект, который мы добавляем (item) , но в деструктурированном виде, и мы просто дописываем ему еще одну пару ключ:значение - count: 1 и потом пушим это всё.
+				state.items.push({ ...action.payload, count: 1 });
 			}
 			state.totalPrice = state.items.reduce((sum, obj) => {
-				return sum + obj.price;
+				return sum + obj.price*obj.count;
 			}, 0);
 		},
 

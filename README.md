@@ -646,7 +646,49 @@ export const store = configureStore({
 <!-- <span>{items.length}</span> -->
 
 <!-- Делаем добавление товара в корзину. Переходим в pizzaBlock -->
-<!-- 26:50 -->
+<!-- Импортируем хуки -->
+<!-- import { useDispatch, useSelector } from 'react-redux'; -->
+<!-- Создаем функцию onClickAddItem, которая будет срабатывать по нажатию на кнопку "добавить в корзину" -->
+<!-- Внутри неё Генерируем объект item, который будем отправлять в корзину -->
+
+<!-- 
+	const onClickAddItem = () => {
+		const item = {
+			id,
+			title,
+			price,
+			imageUrl,
+			size: activeSize,
+			type: activeType,
+		};
+	};
+ -->
+
+<!-- Достаем dispatch -->
+<!-- 	const dispatch = useDispatch(); -->
+
+<!-- Импортируем метод из reducers из cartSlice -->
+<!-- import {addItem} from "../../redux/slices/cartSlice" -->
+
+<!-- Добаляем dispatch к нашей функции -->
+<!-- 
+	const onClickAddItem = () => {
+		const item = {
+			id,
+			title,
+			price,
+			imageUrl,
+			size: activeSize,
+			type: activeType,
+		};
+		dispatch(addItem(item))
+	};
+ -->
+
+ <!-- Вешаем функцию onClickAddItem на нужную нам кнопку -->
+ <!-- onClick={onClickAddItem} -->
+
+ <!-- Теперь в редакс передаются все нужные нам данные для отображения товаров в корзине и работает счетчик кол-ва товаров в Header.jsx -->
 
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

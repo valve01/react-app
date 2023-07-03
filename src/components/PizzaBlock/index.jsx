@@ -1,6 +1,10 @@
 // import React, { useState } from 'react';
 import React from 'react';
-function PizzaBlock({ title, price, imageUrl, sizes, types }) {
+import { useDispatch, useSelector } from 'react-redux';
+
+import {addItem} from "../../redux/slices/cartSlice"
+
+function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 	// function PizzaBlock(props) {
 
 	// Объявляем переменную (pizzaCount), функцию,которая будет ее изменять (setPizzaCount), и говорим какой к этому массиву применить хук (useState(0)). И задаем начальное значение хуку.
@@ -12,15 +16,29 @@ function PizzaBlock({ title, price, imageUrl, sizes, types }) {
 	const [pizzaCount, setPizzaCount] = React.useState(0);
 
 	// Мы навесили прослушку onClickBtn на button ниже в коде, и теперь говорим : Фукция (setPizzaCount), меняющая pizzaCount, возьми pizzaCount добавь к ней 1.
-	const onClickBtn = () => {
-		setPizzaCount(pizzaCount + 1);
-	};
+	// const onClickBtn = () => {
+	// 	setPizzaCount(pizzaCount + 1);
+	// };
 	const typeNames = ['тонкое', 'традиционное'];
 	const [activeType, setActiveType] = React.useState(0);
 	const onClickType = (index) => {
 		setActiveType(index);
 	};
 	const [activeSize, setActiveSize] = React.useState(0);
+
+	const dispatch = useDispatch();
+
+	const onClickAddItem = () => {
+		const item = {
+			id,
+			title,
+			price,
+			imageUrl,
+			size: activeSize,
+			type: activeType,
+		};
+		dispatch(addItem(item))
+	};
 
 	return (
 		<div className="pizza-block-wrapper">
@@ -69,7 +87,7 @@ function PizzaBlock({ title, price, imageUrl, sizes, types }) {
 					{/* 				<div className="pizza-block__price">от {props.price} ₽</div> */}
 					<button
 						// Чтобы навесить прослушку используем атрибут onClick-и присваиваем функцию (в нашем случае onClickBtn), для обработки этого события
-						onClick={onClickBtn}
+						onClick={onClickAddItem}
 						className="button button--outline button--add"
 					>
 						<svg

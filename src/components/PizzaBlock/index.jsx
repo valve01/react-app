@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {addItem} from "../../redux/slices/cartSlice"
 
+const typeNames = ['тонкое', 'традиционное'];
+
 function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 	// function PizzaBlock(props) {
 
@@ -19,7 +21,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 	// const onClickBtn = () => {
 	// 	setPizzaCount(pizzaCount + 1);
 	// };
-	const typeNames = ['тонкое', 'традиционное'];
+
 	const [activeType, setActiveType] = React.useState(0);
 	const onClickType = (index) => {
 		setActiveType(index);
@@ -35,7 +37,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 			price,
 			imageUrl,
 			size: activeSize,
-			type: activeType,
+			type: typeNames[activeType],
 		};
 		dispatch(addItem(item))
 	};

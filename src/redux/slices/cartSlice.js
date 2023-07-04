@@ -30,8 +30,18 @@ export const cartSlice = createSlice({
 				state.items.push({ ...action.payload, count: 1 });
 			}
 			state.totalPrice = state.items.reduce((sum, obj) => {
-				return sum + obj.price*obj.count;
+				return sum + obj.price * obj.count;
 			}, 0);
+		},
+		// Уменьшение кол-ва товаров в корзине
+		minusItem(state, action) {
+			// Ищем элемент в массиве, и если находим добавляем ему к счетчику +1, иначе добавляем его в корзину и устанавливаем счетчик = 1
+
+			const findItem = state.items.find((obj) => obj.id === action.payload);
+			// console.log(action.payload)
+			if (findItem) {
+				findItem.count--;
+			}
 		},
 
 		// Удаление всех товаров данного типа из корзины(Крестик напротив элемента в корзине)
@@ -45,6 +55,6 @@ export const cartSlice = createSlice({
 	},
 });
 
-export const { addItem, removeItem, clearItems, setTotalPrice } = cartSlice.actions;
+export const { addItem, minusItem, removeItem, clearItems } = cartSlice.actions;
 
 export default cartSlice.reducer;

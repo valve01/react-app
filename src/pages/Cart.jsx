@@ -6,7 +6,7 @@ import CartItem from '../components/CartItem';
 
 const Cart = () => {
 	const cartItems = useSelector((state) => state.cart.items);
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	return (
 		<div className="container container--cart">
 			<div className="cart">
@@ -85,6 +85,7 @@ const Cart = () => {
 					</div>
 				</div>
 				<div className="content__items">
+					{/* <CartItem /> */}
 					{cartItems.map((item) => (
 						<CartItem key={item.id} {...item} />
 					))}

@@ -2,23 +2,25 @@ import React from 'react';
 
 // import { useDispatch, useSelector } from 'react-redux';
 
-const CartItem = (id, title, price, imageUrl, size, type, count) => {
+const CartItem = ({id, title, price, imageUrl, size, type, count}) => {
 	// const cartItems = useSelector((state) => state.cart.items);
 	// const dispatch = useDispatch();
 
 	return (
-		
 			<div className="cart__item">
 				<div className="cart__item-img">
 					<img
 						className="pizza-block__image"
 						src={imageUrl}
+						// src=""
 						alt="Pizza"
 					/>
 				</div>
 				<div className="cart__item-info">
+					{/* <h3>Пицца</h3> */}
 					<h3>{title}</h3>
 					<p>
+						{/* тонкое, 26 см. */}
 						{type}, {size} см.
 					</p>
 				</div>
@@ -41,6 +43,7 @@ const CartItem = (id, title, price, imageUrl, size, type, count) => {
 							/>
 						</svg>
 					</div>
+					{/* <b>2</b> */}
 					<b>{count}</b>
 					<div className="button button--outline button--circle cart__item-count-plus">
 						<svg
@@ -62,6 +65,7 @@ const CartItem = (id, title, price, imageUrl, size, type, count) => {
 					</div>
 				</div>
 				<div className="cart__item-price">
+					{/* <b>770 ₽</b> */}
 					<b>{price * count} ₽</b>
 				</div>
 				<div className="cart__item-remove">

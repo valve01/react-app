@@ -2,13 +2,20 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {addItem} from "../../redux/slices/cartSlice"
+import { addItem } from '../../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
 function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 	// function PizzaBlock(props) {
 
+	// Делаем логику счетчику на кнопке добавить
+	const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+
+	// console.log(cartItem )
+
+	const addedCount = cartItem ? cartItem.count : 0;
+	// console.log(addedCount)
 	// Объявляем переменную (pizzaCount), функцию,которая будет ее изменять (setPizzaCount), и говорим какой к этому массиву применить хук (useState(0)). И задаем начальное значение хуку.
 
 	// const [pizzaCount, setPizzaCount] = useState(0);
@@ -39,7 +46,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 			size: activeSize,
 			type: typeNames[activeType],
 		};
-		dispatch(addItem(item))
+		dispatch(addItem(item));
 	};
 
 	return (
@@ -106,7 +113,9 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 						</svg>
 						<span>Добавить</span>
 						{/* Тут мы используем полученную переменную */}
-						<i>{pizzaCount}</i>
+						{/* <i>{pizzaCount}</i> */}
+						{/* Можно оборачивать в {} целиком тэги */}
+						{addedCount > 0 && <i>{addedCount}</i>}
 					</button>
 				</div>
 			</div>

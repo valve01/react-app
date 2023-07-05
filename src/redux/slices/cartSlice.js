@@ -44,7 +44,7 @@ export const cartSlice = createSlice({
 			}
 		},
 
-		// Удаление всех товаров данного типа из корзины(Крестик напротив элемента в корзине)
+		// Удаление всех товаров данного типа из корзины (Крестик напротив элемента в корзине)
 		removeItem(state, action) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
 		},

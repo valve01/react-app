@@ -3,10 +3,19 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import CartItem from '../components/CartItem';
+import { clearItems } from '../redux/slices/cartSlice';
 
 const Cart = () => {
+
+	const { totalPrice, items } = useSelector((state) => state.cart);
+
 	const cartItems = useSelector((state) => state.cart.items);
 	const dispatch = useDispatch();
+	const onClickClearItem = () => {
+		if (window.confirm('Вы действительно хотите очистить корзину?')) {
+			dispatch(clearItems());
+		}
+	};
 	return (
 		<div className="container container--cart">
 			<div className="cart">
@@ -43,7 +52,10 @@ const Cart = () => {
 						</svg>
 						Корзина
 					</h2>
-					<div className="cart__clear">
+					<div
+						onClick={onClickClearItem}
+						className="cart__clear"
+					>
 						<svg
 							width="20"
 							height="20"
@@ -87,7 +99,10 @@ const Cart = () => {
 				<div className="content__items">
 					{/* <CartItem /> */}
 					{cartItems.map((item) => (
-						<CartItem key={item.id} {...item} />
+						<CartItem
+							key={item.id}
+							{...item}
+						/>
 					))}
 				</div>
 				<div className="cart__bottom">
@@ -96,7 +111,7 @@ const Cart = () => {
 							Всего пицц: <b>3 шт.</b>
 						</span>
 						<span>
-							Сумма заказа: <b>900 ₽</b>
+							Сумма заказа: <b>totalPrice ₽</b>
 						</span>
 					</div>
 					<div className="cart__bottom-buttons">

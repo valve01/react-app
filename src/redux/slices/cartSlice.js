@@ -51,6 +51,7 @@ export const cartSlice = createSlice({
 		// Полная очистка корзины
 		clearItems(state) {
 			state.items = [];
+			state.totalPrice = 0;
 		},
 	},
 });

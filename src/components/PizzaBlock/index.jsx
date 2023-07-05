@@ -3,8 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addItem } from '../../redux/slices/cartSlice';
-// C sizesName так просто как с типами не прокатит
-// const sizesName=[26, 30, 40];
+
 const typeNames = ['тонкое', 'традиционное'];
 
 function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
@@ -44,8 +43,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 			title,
 			price,
 			imageUrl,
-			size:activeSize,
-			// size: sizesName[activeSize],
+			size: sizes[activeSize],
 			type: typeNames[activeType],
 		};
 		dispatch(addItem(item));

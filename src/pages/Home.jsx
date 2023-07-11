@@ -59,9 +59,8 @@ const Home = () => {
 		);
 	});
 
+	// Добавляем к стрелочной функции внутри useEffect ключевое слово async, чтобы иметь возможность пользоваться await
 	React.useEffect(() => {
-		setIsLoading(true);
-
 		// fetch(
 		// 	`https://64845cf9ee799e3216269459.mockapi.io/items?${
 		// 		activeCategory > 0 ? `category=${activeCategory}` : ''
@@ -76,22 +75,66 @@ const Home = () => {
 		// 	});
 
 		// Используя axios для запроса, нужно дописать сам метод get
-		axios
-			.get(
-				`https://64845cf9ee799e3216269459.mockapi.io/items?${
-					activeCategory > 0 ? `category=${activeCategory}` : ''
-				}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-					sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-				}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
-			)
-			// При использовании axios в response будут данные уже в js формате, а не в json, как при fetch, но они будут в виде объекта. Сама же основа будет храниться в свойстве data, обращаясь к нему мы пожемо пользоваться данными.
-			.then((res) => {
+		// axios
+		// 	.get(
+		// 		`https://64845cf9ee799e3216269459.mockapi.io/items?${
+		// 			activeCategory > 0 ? `category=${activeCategory}` : ''
+		// 		}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
+		// 			sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+		// 		}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+		// 	)
+		// 	// При использовании axios в response будут данные уже в js формате, а не в json, как при fetch, но они будут в виде объекта. Сама же основа будет храниться в свойстве data, обращаясь к нему мы пожемо пользоваться данными.
+		// 	.then((res) => {
+		// 		setItems(res.data);
+		// 		setIsLoading(false);
+		// 	})
+		// .catch((err)=>{
+		// console.log(err, "axios Error");
+		// // Говорим что загрузку нужно завершить в любом случае, даже при ошибке, иначе код прервет выполнение
+		// setIsLoading(false);
+		// });
+		// Чтобы при рендере автоматически страница вверх прокрутилась
+		// window.scrollTo(0, 0);
+
+		// // Переписываем запрос, используя await
+		// const fetchPizzas = async () => {
+		// 	setIsLoading(true);
+		// 	const res = await axios.get(
+		// 		`https://64845cf9ee799e3216269459.mockapi.io/items?${
+		// 			activeCategory > 0 ? `category=${activeCategory}` : ''
+		// 		}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
+		// 			sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+		// 		}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+		// 	);
+		// 	// Больше не надо использовать then. Тело ответа от сервера мы просто записали в переменную res
+		// 	setItems(res.data);
+		// 	setIsLoading(false);
+		// 	// Чтобы при рендере автоматически страница вверх прокрутилась
+		// 	window.scrollTo(0, 0);
+		// };
+
+		// Переписываем запрос, используя отлов ошибок
+		const fetchPizzas = async () => {
+			setIsLoading(true);
+
+			try {
+				const res = await axios.get(
+					`https://64845cf9ee799e3216269459.mockapi.io/items?${
+						activeCategory > 0 ? `category=${activeCategory}` : ''
+					}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
+						sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+					}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+				);
 				setItems(res.data);
 				setIsLoading(false);
-			});
+				window.scrollTo(0, 0);
+			} catch (error) {
+				setIsLoading(false);
+				console.log('ERROR:', error);
+			}
+		};
 
-		// Чтобы при рендере автоматически страница вверх прокрутилась
-		window.scrollTo(0, 0);
+		fetchPizzas();
 	}, [activeCategory, sortType, searchValue, currentPage]);
 
 	// React.useEffect =

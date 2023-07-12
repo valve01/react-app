@@ -126,11 +126,13 @@ const Home = () => {
 					}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
 				);
 				setItems(res.data);
-				setIsLoading(false);
+	
 				window.scrollTo(0, 0);
 			} catch (error) {
-				setIsLoading(false);
+
 				console.log('ERROR:', error);
+			}finally{
+				setIsLoading(false);
 			}
 		};
 

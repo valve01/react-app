@@ -991,7 +991,35 @@ import { useDispatch, useSelector } from 'react-redux';
 <!-- Чтобы ловить ошибки, используя промисы, применяем метод catch -->
 
 <!-- Чтобы ловить ошибки, используя async/await, применяем синтаксим try/catch. В блоке try пишем, что делать в случае успеха, catch - в случае ошибки. -->
+<!-- Еще есть блок finally -->
+<!-- Этот блок выполняется при любом исходе работы try/catch -->
 
+<!-- 
+finally{
+				setIsLoading(false);
+			}
+ -->
+
+
+<!-- 
+try {
+				const res = await axios.get(
+					`https://64845cf9ee799e3216269459.mockapi.io/items?${
+						activeCategory > 0 ? `category=${activeCategory}` : ''
+					}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
+						sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+					}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+				);
+				setItems(res.data);
+	
+				window.scrollTo(0, 0);
+			} catch (error) {
+
+				console.log('ERROR:', error);
+			}finally{
+				setIsLoading(false);
+			}
+ -->
 
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

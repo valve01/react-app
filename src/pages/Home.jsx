@@ -11,9 +11,11 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice';
+import { setItems } from '../redux/slices/pizzasSlice';
 const Home = () => {
-	const [items, setItems] = React.useState([]);
+	// const [items, setItems] = React.useState([]);
 	const [isLoading, setIsLoading] = React.useState(true);
+
 	// const [activeSort, setActiveSort] = React.useState({
 	// 	name: 'популярности (сначала популярные)',
 	// 	sortProperty: 'rating',
@@ -47,6 +49,14 @@ const Home = () => {
 	const { sortType, activeCategory, currentPage } = useSelector((state) => state.filter);
 	// const activeSort = sortType.sortProperty;
 
+
+	const items = useSelector((state) => {
+		state.pizzas.items;
+	});
+
+
+
+
 	// console.log(activeSort);
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 	const pizzas = items.map((obj) => {
@@ -73,7 +83,6 @@ const Home = () => {
 		// 		setItems(arr);
 		// 		setIsLoading(false);
 		// 	});
-
 		// Используя axios для запроса, нужно дописать сам метод get
 		// axios
 		// 	.get(
@@ -95,7 +104,6 @@ const Home = () => {
 		// });
 		// Чтобы при рендере автоматически страница вверх прокрутилась
 		// window.scrollTo(0, 0);
-
 		// // Переписываем запрос, используя await
 		// const fetchPizzas = async () => {
 		// 	setIsLoading(true);
@@ -112,31 +120,31 @@ const Home = () => {
 		// 	// Чтобы при рендере автоматически страница вверх прокрутилась
 		// 	window.scrollTo(0, 0);
 		// };
-
 		// Переписываем запрос, используя отлов ошибок
 		const fetchPizzas = async () => {
 			setIsLoading(true);
-
+	
+			const category = activeCategory > 0 ? `category=${activeCategory}` : '';
+			const sort = sortType.sortProperty.replace('-', '');
+			const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+			const filter = searchValue ? searchValue : '';
+	
 			try {
-				const res = await axios.get(
-					`https://64845cf9ee799e3216269459.mockapi.io/items?${
-						activeCategory > 0 ? `category=${activeCategory}` : ''
-					}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-						sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-					}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+				const { data } = await axios.get(
+					`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 				);
-				setItems(res.data);
+				//setItems(res.data);
+	
+				dispatch(setItems(data));
 	
 				window.scrollTo(0, 0);
 			} catch (error) {
-
 				console.log('ERROR:', error);
-			}finally{
+			} finally {
 				setIsLoading(false);
 			}
 		};
-
-		fetchPizzas();
+		fetchPizzas()
 	}, [activeCategory, sortType, searchValue, currentPage]);
 
 	// React.useEffect =

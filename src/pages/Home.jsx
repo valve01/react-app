@@ -117,21 +117,21 @@ const Home = () => {
 		const fetchPizzas = async () => {
 			setIsLoading(true);
 
+			const category = activeCategory > 0 ? `category=${activeCategory}` : '';
+			const sort = sortType.sortProperty.replace('-', '');
+			const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+			const filter = searchValue ? searchValue : '';
+
 			try {
-				const res = await axios.get(
-					`https://64845cf9ee799e3216269459.mockapi.io/items?${
-						activeCategory > 0 ? `category=${activeCategory}` : ''
-					}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-						sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-					}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
+				const { data } = await axios.get(
+					`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 				);
-				setItems(res.data);
-	
+				setItems(data);
+
 				window.scrollTo(0, 0);
 			} catch (error) {
-
 				console.log('ERROR:', error);
-			}finally{
+			} finally {
 				setIsLoading(false);
 			}
 		};

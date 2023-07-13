@@ -49,13 +49,30 @@ const Home = () => {
 	const { sortType, activeCategory, currentPage } = useSelector((state) => state.filter);
 	// const activeSort = sortType.sortProperty;
 
+	const items = useSelector((state) => state.pizzas.items);
+	const fetchPizzas = async () => {
+		setIsLoading(true);
 
-	const items = useSelector((state) => {
-		state.pizzas.items;
-	});
+		const category = activeCategory > 0 ? `category=${activeCategory}` : '';
+		const sort = sortType.sortProperty.replace('-', '');
+		const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+		const filter = searchValue ? searchValue : '';
 
+		try {
+			const { data } = await axios.get(
+				`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
+			);
+			//setItems(res.data);
 
+			dispatch(setItems(data));
 
+			window.scrollTo(0, 0);
+		} catch (error) {
+			console.log('ERROR:', error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	// console.log(activeSort);
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
@@ -121,29 +138,7 @@ const Home = () => {
 		// 	window.scrollTo(0, 0);
 		// };
 		// Переписываем запрос, используя отлов ошибок
-		const fetchPizzas = async () => {
-			setIsLoading(true);
-	
-			const category = activeCategory > 0 ? `category=${activeCategory}` : '';
-			const sort = sortType.sortProperty.replace('-', '');
-			const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
-			const filter = searchValue ? searchValue : '';
-	
-			try {
-				const { data } = await axios.get(
-					`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
-				);
-				//setItems(res.data);
-	
-				dispatch(setItems(data));
-	
-				window.scrollTo(0, 0);
-			} catch (error) {
-				console.log('ERROR:', error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
+
 		fetchPizzas()
 	}, [activeCategory, sortType, searchValue, currentPage]);
 

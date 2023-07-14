@@ -23,18 +23,20 @@ export const store = configureStore({
 		// counter3: counterReducer3,
 		// counter4: counterReducer4
 	},
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({
-			// serializableCheck: false,
-			// {
-			// // Ignore these action types
-			// ignoredActions: ['filters/setActiveSortType'],
-			// // Ignore these field paths in all actions
-			// ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
-			// // Ignore these paths in the state
-			// ignoredPaths: ['items.dates'],
-			// },
-		}),
+// Устаревшая настройка вызывает ненужные ворнинги
+
+	// middleware: (getDefaultMiddleware) =>
+	// 	getDefaultMiddleware({
+	// 		// serializableCheck: false,
+	// 		// {
+	// 		// // Ignore these action types
+	// 		// ignoredActions: ['filters/setActiveSortType'],
+	// 		// // Ignore these field paths in all actions
+	// 		// ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+	// 		// // Ignore these paths in the state
+	// 		// ignoredPaths: ['items.dates'],
+	// 		// },
+	// 	}),
 });
 // Импоритровали store в index.js и теперь смотрим что в нем. Всякие методы в нем. Нам пока понадобится только dispatch
 // console.log(store);

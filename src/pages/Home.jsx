@@ -1,7 +1,7 @@
 import React from 'react';
 // ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux. Чтобы пользовать хуками из react их не нужно импортировать
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+
 // import qs from 'qs';
 
 import PizzaBlock from '../components/PizzaBlock';
@@ -11,7 +11,7 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice';
-import { setItems } from '../redux/slices/pizzasSlice';
+import { fetchPizzas } from '../redux/slices/pizzasSlice';
 const Home = () => {
 	// const [items, setItems] = React.useState([]);
 	const [isLoading, setIsLoading] = React.useState(true);
@@ -50,7 +50,7 @@ const Home = () => {
 	// const activeSort = sortType.sortProperty;
 
 	const items = useSelector((state) => state.pizzas.items);
-	const fetchPizzas = async () => {
+	const getPizzas = async () => {
 		setIsLoading(true);
 
 		const category = activeCategory > 0 ? `category=${activeCategory}` : '';
@@ -59,12 +59,16 @@ const Home = () => {
 		const filter = searchValue ? searchValue : '';
 
 		try {
-			const { data } = await axios.get(
-				`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
-			);
+
 			//setItems(res.data);
 
-			dispatch(setItems(data));
+			dispatch(fetchPizzas({
+				category,
+				sort,
+				order,
+				filter,
+				currentPage
+			}));
 
 			window.scrollTo(0, 0);
 		} catch (error) {
@@ -139,7 +143,7 @@ const Home = () => {
 		// };
 		// Переписываем запрос, используя отлов ошибок
 
-		fetchPizzas()
+		getPizzas()
 	}, [activeCategory, sortType, searchValue, currentPage]);
 
 	// React.useEffect =

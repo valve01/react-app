@@ -7,6 +7,7 @@ import pizzasReducer from './slices/pizzasSlice';
 // import counterReducer2 from "./slices/filterSlice2";
 // import counterReducer3 from "./slices/filterSlice3";
 // import counterReducer4 from "./slices/filterSlice4";
+
 export const store = configureStore({
 	// Наше глобальное хранилище может содержать много разных редюсеров из разных слайсов
 	reducer: {
@@ -22,7 +23,7 @@ export const store = configureStore({
 		// counter2: counterReducer2,
 		// counter3: counterReducer3,
 		// counter4: counterReducer4
-	},
+	}
 	// middleware: (getDefaultMiddleware) =>
 	// 	getDefaultMiddleware({
 	// 		// serializableCheck: false,

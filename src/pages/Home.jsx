@@ -1,7 +1,7 @@
 import React from 'react';
 // ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux. Чтобы пользовать хуками из react их не нужно импортировать
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+
 // import qs from 'qs';
 
 import PizzaBlock from '../components/PizzaBlock';
@@ -11,7 +11,7 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice';
-import { setItems } from '../redux/slices/pizzasSlice';
+import { fetchPizzasFromRedux } from '../redux/slices/pizzasSlice';
 const Home = () => {
 	// const [items, setItems] = React.useState([]);
 	const [isLoading, setIsLoading] = React.useState(true);
@@ -59,12 +59,17 @@ const Home = () => {
 		const filter = searchValue ? searchValue : '';
 
 		try {
-			const { data } = await axios.get(
-				`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
-			);
-			//setItems(res.data);
 
-			dispatch(setItems(data));
+// console.log(555)
+			dispatch(
+				fetchPizzasFromRedux({
+					category,
+					sort,
+					order,
+					filter,
+					currentPage,
+				}),
+			);
 
 			window.scrollTo(0, 0);
 		} catch (error) {
@@ -72,6 +77,7 @@ const Home = () => {
 		} finally {
 			setIsLoading(false);
 		}
+		window.scrollTo(0, 0);
 	};
 
 	// console.log(activeSort);
@@ -88,71 +94,9 @@ const Home = () => {
 
 	// Добавляем к стрелочной функции внутри useEffect ключевое слово async, чтобы иметь возможность пользоваться await
 	React.useEffect(() => {
-		// fetch(
-		// 	`https://64845cf9ee799e3216269459.mockapi.io/items?${
-		// 		activeCategory > 0 ? `category=${activeCategory}` : ''
-		// 	}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-		// 		sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-		// 	}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
-		// )
-		// 	.then((res) => res.json())
-		// 	.then((arr) => {
-		// 		setItems(arr);
-		// 		setIsLoading(false);
-		// 	});
-		// Используя axios для запроса, нужно дописать сам метод get
-		// axios
-		// 	.get(
-		// 		`https://64845cf9ee799e3216269459.mockapi.io/items?${
-		// 			activeCategory > 0 ? `category=${activeCategory}` : ''
-		// 		}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-		// 			sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-		// 		}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
-		// 	)
-		// 	// При использовании axios в response будут данные уже в js формате, а не в json, как при fetch, но они будут в виде объекта. Сама же основа будет храниться в свойстве data, обращаясь к нему мы пожемо пользоваться данными.
-		// 	.then((res) => {
-		// 		setItems(res.data);
-		// 		setIsLoading(false);
-		// 	})
-		// .catch((err)=>{
-		// console.log(err, "axios Error");
-		// // Говорим что загрузку нужно завершить в любом случае, даже при ошибке, иначе код прервет выполнение
-		// setIsLoading(false);
-		// });
-		// Чтобы при рендере автоматически страница вверх прокрутилась
-		// window.scrollTo(0, 0);
-		// // Переписываем запрос, используя await
-		// const fetchPizzas = async () => {
-		// 	setIsLoading(true);
-		// 	const res = await axios.get(
-		// 		`https://64845cf9ee799e3216269459.mockapi.io/items?${
-		// 			activeCategory > 0 ? `category=${activeCategory}` : ''
-		// 		}&sortBy=${sortType.sortProperty.replace('-', '')}&order=${
-		// 			sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-		// 		}&filter=${searchValue ? searchValue : ''}&page=${currentPage}&limit=4`,
-		// 	);
-		// 	// Больше не надо использовать then. Тело ответа от сервера мы просто записали в переменную res
-		// 	setItems(res.data);
-		// 	setIsLoading(false);
-		// 	// Чтобы при рендере автоматически страница вверх прокрутилась
-		// 	window.scrollTo(0, 0);
-		// };
-		// Переписываем запрос, используя отлов ошибок
-
-		fetchPizzas()
+		fetchPizzas();
+// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeCategory, sortType, searchValue, currentPage]);
-
-	// React.useEffect =
-	// 	(() => {
-	// 		const queryString = qs.stringify({
-	// 			sortProperty: sortType.sortProperty,
-	// 			activeCategory: activeCategory,
-	// 			currentPage: currentPage,
-	// 		});
-	// 		console.log(queryString)
-	// 	},
-
-	// 	[activeCategory, sortType, searchValue, currentPage]);
 
 	return (
 		<>

@@ -60,7 +60,7 @@ const Home = () => {
 
 		try {
 
-// console.log(555)
+
 			dispatch(
 				fetchPizzasFromRedux({
 					category,

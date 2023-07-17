@@ -9,13 +9,14 @@ export const fetchPizzasFromRedux = createAsyncThunk(
 		const { data } = await axios.get(
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 		);
-		console.log(data);
+		// console.log(data);
 		return data;
 	},
 );
 
 const initialState = {
 	items: [],
+	status: '',
 };
 export const pizzasSlice = createSlice({
 	name: 'pizzas',
@@ -32,6 +33,8 @@ export const pizzasSlice = createSlice({
 	// 	},
 	// },
 
+	// Асинхронный экшн, созданный при помощи createAsyncThunk возвращает 3 события: pending, fulfilled, rejected, мы можем отловить их и использовать для навешивания действий по этим событиям в extraReducers через builder и addCase.
+	// В action.payload будет храниться то что вернет функция fetchPizzasFromRedux, в нашем случае - переменная data
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchPizzasFromRedux.pending, (state) => {

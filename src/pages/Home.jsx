@@ -13,8 +13,9 @@ import { SearchContext } from '../App';
 import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice';
 import { fetchPizzasFromRedux } from '../redux/slices/pizzasSlice';
 const Home = () => {
+	// Перенесли в редакс
 	// const [items, setItems] = React.useState([]);
-	const [isLoading, setIsLoading] = React.useState(true);
+	// const [isLoading, setIsLoading] = React.useState(true);
 
 	// const [activeSort, setActiveSort] = React.useState({
 	// 	name: 'популярности (сначала популярные)',
@@ -49,34 +50,43 @@ const Home = () => {
 	const { sortType, activeCategory, currentPage } = useSelector((state) => state.filter);
 	// const activeSort = sortType.sortProperty;
 
-	const items = useSelector((state) => state.pizzas.items);
+	const { items, status } = useSelector((state) => state.pizzas);
 	const fetchPizzas = async () => {
-		setIsLoading(true);
+		// Переносим IsLoading в редакс
+		// setIsLoading(true);
 
 		const category = activeCategory > 0 ? `category=${activeCategory}` : '';
 		const sort = sortType.sortProperty.replace('-', '');
 		const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
 		const filter = searchValue ? searchValue : '';
 
-		try {
+		// try {
+		// 	dispatch(
+		// 		fetchPizzasFromRedux({
+		// 			category,
+		// 			sort,
+		// 			order,
+		// 			filter,
+		// 			currentPage,
+		// 		}),
+		// 	);
 
-
-			dispatch(
-				fetchPizzasFromRedux({
-					category,
-					sort,
-					order,
-					filter,
-					currentPage,
-				}),
-			);
-
-			window.scrollTo(0, 0);
-		} catch (error) {
-			console.log('ERROR:', error);
-		} finally {
-			setIsLoading(false);
-		}
+		// 	window.scrollTo(0, 0);
+		// } catch (error) {
+		// 	console.log('ERROR:', error);
+		// }
+		//  finally {
+		// 	setIsLoading(false);
+		// }
+		dispatch(
+			fetchPizzasFromRedux({
+				category,
+				sort,
+				order,
+				filter,
+				currentPage,
+			}),
+		);
 		window.scrollTo(0, 0);
 	};
 
@@ -95,7 +105,7 @@ const Home = () => {
 	// Добавляем к стрелочной функции внутри useEffect ключевое слово async, чтобы иметь возможность пользоваться await
 	React.useEffect(() => {
 		fetchPizzas();
-// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeCategory, sortType, searchValue, currentPage]);
 
 	return (
@@ -115,7 +125,7 @@ const Home = () => {
 				</div>
 				<h2 className="content__title">Все пиццы</h2>
 				<Pagination onChangePage={onChangePage} />
-				<div className="content__items">{isLoading ? skeleton : pizzas}</div>
+				<div className="content__items">{status === 'success' ? pizzas : skeleton}</div>
 			</div>
 		</>
 	);

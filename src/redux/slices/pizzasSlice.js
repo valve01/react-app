@@ -16,7 +16,8 @@ export const fetchPizzasFromRedux = createAsyncThunk(
 
 const initialState = {
 	items: [],
-	status: '', //вроде как и не обязательно начальный статус задавать
+	// свойством status заменим state isLoading в Home.jsx
+	status: '', 
 };
 export const pizzasSlice = createSlice({
 	name: 'pizzas',
@@ -38,19 +39,20 @@ export const pizzasSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchPizzasFromRedux.pending, (state) => {
-				state.status = 'Загружаю эту хуйню';
+				state.status = 'loading';
 				state.items = [];
 			})
 			.addCase(fetchPizzasFromRedux.fulfilled, (state, action) => {
 				state.items = action.payload;
-				state.status = 'Наконец-то эта хуйня заработала';
+				state.status = 'success';
 			})
 			.addCase(fetchPizzasFromRedux.rejected, (state) => {
-				state.status = 'Хуйня не пашет';
+				state.status = 'error';
 				// console.log("errorr")
 				state.items = [];
 			});
 	},
+	// Удаляем state isLoading из Home.jsx
 });
 
 // export const { setItems } = pizzasSlice.actions;

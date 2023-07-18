@@ -1062,6 +1062,86 @@ export default pizzasSlice.reducer;
 
 
 <!-- ========================================================================================================================================== -->
+<!-- Переделываем запрос и сохранение пицц с созданием и использованием функционала асинхронного экшена -->
+<!-- У нас будет теперь одна функция, которая будет отвечать одновременно за: загрузку данных, показ статуса загрузки, сохранение данных -->
+
+<!-- Создаем асинхронный экшн -->
+<!-- метод createAsyncThunk создаент асинхронный экшн, принимает 3 параметра: 
+1-тип экшена в виде строки (у нас это pizzas/fetchPizzasFromReduxStatus) (сначала указываем name нашего слайса/потом название функции, которая вызывает асинхронный экшн) 
+
+Строка, которая будет использоваться для создания дополнительных констант типа действия Redux, представляющих жизненный цикл асинхронного запроса:
+
+Например, type аргумент 'users/requestStatus'будет генерировать следующие типы действий:
+
+pending:'users/requestStatus/pending'
+fulfilled:'users/requestStatus/fulfilled'
+rejected:'users/requestStatus/rejected'
+
+ (это нужно только для правильной идентификации экшена внутри редакса ),
+ 2 - функция, выполняющая экнш, 
+ 3 - опции , -->
+<!-- 
+export const fetchPizzasFromRedux = createAsyncThunk(
+	'pizzas/fetchPizzasFromReduxStatus',
+	async (params) => {
+		const { category, sort, order, filter, currentPage } = params;
+		const { data } = await axios.get(
+			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
+		);
+		return data;
+	},
+);
+ -->
+
+ <!-- Теперь список импортов слайса выглядит так -->
+ <!-- 
+ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+ import axios from 'axios';
+  -->
+
+<!-- В Home.jsx импортируем наш асинхронный экшн, причем setItems больше не нужен в Home.jsx -->
+<!-- import { fetchPizzasFromRedux } from '../redux/slices/pizzasSlice'; -->
+
+<!-- В Home.jsx в fetchPizzas в блоке try диспатчим теперь так: -->
+<!-- 
+			dispatch(
+				fetchPizzasFromRedux({
+					category,
+					sort,
+					order,
+					filter,
+					currentPage,
+				}),
+			);
+ -->
+
+ <!-- В реакте принято, что если функция имеет приставку fetch - то она получает и сохраняет данные -->
+
+ <!-- Далее нужно в createSlice добавить extraReducers, и согласно синтаксису из документации задать действия для каждого из событий pending, fulfilled, rejected. Для этого обращаемся к builder и вызываем у него метод addCase и в его параметры передаем ((название функции, вызывающей асинхронный экшн).(одно из событий(pending, fulfilled, rejected)), функцию, которая будет отрабатывать на это событие) Ну и в initialState добавим новое свойство status: '' -->
+
+ <!-- 
+ 	extraReducers: (builder) => {
+		builder
+			.addCase(fetchPizzasFromRedux.pending, (state) => {
+				state.status = 'Загружаю эту хуйню';
+				state.items = [];
+			})
+			.addCase(fetchPizzasFromRedux.fulfilled, (state, action) => {
+				state.items = action.payload;
+				state.status = 'Наконец-то эта хуйня заработала';
+			})
+			.addCase(fetchPizzasFromRedux.rejected, (state) => {
+				state.status = 'Хуйня не пашет';
+				state.items = [];
+			});
+	},
+  -->
+
+<!-- Полная логика такая: -->
+<!-- Создали функцию fetchPizzasFromRedux, ей говорим создай асинхроный экшн, выполни его и верни результат запроса. Потом в extraReducers мы эту функцию берем и проверяем статус выполнения и в соответствии с этим статусом говорим выполнить то или иное действие -->
+
+
+
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

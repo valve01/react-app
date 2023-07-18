@@ -47,6 +47,7 @@ export const pizzasSlice = createSlice({
 			})
 			.addCase(fetchPizzasFromRedux.rejected, (state) => {
 				state.status = 'Хуйня не пашет';
+				// console.log("errorr")
 				state.items = [];
 			});
 	},

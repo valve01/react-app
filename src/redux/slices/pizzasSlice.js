@@ -16,7 +16,7 @@ export const fetchPizzasFromRedux = createAsyncThunk(
 
 const initialState = {
 	items: [],
-	status: '',
+	status: '', //вроде как и не обязательно начальный статус задавать
 };
 export const pizzasSlice = createSlice({
 	name: 'pizzas',

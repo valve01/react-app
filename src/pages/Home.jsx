@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // import qs from 'qs';
-
+import EmptyCart from '../components/EmptyCart';
 import PizzaBlock from '../components/PizzaBlock';
 import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
@@ -123,9 +123,16 @@ const Home = () => {
 					// onClickSetActiveSort={(listObj) => setActiveSort(listObj)}
 					/>
 				</div>
-				<h2 className="content__title">Все пиццы</h2>
-				<Pagination onChangePage={onChangePage} />
-				<div className="content__items">{status === 'success' ? pizzas : skeleton}</div>
+
+				{status === 'error' ? (
+					<EmptyCart />
+				) : (
+					<>
+						<h2 className="content__title">Все пиццы</h2>
+						<Pagination onChangePage={onChangePage} />
+						<div className="content__items">{status === 'success' ? pizzas : skeleton}</div>
+					</>
+				)}
 			</div>
 		</>
 	);

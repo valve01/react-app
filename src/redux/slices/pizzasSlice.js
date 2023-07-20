@@ -4,20 +4,27 @@ import axios from 'axios';
 export const fetchPizzasFromRedux = createAsyncThunk(
 	'pizzas/fetchPizzasFromReduxStatus',
 	// 	async ({ category, sort, order, filter, currentPage }) => {
-	async (params) => {
+	async (params, thunkAPI) => {
 		const { category, sort, order, filter, currentPage } = params;
 		const { data } = await axios.get(
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 		);
-		// console.log(data);
-		return data;
+		console.log(thunkAPI);
+		console.log(thunkAPI.requestId);
+		console.log(thunkAPI.getState().filter.currentPage);
+
+		if (data.length === 0) {
+			// То что мы передадим в методы ниже пойдет в action.payload
+			return thunkAPI.rejectWithValue('Питсы пустые');
+		}
+		return thunkAPI.fulfillWithValue(data);
 	},
 );
 
 const initialState = {
 	items: [],
 	// свойством status заменим state isLoading в Home.jsx
-	status: '', 
+	status: '',
 };
 export const pizzasSlice = createSlice({
 	name: 'pizzas',
@@ -45,11 +52,13 @@ export const pizzasSlice = createSlice({
 			.addCase(fetchPizzasFromRedux.fulfilled, (state, action) => {
 				state.items = action.payload;
 				state.status = 'success';
+				console.log(action, 'fullfiled');
 			})
-			.addCase(fetchPizzasFromRedux.rejected, (state) => {
+			.addCase(fetchPizzasFromRedux.rejected, (state, action) => {
 				state.status = 'error';
-				// console.log("errorr")
 				state.items = [];
+				console.log(action, 'rejected');
+				console.log(action.payload);
 			});
 	},
 	// Удаляем state isLoading из Home.jsx

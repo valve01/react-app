@@ -65,5 +65,7 @@ export const pizzasSlice = createSlice({
 });
 
 // export const { setItems } = pizzasSlice.actions;
+export const selectorFilter = (state) => state.filter
+export const selectorPizzas = (state) => state.pizzas
 
 export default pizzasSlice.reducer;

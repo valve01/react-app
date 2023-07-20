@@ -11,7 +11,7 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice';
-import { fetchPizzasFromRedux } from '../redux/slices/pizzasSlice';
+import { fetchPizzasFromRedux, selectorFilter, selectorPizzas } from '../redux/slices/pizzasSlice';
 const Home = () => {
 	// Перенесли в редакс
 	// const [items, setItems] = React.useState([]);
@@ -47,10 +47,10 @@ const Home = () => {
 	};
 
 	// const activeSort = useSelector((state) => state.filter.sortType);
-	const { sortType, activeCategory, currentPage } = useSelector((state) => state.filter);
+	const { sortType, activeCategory, currentPage } = useSelector(selectorFilter);
 	// const activeSort = sortType.sortProperty;
 
-	const { items, status } = useSelector((state) => state.pizzas);
+	const { items, status } = useSelector(selectorPizzas);
 	const fetchPizzas = async () => {
 		// Переносим IsLoading в редакс
 		// setIsLoading(true);

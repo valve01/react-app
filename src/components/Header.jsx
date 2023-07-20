@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Search from './Search';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { selectorCart } from '../redux/slices/cartSlice';
 // Чтобы воспользоваться роутером без перезагрузки страницы целиком-импоритруем Link из react-router-dom
 // Теперь оборачиваем элемент, по которому мы ожидаем клик в компонент Link
 
@@ -16,7 +17,7 @@ import { useEffect } from 'react';
 // function Header({ searchValue, setSearchValue }) {
 
 function Header() {
-	const { totalPrice, items } = useSelector((state) => state.cart);
+	const { totalPrice, items } = useSelector(selectorCart);
 	const totalCount = items.reduce((sum, item) => {
 		return sum + item.count;
 	}, 0);

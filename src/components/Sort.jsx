@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setActiveSortType } from '../redux/slices/filterSlice';
+import { selectorSort, setActiveSortType } from '../redux/slices/filterSlice';
 
 const list = [
 	// Чтобы прикрутить логику, что если выбираем "популярности"- сортировать по полю rating, "цене" - по полю price, "алфавиту" - title. Создаем массив объектов и исправляем весь код ниже в соответствии с этими объектами -->
@@ -14,7 +14,8 @@ const list = [
 ];
 
 function Sort() {
-	const activeSort = useSelector((state) => state.filter.sortType);
+	const activeSort = useSelector(selectorSort);
+	// 	const activeSort = useSelector((state) => state.filter.sortType);
 	const dispatch = useDispatch();
 	// console.log(activeSort)
 	const [isShow, setIsShow] = React.useState(false);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 // import { useSelector, useDispatch } from 'react-redux';
 
@@ -20,7 +20,7 @@ import './scss/app.scss';
 export const SearchContext = React.createContext();
 
 function App() {
-	const [searchValue, setSearchValue] = useState('');
+
 	// Прокинув useState по цепочке аж до search.jsx проверяем. Изменяя значение инпута в дочернем компоненте, в родителе перезаписывается значение переменной из хука useState.
 	// console.log(searchValue, 'input changed')
 
@@ -51,9 +51,7 @@ function App() {
 				Decrement
 			</button> */}
 
-			{/* <!-- Подобно тому как мы оборачивали все наше приложение в ReactRouter. Aналогично чтобы подключить логику ReactContext нам нужно обернуть содержимое div className="wrapper" в компонент объекта context - Provider. Т.е. в <SearchContext.Provider>...</SearchContext.Provider> --> */}
-			{/* И присвоим значение для нашего context - передадим туда объект с переменными из useState: {searchValue, setSearchValue}*/}
-			<SearchContext.Provider value={{ searchValue, setSearchValue }}>
+
 				<Header
 				// Теперь не нужно прокидывать в Header переменные из useState, будем доставать их там из SearchContext. Комментим их
 				// searchValue={searchValue}
@@ -99,7 +97,7 @@ function App() {
 						/> */}
 					</Routes>
 				</div>
-			</SearchContext.Provider>
+
 		</div>
 	);
 }

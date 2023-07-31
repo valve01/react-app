@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './Search.module.scss';
 import searchIcon from '../../assets/img/search.svg';
 import close from '../../assets/img/close.svg';
-import { SearchContext } from '../../App';
 import debounce from 'lodash.debounce';
+import { useDispatch } from 'react-redux';
+import {setSearchValue} from "../../redux/slices/filterSlice"
 // Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов
 
 // const testDebounce = () => {
@@ -29,13 +30,15 @@ const Search = () => {
 	// 	[],
 	// );
 
+
+	const dispatch = useDispatch()
 	const [value, setValue] = React.useState('');
 
 	const updateSearchValue = React.useCallback(
 		debounce((value) => {
 			// console.log(value)
-			setSearchValue(value);
-		}, 2000),
+			dispatch(setSearchValue(value))
+		}, 500),
 		[],
 	);
 	const onChangeInput = (event) => {
@@ -45,7 +48,6 @@ const Search = () => {
 		updateSearchValue(event.target.value);
 	};
 
-	const { setSearchValue } = React.useContext(SearchContext);
 	//1 Создаем переменную, которая будет хранить ссылку на дом-элемент инпута
 	const inputRef = React.useRef();
 	// inputRef - вернет нам объект
@@ -55,7 +57,7 @@ const Search = () => {
 
 	// Сделаем ф-цию, которая будет одноверменно очищать и оставлять фокус на инпуте
 	const clearInput = () => {
-		setSearchValue('');
+		dispatch(setSearchValue(''))
 		setValue('');
 		inputRef.current.focus();
 	};

@@ -9,7 +9,7 @@ import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
+
 import { setActiveCategory, setCurrentPage } from '../redux/slices/filterSlice';
 import { fetchPizzasFromRedux, selectorFilter, selectorPizzas } from '../redux/slices/pizzasSlice';
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
 	// 	name: 'популярности (сначала популярные)',
 	// 	sortProperty: 'rating',
 	// });
-	const { searchValue } = React.useContext(SearchContext);
+
 	// const [currentPage, setCurrentPage] = React.useState(1);
 
 	// Вытаскиваем activeCategory из Redux слайса. Этим хуком можно вообще все данные из хранилища вытащить (оно все записано в state. Получается наш state === store.reducer).
@@ -47,7 +47,8 @@ const Home = () => {
 	};
 
 	// const activeSort = useSelector((state) => state.filter.sortType);
-	const { sortType, activeCategory, currentPage } = useSelector(selectorFilter);
+
+	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
 	// const activeSort = sortType.sortProperty;
 
 	const { items, status } = useSelector(selectorPizzas);

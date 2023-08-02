@@ -21,7 +21,7 @@ function Header() {
 	// const pathname = window.location.pathname;
 	// console.log(pathname);
 	const location = useLocation();
-	console.log(location, window.location);
+	// console.log(location, window.location);
 	const totalCount = items.reduce((sum, item) => {
 		return sum + item.count;
 	}, 0);

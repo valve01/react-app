@@ -9,9 +9,9 @@ export const fetchPizzasFromRedux = createAsyncThunk(
 		const { data } = await axios.get(
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 		);
-		console.log(thunkAPI);
-		console.log(thunkAPI.requestId);
-		console.log(thunkAPI.getState().filter.currentPage);
+		// console.log(thunkAPI);
+		// console.log(thunkAPI.requestId);
+		// console.log(thunkAPI.getState().filter.currentPage);
 
 		if (data.length === 0) {
 			// То что мы передадим в методы ниже пойдет в action.payload
@@ -35,14 +35,7 @@ export const pizzasSlice = createSlice({
 		},
 	},
 
-	// extraReducers: {
-	// 	[fetchPizzasFromRedux.fulfilled]: (state, action) => {
-	// 		console.log(state);
-	// 	},
-	// },
 
-	// Асинхронный экшн, созданный при помощи createAsyncThunk возвращает 3 события: pending, fulfilled, rejected, мы можем отловить их и использовать для навешивания действий по этим событиям в extraReducers через builder и addCase.
-	// В action.payload будет храниться то что вернет функция fetchPizzasFromRedux, в нашем случае - переменная data
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchPizzasFromRedux.pending, (state) => {
@@ -52,13 +45,13 @@ export const pizzasSlice = createSlice({
 			.addCase(fetchPizzasFromRedux.fulfilled, (state, action) => {
 				state.items = action.payload;
 				state.status = 'success';
-				console.log(action, 'fullfiled');
+				// console.log(action, 'fullfiled');
 			})
 			.addCase(fetchPizzasFromRedux.rejected, (state, action) => {
 				state.status = 'error';
 				state.items = [];
-				console.log(action, 'rejected');
-				console.log(action.payload);
+				// console.log(action, 'rejected');
+				// console.log(action.payload);
 			});
 	},
 	// Удаляем state isLoading из Home.jsx

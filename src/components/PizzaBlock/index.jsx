@@ -1,5 +1,6 @@
 // import React, { useState } from 'react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addItem, selectorCartItemById } from '../../redux/slices/cartSlice';
@@ -23,7 +24,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 	// Также можно не делать деструктуризацию вначале файла, а просто:
 	// import React from 'react';
 	// Но тогда, если мы хотим присвоить хук, сначала нужно будет обраться к переменной, в которой содержится весь реакт
-	const [pizzaCount, setPizzaCount] = React.useState(0);
+	// const [pizzaCount, setPizzaCount] = React.useState(0);
 
 	// Мы навесили прослушку onClickBtn на button ниже в коде, и теперь говорим : Фукция (setPizzaCount), меняющая pizzaCount, возьми pizzaCount добавь к ней 1.
 	// const onClickBtn = () => {
@@ -53,11 +54,13 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 	return (
 		<div className="pizza-block-wrapper">
 			<div className="pizza-block">
-				<img
-					className="pizza-block__image"
-					src={imageUrl}
-					alt="Pizza"
-				/>
+				<Link to={`/pizza/${id}`}>
+					<img
+						className="pizza-block__image"
+						src={imageUrl}
+						alt="Pizza"
+					/>
+				</Link>
 				<h4 className="pizza-block__title">{title}</h4>
 				{/* 		<h4 className="pizza-block__title">{props.title}</h4> */}
 				<div className="pizza-block__selector">

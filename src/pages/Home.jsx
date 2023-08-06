@@ -25,7 +25,7 @@ const Home = () => {
 	const onChangePage = (value) => {
 		dispatch(setCurrentPage(value));
 	};
-
+// Если был первый рендер, то проверяем url-параметры и сохраняем в редаксе
 	React.useEffect(() => {
 		const params = qs.parse(window.location.search.substring(1));
 		const sortType = list.find((obj) => obj.sortProperty === params.sortProperty);

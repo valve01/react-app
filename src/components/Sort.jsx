@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectorSort, setActiveSortType } from '../redux/slices/filterSlice';
 
-const list = [
+export const list = [
 	// Чтобы прикрутить логику, что если выбираем "популярности"- сортировать по полю rating, "цене" - по полю price, "алфавиту" - title. Создаем массив объектов и исправляем весь код ниже в соответствии с этими объектами -->
 	{ name: 'популярности (сначала популярные)', sortProperty: 'rating' },
 	{ name: 'популярности (сначала непопулярные)', sortProperty: '-rating' },

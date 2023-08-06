@@ -9,10 +9,11 @@ import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
+import { useNavigate } from 'react-router-dom';
 
 import { setActiveCategory, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzasFromRedux, selectorFilter, selectorPizzas } from '../redux/slices/pizzasSlice';
-import { useNavigate} from 'react-router-dom';
+import { list } from '../components/Sort';
 const Home = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -25,12 +26,13 @@ const Home = () => {
 		dispatch(setCurrentPage(value));
 	};
 
-	React.useEffect(()=>{
-	const params =qs.parse(window.location.search.substring(1))
-	console.log(params)
-	dispatch(setFilters({...params}))
-	},[])
-
+	React.useEffect(() => {
+		const params = qs.parse(window.location.search.substring(1));
+		const sortType = list.find((obj) => obj.sortProperty === params.sortProperty);
+		console.log(params, sortType);
+		dispatch(setFilters({ ...params, sortType }));
+		// eslint-disable-next-line
+	}, []);
 
 	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
 
@@ -66,6 +68,7 @@ const Home = () => {
 		});
 		console.log(queryString);
 		navigate(`?${queryString}`);
+		// eslint-disable-next-line
 	}, [activeCategory, sortType, searchValue, currentPage]);
 
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);

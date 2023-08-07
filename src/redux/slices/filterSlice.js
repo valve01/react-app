@@ -29,7 +29,7 @@ export const filterSlice = createSlice({
 			state.currentPage = Number(action.payload.currentPage) ;
 			state.activeCategory = Number(action.payload.activeCategory) ;
 			state.sortType= action.payload.sortType;
-			console.log(action.payload)
+			// console.log(action.payload)
 		},
 	},
 });

@@ -17,6 +17,9 @@ import { list } from '../components/Sort';
 const Home = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const isSearch = React.useRef(false);
+	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
+	const { items, status } = useSelector(selectorPizzas);
 
 	const onClickSetActiveCategory = (index) => {
 		dispatch(setActiveCategory(index));
@@ -25,18 +28,7 @@ const Home = () => {
 	const onChangePage = (value) => {
 		dispatch(setCurrentPage(value));
 	};
-// Если был первый рендер, то проверяем url-параметры и сохраняем в редаксе
-	React.useEffect(() => {
-		const params = qs.parse(window.location.search.substring(1));
-		const sortType = list.find((obj) => obj.sortProperty === params.sortProperty);
-		console.log(params, sortType);
-		dispatch(setFilters({ ...params, sortType }));
-		// eslint-disable-next-line
-	}, []);
 
-	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
-
-	const { items, status } = useSelector(selectorPizzas);
 	const fetchPizzas = async () => {
 		const category = activeCategory > 0 ? `category=${activeCategory}` : '';
 		const sort = sortType.sortProperty.replace('-', '');
@@ -52,11 +44,19 @@ const Home = () => {
 				currentPage,
 			}),
 		);
-		window.scrollTo(0, 0);
 	};
+	// Если был первый рендер, то проверяем url-параметры и сохраняем в редаксе
+	React.useEffect(() => {
+		const params = qs.parse(window.location.search.substring(1));
+		const sortType = list.find((obj) => obj.sortProperty === params.sortProperty);
+		// console.log(params, sortType);
+		dispatch(setFilters({ ...params, sortType }));
+		// eslint-disable-next-line
+	}, []);
 
 	React.useEffect(() => {
 		fetchPizzas();
+		window.scrollTo(0, 0);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeCategory, sortType, searchValue, currentPage]);
 
@@ -66,7 +66,7 @@ const Home = () => {
 			activeCategory: activeCategory,
 			currentPage: currentPage,
 		});
-		console.log(queryString);
+		// console.log(queryString);
 		navigate(`?${queryString}`);
 		// eslint-disable-next-line
 	}, [activeCategory, sortType, searchValue, currentPage]);

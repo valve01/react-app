@@ -40,7 +40,7 @@ function Sort() {
 			// JavaScript метод composedPath() объекта Event возвращает путь события, представляющий собой массив объектов, на которых будут вызваны обработчики событий.
 			if (!event.composedPath().includes(sortRef.current)) {
 				setIsShow(false);
-				console.log('click outside');
+				// console.log('click outside');
 			}
 		};
 

@@ -1578,9 +1578,73 @@ const initialState = {
 <!-- Сделаем так, чтобы запрос на бэк не отправлялся до тех пор пока параметры из url не задиспатчатся в редакс -->
 <!-- т.е. при первом рендере нужно сделать проверку на необходимость отправки запроса. Если пришли параметры => не отправляй запрос до диспатча. Если параметров нет => диспатч не отравится => отправляй запрос  -->
 
-<!-- Делаем флаг. Благодаря хуку useRef в isSearch.current всегда будет храниться актуальное состояние переменной.(независимо от перерисовок) По умолчанию будет false -->
+<!-- Делаем флаг. Он будет сигнализировать о том есть ли в адресной строке параметры, которые мы в редакс записали.(по умолчанию - нет) Благодаря хуку useRef в isSearch.current всегда будет храниться актуальное состояние переменной.(независимо от перерисовок) По умолчанию будет false -->
 <!-- const isSearch = React.useRef(false); -->
-<!-- 16:00 -->
+
+<!-- Пишем условие на запуск useEffect - наличие параметров в строке поиска -->
+<!--  <!-- window.location.search - вернет нам все параметры что написаны в адресной строке после первого / включая "?" вначале --> -->
+<!-- Ставим это флаг в true, в момент сразу после диспатча параметров в редакс -->
+<!-- 
+	React.useEffect(() => {
+		if (window.location.search) {
+			const params = qs.parse(window.location.search.substring(1));
+			const sortType = list.find((obj) => obj.sortProperty === params.sortProperty);
+			// console.log(params, sortType);
+			dispatch(setFilters({ ...params, sortType }));
+			isSearch.current = true;
+		}
+		// eslint-disable-next-line
+	}, []);
+ -->
+ <!-- Этот useEffect должен идти самым первым, и если адрсная строка пуста-то диспатч не отработает и isSearch.current останется false. т.к по умолчанию -->
+ <!-- const isSearch = React.useRef(false); --> 
+ <!-- И тогда следующий useEffect по состоянию флага поймет отправлять запрос или нет. Если isSearch.current = false, значит - параметров в url нет => отправляем запрос . А если isSearch.current = true, запрос не отработает и переключаем флаг isSearch.current = false (как по умолчанию) чтобы при перерендере (когда мы будем параметры менять) запрос отправлялся -->
+<!-- 
+	React.useEffect(() => {
+		window.scrollTo(0, 0);
+		if (!isSearch.current) {
+			fetchPizzas();
+		}
+		isSearch.current = false;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activeCategory, sortType, searchValue, currentPage]);
+ -->
+
+<!-- Все круто работает. И запрос отпраляется только один и при первоначальной загрузке все сразу корректно рендерится. И без параметров тоже все корректно. -->
+<!-- Но есть проблема. При перезапуске приложения (обновлении страницы) параметры (если они были) автоматически вшиваются старые в адресную строку -->
+<!-- Дело в том что  useEffect при первом рендере сразу смотрит в редаксе параметры и вшивает их в url, даже если они не изменялись пользователем -->
+<!-- 
+	React.useEffect(() => {
+		const queryString = qs.stringify({
+			sortProperty: sortType.sortProperty,
+			activeCategory: activeCategory,
+			currentPage: currentPage,
+		});
+		// console.log(queryString);
+		navigate(`?${queryString}`);
+		// eslint-disable-next-line
+	}, [activeCategory, sortType, searchValue, currentPage]);
+ -->
+<!-- Сделаем так чтобы при первом рендере никакие параметры не вшивались в url. Если же перерендер произошел из-за изменения параметров пользователем - тогда вшивай. -->
+<!-- Делаем флаг. Он будет хранить инфорамацию о том, что уже произошел первый рендер. -->
+<!-- 	const isMounted = React.useRef(false); -->
+<!-- Пишем условие для useEffect. И ставим флаг в true только после всех действий useEffect. Тут мы уже точно уверены что самый первый рендер произошел, переменная с помощью useRef хранит данные независимо от перерендеров, и когда уже будут изменения в параметрах со стороны пользователя параметры будут вшиваться в url  -->
+
+<!-- 
+	React.useEffect(() => {
+		if (isMounted.current) {
+			const queryString = qs.stringify({
+				sortProperty: sortType.sortProperty,
+				activeCategory: activeCategory,
+				currentPage: currentPage,
+			});
+			// console.log(queryString);
+			navigate(`?${queryString}`);
+		}
+		isMounted.current = true;
+		// eslint-disable-next-line
+	}, [activeCategory, sortType, searchValue, currentPage]);
+ -->
 
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

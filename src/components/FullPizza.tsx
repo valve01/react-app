@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
 	const [pizza, setPizza] = React.useState();
 	// const params = useParams();
 	// console.log(params);
@@ -20,6 +20,7 @@ const FullPizza = () => {
 			}
 		}
 		fetchPizza();
+		// eslint-disable-next-line
 	}, [id]);
 
 	if (pizza) {
@@ -38,7 +39,7 @@ const FullPizza = () => {
 			</div>
 		);
 	} else {
-		return 'Загрузка';
+		return <>'Загрузка'</>;
 	}
 };
 

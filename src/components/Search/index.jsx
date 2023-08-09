@@ -4,7 +4,7 @@ import searchIcon from '../../assets/img/search.svg';
 import close from '../../assets/img/close.svg';
 import debounce from 'lodash.debounce';
 import { useDispatch } from 'react-redux';
-import {setSearchValue} from "../../redux/slices/filterSlice"
+import { setSearchValue } from '../../redux/slices/filterSlice';
 // Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов
 
 // const testDebounce = () => {
@@ -30,15 +30,15 @@ const Search = () => {
 	// 	[],
 	// );
 
-
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const [value, setValue] = React.useState('');
-
+// eslint-disable-next-line
 	const updateSearchValue = React.useCallback(
 		debounce((value) => {
 			// console.log(value)
-			dispatch(setSearchValue(value))
+			dispatch(setSearchValue(value));
 		}, 500),
+		
 		[],
 	);
 	const onChangeInput = (event) => {
@@ -57,7 +57,7 @@ const Search = () => {
 
 	// Сделаем ф-цию, которая будет одноверменно очищать и оставлять фокус на инпуте
 	const clearInput = () => {
-		dispatch(setSearchValue(''))
+		dispatch(setSearchValue(''));
 		setValue('');
 		inputRef.current.focus();
 	};

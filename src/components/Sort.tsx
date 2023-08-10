@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectorSort, setActiveSortType } from '../redux/slices/filterSlice';
 
-export const list = [
+type SortItem = {
+	name: string;
+	sortProperty: string;
+};
+
+export const list: SortItem[] = [
 	// Чтобы прикрутить логику, что если выбираем "популярности"- сортировать по полю rating, "цене" - по полю price, "алфавиту" - title. Создаем массив объектов и исправляем весь код ниже в соответствии с этими объектами -->
 	{ name: 'популярности (сначала популярные)', sortProperty: 'rating' },
 	{ name: 'популярности (сначала непопулярные)', sortProperty: '-rating' },
@@ -21,20 +26,18 @@ function Sort() {
 	const [isShow, setIsShow] = React.useState(false);
 
 	// const [activelistElement, setActivelistElement] = React.useState(list[0]);
-	const onClickSetActEl = (listObj) => {
+	const onClickSetActEl = (listObj: SortItem) => {
 		dispatch(setActiveSortType(listObj));
 		// console.log(listObj);
 		setIsShow(!isShow);
 	};
-	const sortRef = useRef();
+	const sortRef = useRef<HTMLDivElement>(null);
 	// console.log(sortRef.current);
-
 
 	// Получается так: в sortRef.current хранится наш компонент с классом sort. event.composedPath() - возвращает массив элементов на которых слышно событие. И теперь по клику в любом месте идет проверка - содержит ли массив из event.composedPath() элемент с классом sort. Если не содержит - то ставим флаг isShow=false.
 
 	// Оборачиваем обработчик событий в useEffect без зависимостей, чтобы он навешивался только при первом рендере, и не пересоздавался и не навешивал новые.
 	React.useEffect(() => {
-
 		const popupCloser = (event) => {
 			// console.log(event.composedPath());
 			// JavaScript метод composedPath() объекта Event возвращает путь события, представляющий собой массив объектов, на которых будут вызваны обработчики событий.

@@ -1,7 +1,7 @@
 import React from 'react';
 // Используем css модули. Не нужно придумывать никакие доп классы. Вебпак сам все сделает, даже если внутри разных scss файлов будут одинаковые селекторы/классы. Просто используем все это. Вебпак добат суффиксы, хэши, подчеркивания - все что нужно чтобы уникализировать классы.
 import styles from './NotFoundBlock.module.scss';
-const NotFoundBlock = () => {
+const NotFoundBlock: React.FC = () => {
 	return (
 		<>
 			<div className={styles.root}>

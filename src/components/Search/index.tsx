@@ -32,13 +32,13 @@ const Search = () => {
 
 	const dispatch = useDispatch();
 	const [value, setValue] = React.useState('');
-// eslint-disable-next-line
+	// eslint-disable-next-line
 	const updateSearchValue = React.useCallback(
 		debounce((value) => {
 			// console.log(value)
 			dispatch(setSearchValue(value));
 		}, 500),
-		
+
 		[],
 	);
 	const onChangeInput = (event) => {

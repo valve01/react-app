@@ -38,7 +38,7 @@ function Sort() {
 
 	// Оборачиваем обработчик событий в useEffect без зависимостей, чтобы он навешивался только при первом рендере, и не пересоздавался и не навешивал новые.
 	React.useEffect(() => {
-		const popupCloser = (event) => {
+		const popupCloser = (event:any) => {
 			// console.log(event.composedPath());
 			// JavaScript метод composedPath() объекта Event возвращает путь события, представляющий собой массив объектов, на которых будут вызваны обработчики событий.
 			if (!event.composedPath().includes(sortRef.current)) {

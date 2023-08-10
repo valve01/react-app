@@ -22,7 +22,7 @@ function Header() {
 	// console.log(pathname);
 	const location = useLocation();
 	// console.log(location, window.location);
-	const totalCount = items.reduce((sum, item) => {
+	const totalCount = items.reduce((sum: number, item: { count: number }) => {
 		return sum + item.count;
 	}, 0);
 

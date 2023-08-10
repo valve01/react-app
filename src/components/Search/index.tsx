@@ -22,7 +22,7 @@ import { setSearchValue } from '../../redux/slices/filterSlice';
 // };
 // testDebounceStart()
 
-const Search = () => {
+const Search: React.FC = () => {
 	// const updateSearchValue = React.useCallback(
 	// 	debounce((event) => {
 	// 		setSearchValue(event.target.value);
@@ -34,14 +34,14 @@ const Search = () => {
 	const [value, setValue] = React.useState('');
 	// eslint-disable-next-line
 	const updateSearchValue = React.useCallback(
-		debounce((value) => {
+		debounce((value:string) => {
 			// console.log(value)
 			dispatch(setSearchValue(value));
 		}, 500),
 
 		[],
 	);
-	const onChangeInput = (event) => {
+	const onChangeInput = (event:any) => {
 		// Вот это действие выполняется сразу: value - присваивается значение event.target.value (т.е. то что мы ввели в инпут)
 		setValue(event.target.value);
 		// А это только через 2000мс. Т.к. в функции updateSearchValue записана функция оберннутая в debounce с таймером 2000мс
@@ -49,17 +49,25 @@ const Search = () => {
 	};
 
 	//1 Создаем переменную, которая будет хранить ссылку на дом-элемент инпута
-	const inputRef = React.useRef();
+	const inputRef = React.useRef<HTMLInputElement>(null);
 	// inputRef - вернет нам объект
 	// inputRef.current - сам дом-элемент
 	// Значение дом элемента, если это инпут например
 	// console.log(inputRef.current.value);
 
 	// Сделаем ф-цию, которая будет одноверменно очищать и оставлять фокус на инпуте
+
 	const clearInput = () => {
 		dispatch(setSearchValue(''));
 		setValue('');
-		inputRef.current.focus();
+
+		// if (inputRef.current) {
+		// 	inputRef.current.focus();
+		// }
+
+		// Более котороткай вариант проверки с помощью оператора опциональнольной последовательности
+		// Говорится: если есть inputRef.current сделай на него фокус
+		inputRef.current?.focus();
 	};
 
 	// const onChangeInput = (event) => {

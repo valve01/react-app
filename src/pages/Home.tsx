@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { setActiveCategory, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzasFromRedux, selectorFilter, selectorPizzas } from '../redux/slices/pizzasSlice';
 import { list } from '../components/Sort';
-const Home = () => {
+const Home: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const isSearch = React.useRef(false);
@@ -22,11 +22,11 @@ const Home = () => {
 	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
 	const { items, status } = useSelector(selectorPizzas);
 
-	const onClickSetActiveCategory = (index) => {
+	const onClickSetActiveCategory = (index: number) => {
 		dispatch(setActiveCategory(index));
 	};
 
-	const onChangePage = (value) => {
+	const onChangePage = (value: number) => {
 		dispatch(setCurrentPage(value));
 	};
 
@@ -37,6 +37,7 @@ const Home = () => {
 		const filter = searchValue ? searchValue : '';
 
 		dispatch(
+			// @ts-ignore
 			fetchPizzasFromRedux({
 				category,
 				sort,
@@ -59,8 +60,8 @@ const Home = () => {
 		}
 		// eslint-disable-next-line
 	}, []);
-// 2 Если первого рендера не было, ( а по умолчанию так и есть) тогда ничего вшиваться в url не будет, но теперь то мы знаем что первый рендер произошел и ставим флаг isMounted.current = true. (Помним что useEffect отработает при первом рендере, даже если в его зависимостях не будет изменений).
-// 3. Теперь флаг = true и Если же теперь изменяться зависимости пользователем, то параметры будут вшиваться в url
+	// 2 Если первого рендера не было, ( а по умолчанию так и есть) тогда ничего вшиваться в url не будет, но теперь то мы знаем что первый рендер произошел и ставим флаг isMounted.current = true. (Помним что useEffect отработает при первом рендере, даже если в его зависимостях не будет изменений).
+	// 3. Теперь флаг = true и Если же теперь изменяться зависимости пользователем, то параметры будут вшиваться в url
 
 	React.useEffect(() => {
 		if (isMounted.current) {
@@ -75,7 +76,7 @@ const Home = () => {
 		isMounted.current = true;
 		// eslint-disable-next-line
 	}, [activeCategory, sortType, searchValue, currentPage]);
-// 4 Тут идет проверка, если параметры были при первом рендере в url, то запрос не отправляй, но флаг, что теперь параметров в url нет в любом случае все же выстави в false : isSearch.current = false. И когда другой useEffect заставит приложение перерисоваться, и флаг у нас уже переключен в false, тогда запрос отправится
+	// 4 Тут идет проверка, если параметры были при первом рендере в url, то запрос не отправляй, но флаг, что теперь параметров в url нет в любом случае все же выстави в false : isSearch.current = false. И когда другой useEffect заставит приложение перерисоваться, и флаг у нас уже переключен в false, тогда запрос отправится
 	React.useEffect(() => {
 		window.scrollTo(0, 0);
 		if (!isSearch.current) {
@@ -86,11 +87,9 @@ const Home = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeCategory, sortType, searchValue, currentPage]);
 
-
-
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 
-	const pizzas = items.map((obj) => (
+	const pizzas = items.map((obj:any) => (
 		<PizzaBlock
 			key={obj.id}
 			{...obj}

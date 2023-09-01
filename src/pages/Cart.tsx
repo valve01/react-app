@@ -13,7 +13,7 @@ const Cart: React.FC = () => {
 		return sum + item.count;
 	}, 0);
 
-	const cartItems = useSelector((state) => state.cart.items);
+	const cartItems = useSelector((state: any) => state.cart.items);
 	const dispatch = useDispatch();
 	const onClickClearItem = () => {
 		if (window.confirm('Вы действительно хотите очистить корзину?')) {

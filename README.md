@@ -1772,7 +1772,24 @@ export const list: {
 
 <!-- Теперь sortRef ожидает получить от useRef - HTMLDivElement, но если не получится то получит null -->
 
-<!-- 27:30 -->
+                                                              <!-- Типизация пропсов -->
+
+<!-- Для компонентов лучше создавать их через const, чем через function -->
+<!-- Чтобы типизировать пропсы для компонента - указыаем ему тип (: React.FC) после названия типа открываем <> и прописываем объект(потому что наши пропсы находятся внутри объекта), где ключи - это пропсы, значения - их типы. Также можно создать кастомыный тип и переиспользовать его   -->
+
+<!-- 
+type CategoriesProps = {
+	activeCategory: number;
+	onClickSetActiveCategory: any;
+};
+const Categories: React.FC<CategoriesProps> = ({ activeCategory, onClickSetActiveCategory }) => {...}
+ -->
+
+<!-- 
+	// Вариант типизации похуже
+// const Categories: React.FC = ({ activeCategory, onClickSetActiveCategory }: CategoriesProps) => {...}
+ -->
+
 
 <!-- ========================================================================================================================================== -->
 

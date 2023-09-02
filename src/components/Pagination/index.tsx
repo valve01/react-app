@@ -15,12 +15,15 @@ const theme = createTheme({
 	},
 });
 
-type PaginationBlockProps = { onChangePage: any };
+type PaginationBlockProps = { onChangePage: (page: number) => void };
+// onChangePage это у нас функция, которая должна получить аргумент page, который является number и ничего не вернуть
+// Можно оставить вызов функции обязательными, сделать передачу параметров опциональными. Также испольузуется ? перед :
+// type PaginationBlockProps = { onChangePage: (page?: number) => void };
 
 const PaginationBlock: React.FC<PaginationBlockProps> = ({ onChangePage }) => {
 	// Помним что в value будет помещен номер страницы, это сделала библиотека '@mui/material/styles', потому что мы пользуемся ее компонентном Pagination
 
-	const handleChange = (event: any, value: number) => {
+	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
 		onChangePage(value);
 	};
 	const { currentPage } = useSelector((state: { filter: any }) => state.filter);

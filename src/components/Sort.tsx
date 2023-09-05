@@ -32,18 +32,15 @@ function Sort() {
 		setIsShow(!isShow);
 	};
 	const sortRef = useRef<HTMLDivElement>(null);
-	// console.log(sortRef.current);
 
-	// Получается так: в sortRef.current хранится наш компонент с классом sort. event.composedPath() - возвращает массив элементов на которых слышно событие. И теперь по клику в любом месте идет проверка - содержит ли массив из event.composedPath() элемент с классом sort. Если не содержит - то ставим флаг isShow=false.
-
-	// Оборачиваем обработчик событий в useEffect без зависимостей, чтобы он навешивался только при первом рендере, и не пересоздавался и не навешивал новые.
 	React.useEffect(() => {
-		const popupCloser = (event:React.MouseEvent<HTMLBodyElement>) => {
-			// console.log(event.composedPath());
-			// JavaScript метод composedPath() объекта Event возвращает путь события, представляющий собой массив объектов, на которых будут вызваны обработчики событий.
-			if (!event.composedPath().includes(sortRef.current)) {
+		type popupCloserEvent = MouseEvent & {
+			composedPath: Node[];
+		};
+		const popupCloser = (event: MouseEvent) => {
+			const _event = event as popupCloserEvent;
+			if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
 				setIsShow(false);
-				// console.log('click outside');
 			}
 		};
 

@@ -18,7 +18,7 @@ const Search: React.FC = () => {
 		[],
 	);
 	const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-		// Чтобы типизировать event для реакта пишем для onChange : React.ChangeEvent<...>, где в <...> указываем элемент, который отправляет event
+		// Чтобы типизировать event для реакта пишем для onChange : React.ChangeEvent<...>, где в <...> указываем элемент, (в котором произошло событие) который отправляет event (в нашем случае это HTMLInputElement)(чтобы узнать какой это элемент наводим в разметке на onChange в месте вызова функции использующей event)
 		// Для event на события мыши (onClick) пишем :React.MouseEvent<...>, где в <...> указываем элемент, который отправляет event
 		// например
 		// 	const clearInput = (event: React.MouseEvent<HTMLImageElement>) => {

@@ -34,9 +34,11 @@ function Sort() {
 	const sortRef = useRef<HTMLDivElement>(null);
 
 	React.useEffect(() => {
+
 		type popupCloserEvent = MouseEvent & {
 			composedPath: Node[];
 		};
+		
 		const popupCloser = (event: MouseEvent) => {
 			const _event = event as popupCloserEvent;
 			if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {

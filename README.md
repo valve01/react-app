@@ -1908,14 +1908,64 @@ type CategoriesProps = {
 // type PaginationBlockProps = { onChangePage: (page?: number) => void };
  -->
                                                                <!-- as в TS -->
-<!-- as - называется Type Assertion. он просто указывает компилятору рассматривать что-то как тип-->
+<!-- as - называется Type Assertion. он просто указывает компилятору рассматривать что-то как тип (переопределяет тип)-->
 <!-- 
 var a = 'TEST STRING'
 var b = a as string; //Означает, что компилятор предположит, что это строка
 
-Также в качестве указываемого типа ...
+Также в качестве указываемого типа можно использовать кастомный
 
  -->
+
+                                                                <!-- composedPath() для MouseEvent в TS -->
+<!-- Идем в Sort.tsx -->
+
+<!-- Изначально у типа MouseEvent нет свойства composedPath()  -->
+<!-- Если мы хотим прикрутить к какому либо типу еще какую-то часть мы используем & и дальше в {} пишем что хотим добавить это что-то вроде конкатенации для типов в TS-->
+<!-- Создаем кастомный тип, в нем добавляем свойство при помощи &  -->
+<!-- 
+		type popupCloserEvent = MouseEvent & {
+			composedPath: Node[];
+		};
+ -->
+ <!-- т.е. мы говорим тип popupCloserEvent это тип MouseEvent плюс то что внутри фигурных скобок {} -->
+ <!-- Теперь внутри функции popupCloser мы создаем _event, который является тем же event, но имеет наш кастомный тип - popupCloserEvent -->
+ <!-- const _event = event as popupCloserEvent; -->
+ <!-- И дальше в функции мы используем именно _event-->
+ <!-- Добавляем проверку на наличие sortRef.current -->
+<!-- В итоге код имеет вид -->
+ <!-- 
+ 
+	React.useEffect(() => {
+
+		type popupCloserEvent = MouseEvent & {
+			composedPath: Node[];
+		};
+		
+		const popupCloser = (event: MouseEvent) => {
+			const _event = event as popupCloserEvent;
+			if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
+				setIsShow(false);
+			}
+		};
+
+		window.document.body.addEventListener('click', popupCloser);
+
+		return () => {
+			window.document.body.removeEventListener('click', popupCloser);
+		};
+	}, []);
+
+  -->
+
+<!-- Теперь addEventListener и removeEventListener отправляют в popupCloser обычный MouseEvent, и функция popupCloser его ожидает. При этом нам доступно свойство composedPath() у _event потому что мы сказали ему использовать объект event как кастомный тип popupCloserEvent, в котором уже composedPath() был добавлен-->
+
+
+
+
+
+
+
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

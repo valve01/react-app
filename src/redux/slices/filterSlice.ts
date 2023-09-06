@@ -9,10 +9,9 @@ export const filterSlice = createSlice({
 	name: 'filters',
 	initialState,
 	reducers: {
-		// Можно сразу вот так методы тут создавать
+
 		setActiveCategory(state, action) {
-			// При вызове нашего метода в нужных компонентах в него будет передан неявно объект action, который содержит в себе type - тип действия (это самому редаксу нужно), и payload - то что мы передали, обычно какое-то значение. А мы его принимаем тут, этот action и извлекаем из него переданное значение
-			// console.log(action);
+
 			state.activeCategory = action.payload;
 		},
 		setActiveSortType(state, action) {
@@ -29,7 +28,7 @@ export const filterSlice = createSlice({
 			state.currentPage = Number(action.payload.currentPage) ;
 			state.activeCategory = Number(action.payload.activeCategory) ;
 			state.sortType= action.payload.sortType;
-			// console.log(action.payload)
+
 		},
 	},
 });

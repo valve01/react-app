@@ -2079,11 +2079,93 @@ const newState = produce(state, draft => {
 
 																															<!-- Типизация configureStore-->
 <!-- https://redux-toolkit.js.org/usage/usage-with-typescript -->
-<!-- 12:40 -->
+
+<!-- 
+ Выдержка из документации RTK:
+ если вы решите не создавать rootReducer самостоятельно, а вместо этого передать slice reducers непосредственно в configureStore(), вам нужно немного изменить типизацию, чтобы правильно определить корневой редуктор:
+ -->
+ <!-- Для этого добавляем в конце файла stoer.ts -->
 
 <!-- 
 export type RootState = ReturnType<typeof store.getState>
  -->
+
+ <!-- Разбираемся что это: -->
+ <!-- создаем и экспортируем тип RootState -->
+ <!-- RootState - так мы сами называем тип, чтобы не возникало путаницы, т.к. просто state много где используется -->
+<!-- RootState содержит тип всего нашего глобального state. В нем содержится типизация каждого reducer (filter, cart, pizza). states всех reducer будут находиться внутри RootState. Как мы это получили? -->
+<!-- export type RootState = ReturnType<typeof store.getState> -->
+<!-- store - это наша переменная store. Она хранит все state, а также subscribe, dispatch и многое другое - т.е. все что у нас есть в редаксе -->
+
+<!-- 
+export const store = configureStore({
+	reducer: {
+		filter: filterReducer,
+		cart: cartReducer,
+		pizzas: pizzasReducer,
+	},
+});
+ -->
+<!-- И мы вытаскиваем из всего редакса js-функцию getState -->
+<!-- 
+store.getState
+ -->
+<!-- store.getState вернет нам весь state -->
+<!-- Но мы не вызываем store.getState. Не ставим (). Вместо этого мы используем typeof, который вернет нам тип функции store.getState -->
+<!-- typeof store.getState -->
+
+<!-- если мы эту строчку присвоим переменной то увидим, что в ней хранится такая стрелочная функция. т.е. просто весь тип state внутри тела функции -->
+
+<!-- 
+{
+	()=> {
+    filter: {
+        sortType: {
+            name: string;
+            sortProperty: string;
+        };
+        activeCategory: number;
+        currentPage: number;
+        searchValue: string;
+    };
+    cart: CartSliceState;
+    pizzas: {
+        items: never[];
+        status: string;
+    };
+	}
+ -->
+
+ <!-- Но глобальный state не является функцией. Мы же никогда не вызываем его чтобы получить из него данные, типа state().filter - Такого нет -->
+ <!-- Теперь чтобы вытащить из функции ее тело мы используем ReturnType .
+ 
+  ReturnType - условный тип, существующий в TS (получить тип значения, возвращаемого функцией). Он говорит: дай мне любую функцию и я ее содержимое превращу в тип.
+	
+	 (Условный тип ReturnType<T> служит для установления возвращаемого из функции типа. В качестве параметра типа должен обязательно выступать функциональный тип. На практике очень часто требуется получить тип, к которому принадлежит значение, возвращаемое из функции. Единственное, на что стоит обратить внимание, что в случаях, когда тип возвращаемого из функции значения является параметром типа, у которого отсутствуют хоть какие-то признаки, то тип ReturnType<T> будет представлен пустым объектным типом {}.)-->
+
+<!-- export type RootState = ReturnType<typeof store.getState> -->
+
+<!-- Теперь в RootState содержится следующий объект -->
+
+<!-- 
+type RootState = {
+    filter: {
+        sortType: {
+            name: string;
+            sortProperty: string;
+        };
+        activeCategory: number;
+        currentPage: number;
+        searchValue: string;
+    };
+    cart: CartSliceState;
+    pizzas: {
+        items: never[];
+        status: string;
+    };
+}
+ -->
+<!-- 18:00 -->
 
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

@@ -11,22 +11,30 @@ export const fetchPizzasFromRedux = createAsyncThunk(
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 		);
 
-
 		if (data.length === 0) {
-
 			return thunkAPI.rejectWithValue('Питсы пустые');
 		}
 		return thunkAPI.fulfillWithValue(data);
 	},
 );
 
+type PizzaItem = {
+	id: string;
+	title: string;
+	price: number;
+	imageUrl: string;
+	sizes: number[];
+	types: number[];
+};
+
 interface IPizzaSliceState {
-	items:
+	items: PizzaItem[];
+	status: 'loading'|'success'|'error';
 }
 
-const initialState = {
+const initialState: IPizzaSliceState = {
 	items: [],
-	status: '',
+	status: 'loading',
 };
 export const pizzasSlice = createSlice({
 	name: 'pizzas',
@@ -37,7 +45,6 @@ export const pizzasSlice = createSlice({
 		},
 	},
 
-
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchPizzasFromRedux.pending, (state) => {
@@ -47,19 +54,15 @@ export const pizzasSlice = createSlice({
 			.addCase(fetchPizzasFromRedux.fulfilled, (state, action) => {
 				state.items = action.payload;
 				state.status = 'success';
-
 			})
 			.addCase(fetchPizzasFromRedux.rejected, (state, action) => {
 				state.status = 'error';
 				state.items = [];
-
 			});
 	},
-
 });
 
-
-export const selectorFilter = (state:RootState) => state.filter
-export const selectorPizzas = (state:RootState) => state.pizzas
+export const selectorFilter = (state: RootState) => state.filter;
+export const selectorPizzas = (state: RootState) => state.pizzas;
 
 export default pizzasSlice.reducer;

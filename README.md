@@ -2165,7 +2165,30 @@ type RootState = {
     };
 }
  -->
-<!-- 18:00 -->
+<!-- Тип RootState конечно можно прописать вручную, что уже не просто, т.к. придется кучу всего импортировать, но если state будет расширяться, дополнятся вносить изменения придется также вручную и в RootState, а у нас все сейчас делается автоматически встроенными средствами RTK -->
+
+
+																															<!-- Типизация селекторов продолжение-->
+
+<!-- Теперь мы можем спокойно типизировать селекторы -->
+<!-- Импортируем RootState -->
+<!-- 
+import { RootState } from '../store';
+ -->
+<!-- Говорим что тип глобального state - это RootState, и все отлично, id в нашем случае - это string -->
+<!-- 
+export const selectorCart = (state: RootState) => state.cart;
+export const selectorCartItemById = (id: string) => (state: RootState) => state.cart.items.find((obj) => obj.id === id);
+ -->
+ 
+<!-- в filterSlice -->
+<!-- export const selectorSort = (state: RootState) => state.filter.sortType; -->
+
+<!-- в pizzaSlice -->
+<!-- 
+export const selectorFilter = (state:RootState) => state.filter
+export const selectorPizzas = (state:RootState) => state.pizzas
+  -->
 
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

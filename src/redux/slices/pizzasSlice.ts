@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { RootState } from '../store';
 
 export const fetchPizzasFromRedux = createAsyncThunk(
 	'pizzas/fetchPizzasFromReduxStatus',
@@ -55,7 +56,7 @@ export const pizzasSlice = createSlice({
 });
 
 
-export const selectorFilter = (state) => state.filter
-export const selectorPizzas = (state) => state.pizzas
+export const selectorFilter = (state:RootState) => state.filter
+export const selectorPizzas = (state:RootState) => state.pizzas
 
 export default pizzasSlice.reducer;

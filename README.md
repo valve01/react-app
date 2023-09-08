@@ -2025,6 +2025,44 @@ const initialState: CartSliceState = {
 
  <!--если навести на state мы увидим что он - WritableDraft это уже относится к immerJS -->
 
+
+                                                    <!-- Типизация initialState в filterSlice -->
+
+<!-- Пропишем типы для каждого state, но sortProperty сделаем не просто string, а чтобы он мог принимать только определенные строковые значения  -->
+
+<!-- 
+interface IFilterSliceState {
+	sortType: {
+		name: string;
+		sortProperty: 'rating' | 'price' | 'title' | '-rating' | '-price' | '-title';
+	};
+	activeCategory: number;
+	currentPage: number;
+	searchValue: string;
+}
+
+const initialState: IFilterSliceState = {
+ -->
+ 
+<!-- Ну или можно создать для sortType кастомный тип -->
+
+ <!-- 
+ type TSortProperty = {
+	name: string;
+	sortProperty: 'rating' | 'price' | 'title' | '-rating' | '-price' | '-title';
+};
+
+interface IFilterSliceState {
+	sortType: TSortProperty;
+	activeCategory: number;
+	currentPage: number;
+	searchValue: string;
+}
+
+const initialState: IFilterSliceState = {
+  -->
+
+
 																															<!-- interface (implements)(реализация интерфейса)-->
 
 <!-- interface - это понятие из ООП и оно нужно чтобы избегать проблемы множественного наследования (наследование - создание более специфичного типа на основе уже существующего) (множественное наследование - наследование одновременно от двух или нескольких классов.) Проблема множественного наследования в том, что в одном и другом классе может быть реализация одного и того же свойства, в результате непонятно какая из этих реализация будет унаследована дочерним классом-->
@@ -2180,7 +2218,7 @@ import { RootState } from '../store';
 export const selectorCart = (state: RootState) => state.cart;
 export const selectorCartItemById = (id: string) => (state: RootState) => state.cart.items.find((obj) => obj.id === id);
  -->
- 
+
 <!-- в filterSlice -->
 <!-- export const selectorSort = (state: RootState) => state.filter.sortType; -->
 
@@ -2191,6 +2229,7 @@ export const selectorPizzas = (state:RootState) => state.pizzas
   -->
 
 <!-- ========================================================================================================================================== -->
+<!-- 26^40 -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

@@ -20,9 +20,12 @@ export const fetchPizzasFromRedux = createAsyncThunk(
 	},
 );
 
+interface IPizzaSliceState {
+	items:
+}
+
 const initialState = {
 	items: [],
-
 	status: '',
 };
 export const pizzasSlice = createSlice({

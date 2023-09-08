@@ -11,12 +11,12 @@ type TCartItem = {
 	count: number;
 };
 
-interface CartSliceState {
+interface ICartSliceState {
 	totalPrice: number;
 	items: TCartItem[];
 }
 
-const initialState: CartSliceState = {
+const initialState: ICartSliceState = {
 	items: [],
 	totalPrice: 0,
 };

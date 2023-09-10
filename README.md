@@ -2253,9 +2253,57 @@ export const selectorPizzas = (state:RootState) => state.pizzas
   -->
 
 <!-- ========================================================================================================================================== -->
-																															<!-- Типизация экшенов -->
-<!-- 28:40 -->
+																															<!-- Типизация createSlice (экшенов) -->
+<!-- документация (https://redux-toolkit.js.org/usage/usage-with-typescript) -->
+<!-- импотрируем из редакса тип PayloadAction -->
+<!-- import { PayloadAction, createSlice } from '@reduxjs/toolkit'; -->
+<!-- Далее нужно внутри <> указать какой тип хранит payload(/какой тип мы хотипм от него получить) -->
+<!-- например -->
+<!-- 
+		minusItem(state, action: PayloadAction<string>) {
+ -->
+ <!-- 
+ 		addItem(state, action: PayloadAction<TCartItem>) {
+  -->
+<!-- 
+		removeItem(state, action: PayloadAction<string>) {
+ -->
+ <!-- !!!Чтобы узнать что хранит экшн нужно идти в место где вызывается функция и смотреть что она передает!!! -->
+
+<!-- Типизируем заодно объект item в PizzaBlock, скажем что он как и payload имеет тип TCartItem. Чтобы мы 100% отправляели то что ожидаем получить. -->
+
+<!-- Экспортируем TCartItem -->
+<!-- 
+ export type TCartItem = {
+	id: string;
+	title: string;
+	price: number;
+	imageUrl: string;
+	size: number;
+	type: string;
+	count: number;
+};
+ -->
+
+<!-- импоритируем его в PizzaBlock -->
+<!-- import { TCartItem, addItem, selectorCartItemById } from '../../redux/slices/cartSlice'; -->
+
+<!-- Типизируем item -->
+<!-- 
+	const onClickAddItem = () => {
+		const item: TCartItem = {
+			id,
+			title,
+			price,
+			imageUrl,
+			size: sizes[activeSize],
+			type: typeNames[activeType],
+			count: 0,
+		};
+ -->
+
 <!-- ========================================================================================================================================== -->
+<!-- 34:00 -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

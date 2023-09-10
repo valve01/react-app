@@ -28,7 +28,7 @@ export const filterSlice = createSlice({
 		},
 		setActiveSortType(state, action) {
 			state.sortType = action.payload;
-			// console.log(action);
+
 		},
 		setCurrentPage(state, action) {
 			state.currentPage = action.payload;

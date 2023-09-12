@@ -54,7 +54,7 @@ const Home: React.FC = () => {
 			// console.log(window.location.search);
 			const params = qs.parse(window.location.search.substring(1));
 			const sortType = list.find((obj) => obj.sortProperty === params.sortProperty);
-			// console.log(params, sortType);
+			console.log(params, sortType);
 			dispatch(setFilters({ ...params, sortType }));
 			isSearch.current = true;
 		}

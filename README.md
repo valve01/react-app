@@ -2302,9 +2302,116 @@ export const selectorPizzas = (state:RootState) => state.pizzas
 		};
  -->
 
+
+																															<!-- Быстрая типизация объектов с однотипными данными -->
+<!-- Если у нас есть объек, у которого все ключи имеют одинаковый тип, и все значения имеют одинаковый тип, то типизацию такого объекта можно сократить -->
+<!-- Для этого используется тип Record -->
+<!-- например -->
+
+<!-- type FetchAsyncArgs = Record<string, number>; -->
+
+<!-- тут все ключи - это строки, все значания числа -->
+<!-- Если хоть в одном месте тип не совпадает - нужно писать полностью -->
+
 <!-- ========================================================================================================================================== -->
-<!-- 34:00 -->
+
+																															<!-- Типизация createAsyncThunk -->
+
+<!-- Мы тут можем типизировать аргументы асинхронной функции - делаем это как обычно. И ответ, который мы получаем от сервера - для этого используем ключевое слово "as" и указыаем необходимый тип. В нашем случае - это массив объектов пицц, тип объекта из этого массива у нас уже есть - это TCartItem из cartSlice-->
+
+<!-- 
+type FetchAsyncArgs = Record<string,string>;
+
+export const fetchPizzasFromRedux = createAsyncThunk(
+	'pizzas/fetchPizzasFromReduxStatus',
+
+	async (params: FetchAsyncArgs, thunkAPI) => {
+		const { category, sort, order, filter, currentPage } = params;
+		const { data } = await axios.get(
+			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
+		);
+
+		if (data.length === 0) {
+			return thunkAPI.rejectWithValue('Питсы пустые');
+		}
+		return thunkAPI.fulfillWithValue(data) as TCartItem[];
+	},
+);
+ -->
+
+<!-- Можно того же результата достичь по-другому. А именно сразу задать типы в <> во время вызова createAsyncThunk (1 идет тип возвращаемого значения, следующие - типы параметров) -->
+<!-- Если с зажатым ctrl кликнуть на createAsyncThunk увидим ее код, где Returned - это возвращаемое значение, ThunkArg - аргументы функции. -->
+<!-- 
+    <Returned, ThunkArg = void>(typePrefix: string, payloadCreator: AsyncThunkPayloadCreator<Returned, ThunkArg, CurriedThunkApiConfig>, options?: AsyncThunkOptions<ThunkArg, CurriedThunkApiConfig>): AsyncThunk<Returned, ThunkArg, CurriedThunkApiConfig>;
+ -->
+
+<!-- 
+export const fetchPizzasFromRedux = createAsyncThunk<TCartItem[],Record<string,string>>(
+	'pizzas/fetchPizzasFromReduxStatus',
+
+	async (params, thunkAPI) => {
+		const { category, sort, order, filter, currentPage } = params;
+		const { data } = await axios.get(
+			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
+		);
+
+		if (data.length === 0) {
+			return thunkAPI.rejectWithValue('Питсы пустые');
+		}
+		return thunkAPI.fulfillWithValue(data);
+	},
+);
+ -->
+
+ <!-- Работать все будет так же, но если тут навести на data, то в подсказке выплывет, что data до сих пор any -->
+<!-- Поэтому мы дополнительно типизируем data-->
+
+<!-- Если кликнуть с зажатым ctrl на axios.get, то увидим такую строку -->
+<!-- 
+  get<T = any, R = AxiosResponse<T>, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<R>;
+ -->
+ <!-- где первый аргумент это T - это любой тип, и эта переменная используется потом в AxiosResponse в качестве значения для data  -->
+
+<!-- 
+export interface AxiosResponse<T = any, D = any> {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: RawAxiosResponseHeaders | AxiosResponseHeaders;
+  config: InternalAxiosRequestConfig<D>;
+  request?: any;
+}
+ -->
+
+<!-- Значит указываем тип для первого аргумента функции get -->
+
+ <!-- 
+ 		const { data } = await axios.get<TCartItem[]>(
+  -->
+
+<!-- В итоге так: -->
+<!-- 
+export const fetchPizzasFromRedux = createAsyncThunk<TCartItem[],Record<string,string>>(
+	'pizzas/fetchPizzasFromReduxStatus',
+
+	async (params, thunkAPI) => {
+		const { category, sort, order, filter, currentPage } = params;
+		const { data } = await axios.get<TCartItem[]>(
+			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
+		);
+
+		if (data.length === 0) {
+			return thunkAPI.rejectWithValue('Питсы пустые');
+		}
+		return thunkAPI.fulfillWithValue(data);
+	},
+);
+ -->
+
 <!-- ========================================================================================================================================== -->
+<!-- 49:00 -->
+																															<!-- Типизация extraReducers -->
+
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

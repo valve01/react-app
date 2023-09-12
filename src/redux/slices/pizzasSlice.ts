@@ -1,13 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
+import { TCartItem } from './cartSlice';
 
-export const fetchPizzasFromRedux = createAsyncThunk(
+
+
+
+export const fetchPizzasFromRedux = createAsyncThunk<TCartItem[],Record<string,string>>(
 	'pizzas/fetchPizzasFromReduxStatus',
 
 	async (params, thunkAPI) => {
 		const { category, sort, order, filter, currentPage } = params;
-		const { data } = await axios.get(
+		const { data } = await axios.get<TCartItem[]>(
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 		);
 

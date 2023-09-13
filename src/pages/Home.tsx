@@ -1,6 +1,6 @@
 import React from 'react';
 // ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux. Чтобы пользовать хуками из react их не нужно импортировать
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import qs from 'qs';
 import EmptyCart from '../components/EmptyCart';
@@ -14,9 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import { setActiveCategory, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzasFromRedux, selectorFilter, selectorPizzas } from '../redux/slices/pizzasSlice';
 import { list } from '../components/Sort';
+import { useAppDispatch } from '../redux/store';
 const Home: React.FC = () => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
 
 	const onChangePage = (value: number) => {
 		dispatch(setCurrentPage(value));
+		// dispatch(fetchPizzasFromRedux(value))
 	};
 
 	const fetchPizzas = async () => {
@@ -42,7 +44,7 @@ const Home: React.FC = () => {
 				sort,
 				order,
 				filter,
-				currentPage,
+				currentPage: String(currentPage),
 			}),
 		);
 	};
@@ -88,7 +90,7 @@ const Home: React.FC = () => {
 
 	const skeleton = [...new Array(4)].map((_, index) => <SkeletonPizzaBlock key={index} />);
 
-	const pizzas = items.map((obj:any) => (
+	const pizzas = items.map((obj: any) => (
 		<PizzaBlock
 			key={obj.id}
 			{...obj}

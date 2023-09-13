@@ -2317,7 +2317,7 @@ export const selectorPizzas = (state:RootState) => state.pizzas
 
 																															<!-- Типизация createAsyncThunk -->
 
-<!-- Мы тут можем типизировать аргументы асинхронной функции - делаем это как обычно. И ответ, который мы получаем от сервера - для этого используем ключевое слово "as" и указыаем необходимый тип. В нашем случае - это массив объектов пицц, тип объекта из этого массива у нас уже есть - это TCartItem из cartSlice-->
+<!-- Мы тут можем типизировать аргументы асинхронной функции - делаем это как обычно. И ответ, который мы получаем от сервера - для этого используем ключевое слово "as" и указыаем необходимый тип. В нашем случае - это массив объектов пицц, тип объекта из этого массива у нас уже есть - это PizzaItem -->
 
 <!-- 
 type FetchAsyncArgs = Record<string,string>;
@@ -2334,9 +2334,19 @@ export const fetchPizzasFromRedux = createAsyncThunk(
 		if (data.length === 0) {
 			return thunkAPI.rejectWithValue('Питсы пустые');
 		}
-		return thunkAPI.fulfillWithValue(data) as TCartItem[];
+		return thunkAPI.fulfillWithValue(data) as PizzaItem[];
 	},
 );
+
+type PizzaItem = {
+	id: string;
+	title: string;
+	price: number;
+	imageUrl: string;
+	sizes: number[];
+	types: number[];
+};
+
  -->
 
 <!-- Можно того же результата достичь по-другому. А именно сразу задать типы в <> во время вызова createAsyncThunk (1 идет тип возвращаемого значения, следующие - типы параметров) -->
@@ -2346,7 +2356,7 @@ export const fetchPizzasFromRedux = createAsyncThunk(
  -->
 
 <!-- 
-export const fetchPizzasFromRedux = createAsyncThunk<TCartItem[],Record<string,string>>(
+export const fetchPizzasFromRedux = createAsyncThunk<PizzaItem[],Record<string,string>>(
 	'pizzas/fetchPizzasFromReduxStatus',
 
 	async (params, thunkAPI) => {
@@ -2386,17 +2396,17 @@ export interface AxiosResponse<T = any, D = any> {
 <!-- Значит указываем тип для первого аргумента функции get -->
 
  <!-- 
- 		const { data } = await axios.get<TCartItem[]>(
+ 		const { data } = await axios.get<PizzaItem[]>(
   -->
 
 <!-- В итоге так: -->
 <!-- 
-export const fetchPizzasFromRedux = createAsyncThunk<TCartItem[],Record<string,string>>(
+export const fetchPizzasFromRedux = createAsyncThunk<PizzaItem[],Record<string,string>>(
 	'pizzas/fetchPizzasFromReduxStatus',
 
 	async (params, thunkAPI) => {
 		const { category, sort, order, filter, currentPage } = params;
-		const { data } = await axios.get<TCartItem[]>(
+		const { data } = await axios.get<PizzaItem[]>(
 			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 		);
 
@@ -2411,7 +2421,25 @@ export const fetchPizzasFromRedux = createAsyncThunk<TCartItem[],Record<string,s
 <!-- ========================================================================================================================================== -->
 <!-- 49:00 -->
 																															<!-- Типизация extraReducers -->
-
+<!-- Все будет типизировано автоматически, если до него все правильно типизировть -->
+<!-- 
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchPizzasFromRedux.pending, (state) => {
+				state.status = 'loading';
+				state.items = [];
+			})
+			.addCase(fetchPizzasFromRedux.fulfilled, (state, action) => {
+				state.items = action.payload;
+				state.status = 'success';
+			})
+			.addCase(fetchPizzasFromRedux.rejected, (state, action) => {
+				state.status = 'error';
+				state.items = [];
+			});
+	},
+}
+ -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

@@ -37,7 +37,6 @@ const Home: React.FC = () => {
 		const filter = searchValue ? searchValue : '';
 
 		dispatch(
-			// @ts-ignore
 			fetchPizzasFromRedux({
 				category,
 				sort,

@@ -11,8 +11,18 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { useNavigate } from 'react-router-dom';
 
-import { setActiveCategory, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzasFromRedux, selectorFilter, selectorPizzas } from '../redux/slices/pizzasSlice';
+import {
+	IFilterSliceState,
+	setActiveCategory,
+	setCurrentPage,
+	setFilters,
+} from '../redux/slices/filterSlice';
+import {
+	fetchPizzasFromRedux,
+	SearchPizzaParams,
+	selectorFilter,
+	selectorPizzas,
+} from '../redux/slices/pizzasSlice';
 import { list } from '../components/Sort';
 import { useAppDispatch } from '../redux/store';
 const Home: React.FC = () => {
@@ -34,14 +44,14 @@ const Home: React.FC = () => {
 
 	const fetchPizzas = async () => {
 		const category = activeCategory > 0 ? `category=${activeCategory}` : '';
-		const sort = sortType.sortProperty.replace('-', '');
+		const sortBy = sortType.sortProperty.replace('-', '');
 		const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
 		const filter = searchValue ? searchValue : '';
 
 		dispatch(
 			fetchPizzasFromRedux({
 				category,
-				sort,
+				sortBy,
 				order,
 				filter,
 				currentPage: String(currentPage),
@@ -53,10 +63,25 @@ const Home: React.FC = () => {
 	React.useEffect(() => {
 		if (window.location.search) {
 			// console.log(window.location.search);
-			const params = qs.parse(window.location.search.substring(1));
-			const sortType = list.find((obj) => obj.sortProperty === params.sortProperty);
-			console.log(params, sortType);
-			dispatch(setFilters({ ...params, sortType }));
+			const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
+			const sortType = list.find((obj) => obj.sortProperty === params.sortBy);
+
+			// console.log(params, sortType);
+
+			// if (sortType){
+			// 	params.sort = sortType
+			// }
+
+			dispatch(
+				setFilters({
+					sortType: sortType || list[0],
+					activeCategory: Number(params.category),
+					searchValue: params.search,
+					currentPage: Number(params.currentPage),
+				}),
+			);
+			// 			dispatch(setFilters({ ...params, sortType } as unknown as IFilterSliceState));
+
 			isSearch.current = true;
 		}
 		// eslint-disable-next-line

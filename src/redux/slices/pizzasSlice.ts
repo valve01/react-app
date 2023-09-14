@@ -2,13 +2,23 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
 
+
+export type SearchPizzaParams = {
+	search: string;
+	category: string;
+	sortBy: string;
+	order: string;
+	filter: string;
+	currentPage: string;
+};
+
 export const fetchPizzasFromRedux = createAsyncThunk<PizzaItem[], Record<string, string>>(
 	'pizzas/fetchPizzasFromReduxStatus',
 
 	async (params, thunkAPI) => {
-		const { category, sort, order, filter, currentPage } = params;
+		const { category, sortBy, order, filter, currentPage } = params;
 		const { data } = await axios.get<PizzaItem[]>(
-			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sort}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
+			`https://64845cf9ee799e3216269459.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}&filter=${filter}&page=${currentPage}&limit=4`,
 		);
 
 		if (data.length === 0) {

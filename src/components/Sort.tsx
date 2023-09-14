@@ -1,21 +1,20 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectorSort, setActiveSortType } from '../redux/slices/filterSlice';
+import {  SortPropertyEnum, selectorSort, setActiveSortType } from '../redux/slices/filterSlice';
 
-export type SortItem = {
-	name: string;
-	sortProperty: string;
-};
+export type SortItem = 
+	{name: string;
+	sortProperty: SortPropertyEnum }
 
 export const list: SortItem[] = [
 	// Чтобы прикрутить логику, что если выбираем "популярности"- сортировать по полю rating, "цене" - по полю price, "алфавиту" - title. Создаем массив объектов и исправляем весь код ниже в соответствии с этими объектами -->
-	{ name: 'популярности (сначала популярные)', sortProperty: 'rating' },
-	{ name: 'популярности (сначала непопулярные)', sortProperty: '-rating' },
-	{ name: 'цене (сначала дороже)', sortProperty: 'price' },
-	{ name: 'цене (сначала дешевле)', sortProperty: '-price' },
-	{ name: 'алфавиту (А-Я)', sortProperty: '-title' },
-	{ name: 'алфавиту (Я-А)', sortProperty: 'title' },
+	{ name: 'популярности (сначала популярные)', sortProperty: SortPropertyEnum.RATING_DESC },
+	{ name: 'популярности (сначала непопулярные)', sortProperty: SortPropertyEnum.RATING_ASC },
+	{ name: 'цене (сначала дороже)', sortProperty: SortPropertyEnum.PRICE_DESC },
+	{ name: 'цене (сначала дешевле)', sortProperty: SortPropertyEnum.PRICE_ASC },
+	{ name: 'алфавиту (А-Я)', sortProperty: SortPropertyEnum.TITLE_DESC },
+	{ name: 'алфавиту (Я-А)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
 function Sort() {

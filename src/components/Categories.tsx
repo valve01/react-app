@@ -1,5 +1,5 @@
 import { useWhyDidYouUpdate } from 'ahooks';
-import React, { useCallback } from 'react';
+import React from 'react';
 
 type CategoriesProps = {
 	activeCategory: number;
@@ -7,7 +7,7 @@ type CategoriesProps = {
 };
 
 
-const Categories: React.FC<CategoriesProps> = ({ activeCategory, onClickSetActiveCategory }) => {
+const Categories: React.FC<CategoriesProps> = React.memo(({ activeCategory, onClickSetActiveCategory }) => {
 	// Вариант типизации похуже
 	// const Categories: React.FC = ({ activeCategory, onClickSetActiveCategory }: CategoriesProps) => {
 
@@ -34,6 +34,6 @@ const Categories: React.FC<CategoriesProps> = ({ activeCategory, onClickSetActiv
 			</ul>
 		</div>
 	);
-};
+})
 
 export default Categories;

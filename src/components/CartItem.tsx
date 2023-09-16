@@ -17,12 +17,18 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, t
 	const dispatch = useDispatch();
 
 	const onClickPlus = () => {
-		dispatch(addItem({
-			id
-		} as TCartItem));
+		dispatch(
+			addItem({
+				id,
+			} as TCartItem),
+		);
 	};
 	const onClickMinus = () => {
-		dispatch(minusItem(id));
+		if (count > 0) {
+			dispatch(minusItem(id));
+		}else{
+			dispatch(removeItem(id));
+		}
 	};
 	const onClickRemove = () => {
 		if (window.confirm('Вы действительно хотите удалить этот товар?')) {

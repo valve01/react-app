@@ -21,10 +21,17 @@ const initialState: ICartSliceState = {
 	totalPrice: 0,
 };
 
+
+
 export const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
+
+		totalPriceChange(state){state.totalPrice = state.items.reduce((sum, obj) => {
+			return sum + obj.price * obj.count;
+		}, 0);},
+
 		addItem(state, action: PayloadAction<TCartItem>) {
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
@@ -44,10 +51,16 @@ export const cartSlice = createSlice({
 			if (findItem) {
 				findItem.count--;
 			}
+			state.totalPrice = state.items.reduce((sum, obj) => {
+				return sum + obj.price * obj.count;
+			}, 0);
 		},
 
 		removeItem(state, action: PayloadAction<string>) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
+			state.totalPrice = state.items.reduce((sum, obj) => {
+				return sum + obj.price * obj.count;
+			}, 0);
 		},
 
 		clearItems(state) {

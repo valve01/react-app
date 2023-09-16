@@ -24,6 +24,8 @@ const Cart: React.FC = () => {
 	if (items.length === 0) {
 		return <EmptyCart />;
 	}
+	// eslint-disable-next-line
+	// React.useEffect(() => {}, [totalCount]);
 
 	return (
 		<div className="container container--cart">

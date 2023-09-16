@@ -2525,18 +2525,112 @@ import { useAppDispatch } from '../redux/store';
 		dispatch(
 			fetchPizzasFromRedux({
 				category,
-				sort,
+				sortBy,
 				order,
 				filter,
-				currentPage,
+				currentPage: String(currentPage),
 			}),
 		);
  -->
 <!-- ========================================================================================================================================== -->
 <!-- 1:14:50 -->
 <!-- ========================================================================================================================================== -->
-																															<!-- Типизация const -->
+																															<!-- Типизация qs.parse -->
 
+<!-- qs.parse вернет тип 'Parded.Qs, а нам нужно, чтобы передавать в функцию setFilters тип IFilterSliceState.    -->
+
+<!-- тип 'Parded.Qs имеет такой вид -->
+<!-- 
+interface ParsedQs { [key: string]: undefined | string | string[] | ParsedQs | ParsedQs[] }
+ -->
+
+<!-- Диспатчим мы это -->
+<!-- 
+			dispatch(
+				setFilters({
+        ...params, sortType
+				}),
+			);
+ -->
+
+<!-- Также Из-за того что в url мы используем sortBy, а в редаксе сохраняли sortProperty у нас возникли проблемы. Нам теперь нужно либо привести названия переменных к единому, либо создать специальный тип для всего того, что у нас сохраняется в url -->
+
+<!-- Создаем тип для url параметров -->
+<!-- 
+export type SearchPizzaParams = {
+	search: string;
+	category: string;
+	sortBy: string;
+	order: string;
+	filter: string;
+	currentPage: string;
+};
+ -->
+
+<!-- Просто назначить тип SearchPizzaParams для params нельзя, т.к. когда у нас пустая адресная строка в нем не содержатся ключи, которые есть в SearchPizzaParams -->
+
+<!-- 
+			const params: SearchPizzaParams = qs.parse(window.location.search.substring(1));   // Ошибка
+			const params = qs.parse(window.location.search.substring(1)) as SearchPizzaParams; // Ошибка
+ -->
+<!-- Для таких случаев есть лайвхак: сначала все что вернет qs.parse преобразуем в тип unknown (т.е. превращаем в неизвестно что, теперь можно с этим делать что хочешь) и только потом все это в тип SearchPizzaParams -->
+<!-- 
+			const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
+ -->
+
+
+<!-- Делаем согласованность, чтобы в params искалось sortBy, и в SearchPizzaParams был sortBy -->
+<!-- 
+			const sortType = list.find((obj) => obj.sortProperty === params.sortBy);
+ -->
+
+<!-- Теперь в dispatch мы будем передавать объект с типизированным каждым ключом, которые ожидает IFilterSliceState: в левой части у нас то что мы передаем в редакс, а в правой то что мы спарсили, местами преобразованное. Получается мы из url парсим строчки, но в редакс сохраняем так, как требует от нас редакс -->
+<!-- 
+			dispatch(
+				setFilters({
+					sortType,
+					activeCategory: Number(params.category),
+					searchValue: params.search,
+					currentPage: Number(params.currentPage),
+				}),
+			);
+ -->
+<!--  sortType из-за метода find может вернуть sortType или undefined, поэтому назначим ему первый объект из list, если find ничего не найдет в url (т.е по умолчанию сортировка будет по RATING_DESC -->
+<!--     sortType: sortType ? sortType : list[0] -->
+<!-- тоже самое короче -->
+<!-- 		sortType: sortType || list[0], -->
+
+<!-- В итоге будем передавать так -->
+<!-- 
+			dispatch(
+				setFilters({
+					sortType: sortType || list[0],
+					activeCategory: Number(params.category),
+					searchValue: params.search,
+					currentPage: Number(params.currentPage),
+				}),
+			);
+ -->
+
+<!-- ========================================================================================================================================== -->
+
+<!-- 
+	const onClickPlus = () => {
+		dispatch(addItem({
+			id
+		} ));
+	};
+ -->
+
+<!--  ругается addItem в CartItem.tsx. Т.к редакс ожидает TCartItem, а мы передаем id в виде строки, т.к. нам нет необходимости целый объект передавать. Можно конечно это сделать, но мы просто обхитрим TS через as -->
+
+<!-- 
+	const onClickPlus = () => {
+		dispatch(addItem({
+			id
+		} as TCartItem));
+	};
+ -->
 
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

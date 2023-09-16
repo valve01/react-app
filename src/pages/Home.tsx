@@ -1,7 +1,5 @@
 import React from 'react';
-// ReduxToolkit - это JS библиотека, НЕ React библиотека => В ней нет хуков. Хуки берем из react-redux. Чтобы пользовать хуками из react их не нужно импортировать
 import { useSelector } from 'react-redux';
-
 import qs from 'qs';
 import EmptyCart from '../components/EmptyCart';
 import PizzaBlock from '../components/PizzaBlock';
@@ -11,12 +9,7 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { useNavigate } from 'react-router-dom';
 
-import {
-	IFilterSliceState,
-	setActiveCategory,
-	setCurrentPage,
-	setFilters,
-} from '../redux/slices/filterSlice';
+import { setActiveCategory, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import {
 	fetchPizzasFromRedux,
 	SearchPizzaParams,
@@ -58,19 +51,11 @@ const Home: React.FC = () => {
 			}),
 		);
 	};
-	// Последовательность логики при работе с адресной строкой
-	// 1 Если был первый рендер, то проверяем url-параметры и сохраняем в редаксе(актуально если нужно по ссылке загрузить сайт с параметрами настроенными)
+
 	React.useEffect(() => {
 		if (window.location.search) {
-			// console.log(window.location.search);
 			const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
 			const sortType = list.find((obj) => obj.sortProperty === params.sortBy);
-
-			// console.log(params, sortType);
-
-			// if (sortType){
-			// 	params.sort = sortType
-			// }
 
 			dispatch(
 				setFilters({
@@ -86,8 +71,6 @@ const Home: React.FC = () => {
 		}
 		// eslint-disable-next-line
 	}, []);
-	// 2 Если первого рендера не было, ( а по умолчанию так и есть) тогда ничего вшиваться в url не будет, но теперь то мы знаем что первый рендер произошел и ставим флаг isMounted.current = true. (Помним что useEffect отработает при первом рендере, даже если в его зависимостях не будет изменений).
-	// 3. Теперь флаг = true и Если же теперь изменяться зависимости пользователем, то параметры будут вшиваться в url
 
 	React.useEffect(() => {
 		if (isMounted.current) {
@@ -96,19 +79,18 @@ const Home: React.FC = () => {
 				activeCategory: activeCategory,
 				currentPage: currentPage,
 			});
-			// console.log(queryString);
+
 			navigate(`?${queryString}`);
 		}
 		isMounted.current = true;
 		// eslint-disable-next-line
 	}, [activeCategory, sortType, searchValue, currentPage]);
-	// 4 Тут идет проверка, если параметры были при первом рендере в url, то запрос не отправляй, но флаг, что теперь параметров в url нет в любом случае все же выстави в false : isSearch.current = false. И когда другой useEffect заставит приложение перерисоваться, и флаг у нас уже переключен в false, тогда запрос отправится
+
 	React.useEffect(() => {
 		window.scrollTo(0, 0);
 		if (!isSearch.current) {
 			fetchPizzas();
 		}
-
 		isSearch.current = false;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeCategory, sortType, searchValue, currentPage]);

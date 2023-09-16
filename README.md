@@ -2645,7 +2645,7 @@ export type SearchPizzaParams = {
 				>
  -->
 
-<!-- теперь можно и стили ей прикрутить для атрибута disabled -->
+<!-- теперь можно и стили ей прикрутить для атрибута :disabled -->
 																															<!-- clsx/classnames -->
 
 <!-- npm i clsx -->
@@ -2666,6 +2666,8 @@ https://www.npmjs.com/package/classnames
 <!-- 
 					className={clsx("button button--outline button--circle cart__item-count-minus", {"cart__item-count-minus--disabled": count===1})}
  -->
+ <!-- Теперь можно прикручивать стили для класса: -->
+ <!-- cart__item-count-minus--disabled -->
 <!-- ========================================================================================================================================== -->
 
 

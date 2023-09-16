@@ -18,6 +18,7 @@ import {
 } from '../redux/slices/pizzasSlice';
 import { list } from '../components/Sort';
 import { useAppDispatch } from '../redux/store';
+import { useWhyDidYouUpdate } from 'ahooks';
 const Home: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -26,9 +27,9 @@ const Home: React.FC = () => {
 	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
 	const { items, status } = useSelector(selectorPizzas);
 
-	const onClickSetActiveCategory = (index: number) => {
+	const onClickSetActiveCategory = React.useCallback((index: number) => {
 		dispatch(setActiveCategory(index));
-	};
+	},[])
 
 	const onChangePage = (value: number) => {
 		dispatch(setCurrentPage(value));
@@ -103,6 +104,11 @@ const Home: React.FC = () => {
 			{...obj}
 		/>
 	));
+
+// console.log(activeCategory)
+
+
+
 	return (
 		<>
 			<div className="container">

@@ -24,12 +24,9 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, t
 		);
 	};
 	const onClickMinus = () => {
-		if (count > 0) {
-			dispatch(minusItem(id));
-		}else{
-			dispatch(removeItem(id));
-		}
+		dispatch(minusItem(id));
 	};
+
 	const onClickRemove = () => {
 		if (window.confirm('Вы действительно хотите удалить этот товар?')) {
 			dispatch(removeItem(id));
@@ -54,7 +51,8 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, t
 				</p>
 			</div>
 			<div className="cart__item-count">
-				<div
+				<button
+					disabled={count === 1}
 					onClick={onClickMinus}
 					className="button button--outline button--circle cart__item-count-minus"
 				>
@@ -74,10 +72,10 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, t
 							fill="#EB5A1E"
 						/>
 					</svg>
-				</div>
+				</button>
 				{/* <b>2</b> */}
 				<b>{count}</b>
-				<div
+				<button
 					onClick={onClickPlus}
 					className="button button--outline button--circle cart__item-count-plus"
 				>
@@ -97,7 +95,7 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, t
 							fill="#EB5A1E"
 						/>
 					</svg>
-				</div>
+				</button>
 			</div>
 			<div className="cart__item-price">
 				{/* <b>770 ₽</b> */}

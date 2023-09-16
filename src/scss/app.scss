@@ -4,7 +4,6 @@
 
 @import './components/all.scss';
 
-
 body {
 	background-color: $background;
 }
@@ -78,9 +77,8 @@ body {
 .cart {
 	.content__items {
 		display: block;
-		
 	}
-	
+
 	&__top {
 		display: flex;
 		justify-content: space-between;
@@ -184,6 +182,20 @@ body {
 				svg {
 					path:first-of-type {
 						display: none;
+					}
+				}
+				&:disabled {
+					svg path {
+						fill: #8d8d8d;
+					}
+
+					&:active {
+						transform: none;
+					}
+					border-color: #8d8d8d;
+					opacity: 0.3;
+					&:hover {
+						background-color: transparent;
 					}
 				}
 			}

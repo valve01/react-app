@@ -28,9 +28,7 @@ export const cartSlice = createSlice({
 	initialState,
 	reducers: {
 
-		totalPriceChange(state){state.totalPrice = state.items.reduce((sum, obj) => {
-			return sum + obj.price * obj.count;
-		}, 0);},
+
 
 		addItem(state, action: PayloadAction<TCartItem>) {
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);

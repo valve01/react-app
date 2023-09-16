@@ -2633,8 +2633,39 @@ export type SearchPizzaParams = {
  -->
 
 																															<!-- Фикс кнопки - -->
-																															<!-- clsx -->
 
+<!-- Чтобы отключить кнопку достаточно прописать ей параметр disabled по условию -->
+
+
+<!-- 
+          <button
+					disabled={count === 1}
+					onClick={onClickMinus}
+					className="button button--outline button--circle cart__item-count-minus"
+				>
+ -->
+
+<!-- теперь можно и стили ей прикрутить для атрибута disabled -->
+																															<!-- clsx/classnames -->
+
+<!-- npm i clsx -->
+
+clsx
+https://www.npmjs.com/package/clsx
+<!--  Это библиотека для js для работы с классами -->
+
+classnames
+https://www.npmjs.com/package/classnames
+<!--  Это библиотека для js для работы с классами -->
+
+<!-- каждая из этих библиотек это по сути функция, которая возвращает строку, а передать в нее можно строки с условиями -->
+
+
+<!-- Пример в CartItem.tsx -->
+<!-- Теперь clsx вернет первый аргумент, а второй прибавит, только при выполнении условия -->
+<!-- 
+					className={clsx("button button--outline button--circle cart__item-count-minus", {"cart__item-count-minus--disabled": count===1})}
+ -->
 <!-- ========================================================================================================================================== -->
 
 

@@ -29,8 +29,9 @@ function Header() {
 	useEffect(() => {
 
 const jsonItems = JSON.stringify(items)
-console.log(jsonItems)
-	}, [totalPrice,items]);
+window.localStorage.setItem('cart',jsonItems)
+// console.log(jsonItems)
+	}, [totalPrice,items]); 
 
 	return (
 		<div className="header">

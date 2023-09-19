@@ -1,11 +1,9 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {  SortPropertyEnum, selectorSort, setActiveSortType } from '../redux/slices/filterSlice';
+import { SortPropertyEnum, selectorSort, setActiveSortType } from '../redux/slices/filterSlice';
 
-export type SortItem = 
-	{name: string;
-	sortProperty: SortPropertyEnum }
+export type SortItem = { name: string; sortProperty: SortPropertyEnum };
 
 export const list: SortItem[] = [
 	// Чтобы прикрутить логику, что если выбираем "популярности"- сортировать по полю rating, "цене" - по полю price, "алфавиту" - title. Создаем массив объектов и исправляем весь код ниже в соответствии с этими объектами -->
@@ -17,7 +15,7 @@ export const list: SortItem[] = [
 	{ name: 'алфавиту (Я-А)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-function Sort() {
+const Sort: React.FC = React.memo(() => {
 	const activeSort = useSelector(selectorSort);
 	// 	const activeSort = useSelector((state) => state.filter.sortType);
 	const dispatch = useDispatch();
@@ -33,11 +31,10 @@ function Sort() {
 	const sortRef = useRef<HTMLDivElement>(null);
 
 	React.useEffect(() => {
-
 		type popupCloserEvent = MouseEvent & {
 			composedPath: Node[];
 		};
-		
+
 		const popupCloser = (event: MouseEvent) => {
 			const _event = event as popupCloserEvent;
 			if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
@@ -111,5 +108,5 @@ function Sort() {
 			)} */}
 		</div>
 	);
-}
+});
 export default Sort;

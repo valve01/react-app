@@ -1,4 +1,4 @@
-import { useWhyDidYouUpdate } from 'ahooks';
+// import { useWhyDidYouUpdate } from 'ahooks';
 import React from 'react';
 
 type CategoriesProps = {
@@ -13,7 +13,7 @@ const Categories: React.FC<CategoriesProps> = React.memo(({ activeCategory, onCl
 
 	const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-	useWhyDidYouUpdate("Categories", {activeCategory, onClickSetActiveCategory})
+	// useWhyDidYouUpdate("Categories", {activeCategory, onClickSetActiveCategory})
 
 	return (
 		<div className="categories">

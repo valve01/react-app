@@ -26,7 +26,11 @@ function Header() {
 		return sum + item.count;
 	}, 0);
 
-	useEffect(() => {}, [totalPrice]);
+	useEffect(() => {
+
+const jsonItems = JSON.stringify(items)
+console.log(jsonItems)
+	}, [totalPrice,items]);
 
 	return (
 		<div className="header">

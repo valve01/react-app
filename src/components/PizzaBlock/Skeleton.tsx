@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ContentLoader from 'react-content-loader';
 // Чтобы воспользоваться скелетоном нужно установить библиотеку react-content-loader
 // npm i react-content-loader

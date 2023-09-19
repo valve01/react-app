@@ -1,4 +1,4 @@
-
+import { TCartItem } from '../redux/slices/cart/types';
 import { calcTotalPrice } from './calcTotalPrice';
 
 export const getCartFromLS = () => {
@@ -6,5 +6,6 @@ export const getCartFromLS = () => {
 
 	const items = cartLS ? JSON.parse(cartLS) : [];
 	const totalPrice = calcTotalPrice(items);
-	return { totalPrice, items };
+	// JSON.parse не знает какой тип он получит, поэтому результат типизируем сами
+	return { totalPrice, items: items as TCartItem[] };
 };

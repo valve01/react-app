@@ -4,6 +4,7 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { selectorCart } from '../redux/slices/cartSlice';
+import React from 'react';
 // Чтобы воспользоваться роутером без перезагрузки страницы целиком-импоритруем Link из react-router-dom
 // Теперь оборачиваем элемент, по которому мы ожидаем клик в компонент Link
 
@@ -26,12 +27,16 @@ function Header() {
 		return sum + item.count;
 	}, 0);
 
-	useEffect(() => {
+	const isMounted = React.useRef(false);
 
-const jsonItems = JSON.stringify(items)
-window.localStorage.setItem('cart',jsonItems)
-// console.log(jsonItems)
-	}, [totalPrice,items]); 
+	useEffect(() => {
+		if (isMounted.current) {
+			const jsonItems = JSON.stringify(items);
+			window.localStorage.setItem('cart', jsonItems);
+		}
+		isMounted.current = true;
+		// console.log(jsonItems)
+	}, [totalPrice, items]);
 
 	return (
 		<div className="header">

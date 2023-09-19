@@ -2800,6 +2800,53 @@ window.localStorage.setItem('cart',jsonItems)
 <!-- redux Persist -->
 <!-- подробнее о using Redux Toolkit Persist in React -->
 <!-- https://blog.logrocket.com/persist-state-redux-persist-redux-toolkit-react/ -->
+
+
+
+
+<!-- В слайсах не стоит делать сайд эффекты поэтому localStorage мы в них делать не будем -->
+<!-- Делаем флаг и ставим его в false -->
+<!-- Пре первоначальном рендере флаг останется false и localStorage.setItem не отработает -->
+<!-- В конец useEffect переключаем флаг,   -->
+<!-- теперь localStorage.setItem будет отрабатывать только на перерендерах и сохраненные пиццы не будут заменяться на пустой массив -->
+
+<!-- 
+	const isMounted = React.useRef(false);
+
+	useEffect(() => {
+		if (isMounted.current) {
+			const jsonItems = JSON.stringify(items);
+			window.localStorage.setItem('cart', jsonItems);
+		}
+		isMounted.current = true;
+		// console.log(jsonItems)
+	}, [totalPrice, items]);
+ -->
+
+<!-- В данный момент вся нужная информация хранится и обновляется localStorage, осталось пропихнуть ее в редакс -->
+
+<!-- Идем в CartSlice и  меняем initialState -->
+<!-- 
+const initialState: ICartSliceState = {
+	items: JSON.parse(localStorage.getItem('cart')) || [],
+	totalPrice: 0,
+};
+ -->
+
+<!-- Теперь TS говорит что parse не может принимать потенциальный null -->
+
+<!-- Чтобы решать подобные проблемы нужно создать функцию , (которую мы будем передавать в initialState.items ) -->
+<!-- в ней создаем промежуточную переменную cartLS, которой присвоим значение, которое потенциально может быть null-->
+<!-- Теперь делаем проверку, если переменная не null, то парсим ее и возвращаем результат, иначе возвращаем допустимое значени (в нашем случае []) -->
+<!-- 
+export const getCartFromLS = () => {
+	const cartLS = localStorage.getItem('cart');
+	return cartLS ? JSON.parse(cartLS) : [];
+};
+ -->
+
+<!-- Работает, но totalPrice не сохранятеся и при первом рендере = 0 -->
+
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

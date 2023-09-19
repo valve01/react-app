@@ -3,8 +3,6 @@ import { getCartFromLS } from '../../../utils/getCartFromLocalStorage';
 import { calcTotalPrice } from '../../../utils/calcTotalPrice';
 import { ICartSliceState, TCartItem } from './types';
 
-
-
 const { items, totalPrice } = getCartFromLS();
 
 const initialState: ICartSliceState = {

@@ -2846,6 +2846,46 @@ export const getCartFromLS = () => {
  -->
 
 <!-- Работает, но totalPrice не сохранятеся и при первом рендере = 0 -->
+<!-- 18:30 -->
+
+<!-- Меняем функцию getCartFromLS -->
+
+
+<!-- 
+export const getCartFromLS = () => {
+	const cartLS = localStorage.getItem('cart');
+	const items = cartLS ? JSON.parse(cartLS) : [];
+	//Создаем новую функцию, выносим в отдельный файл, в ней будет проходить подсчет totalPrice (воруем ее из cartSlice)
+	//Добавляем переменную в которой будет записан результат вычислений totalPrice
+	const totalPrice = calcTotalPrice(items);
+	// Возвращаем теперь объект в котором есть и totalPrice и items, соответсвенно извлекать тоже будет из объекта (сделаем деструктуризацию)
+	// JSON.parse не знает какой тип он получит, поэтому результат типизируем сами
+	return { totalPrice, items: items as TCartItem[] };
+};
+ -->
+
+<!-- подсчет totalPrice - новая функция calcTotalPrice() -->
+<!-- 
+import { TCartItem } from '../redux/slices/cart/types';
+
+export const calcTotalPrice = (items: TCartItem[]) => {
+	return items.reduce((sum, obj) => {
+		return sum + obj.price * obj.count;
+	}, 0);
+};
+ -->
+
+ <!-- В cartSlice вытаскиваем деструктуризацией items, totalPrice и пропихиваем их в initialState -->
+<!-- 
+
+const { items, totalPrice } = getCartFromLS();
+
+const initialState: ICartSliceState = {
+	items,
+	totalPrice,
+};
+ -->
+
 <!-- 23:14 у меня готово, дальше структурирование -->
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

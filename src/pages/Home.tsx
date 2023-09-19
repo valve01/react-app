@@ -9,6 +9,7 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { useNavigate } from 'react-router-dom';
 
+// import { add } from '../utils/math';
 import { setActiveCategory, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import {
 	fetchPizzasFromRedux,
@@ -18,18 +19,23 @@ import {
 } from '../redux/slices/pizzasSlice';
 import { list } from '../components/Sort';
 import { useAppDispatch } from '../redux/store';
-import { useWhyDidYouUpdate } from 'ahooks';
+// import { useWhyDidYouUpdate } from 'ahooks';
 const Home: React.FC = () => {
+
+	import("../utils/math").then(math => {
+		console.log(math.add(2222, 4444));
+	});
+
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 	const { sortType, activeCategory, currentPage, searchValue } = useSelector(selectorFilter);
 	const { items, status } = useSelector(selectorPizzas);
-
+	// add(7777, 9999);
 	const onClickSetActiveCategory = React.useCallback((index: number) => {
 		dispatch(setActiveCategory(index));
-	},[])
+	}, []);
 
 	const onChangePage = (value: number) => {
 		dispatch(setCurrentPage(value));
@@ -105,9 +111,7 @@ const Home: React.FC = () => {
 		/>
 	));
 
-// console.log(activeCategory)
-
-
+	// console.log(activeCategory)
 
 	return (
 		<>

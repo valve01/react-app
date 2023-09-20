@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-export const FullPizza: React.FC = () => {
+ const FullPizza: React.FC = () => {
 	const [pizza, setPizza] = React.useState<{
 		imageUrl: string;
 		title: string;
@@ -47,4 +47,4 @@ export const FullPizza: React.FC = () => {
 	}
 };
 
-
+export default FullPizza

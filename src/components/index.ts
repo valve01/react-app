@@ -47,7 +47,7 @@ export * from './PizzaBlock/Skeleton';
 export * from './CartItem';
 export * from './Categories';
 export * from './EmptyCart';
-export * from './FullPizza';
+// export * from './FullPizza';
 export * from './Header';
 export * from './Sort';
 export * from './Pagination';

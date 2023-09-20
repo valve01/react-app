@@ -17,7 +17,7 @@ import React from 'react';
 // Т.к. мы теперь будем доставать searchValue, setSearchValue из context - больше не нужно из извлекать из пропсов. И не нужно дальше передавать их в Search.jsx
 // function Header({ searchValue, setSearchValue }) {
 
-function Header() {
+const Header: React.FC = () => {
 	const { totalPrice, items } = useSelector(selectorCart);
 	// const pathname = window.location.pathname;
 	// console.log(pathname);
@@ -100,5 +100,5 @@ function Header() {
 			</div>
 		</div>
 	);
-}
+};
 export default Header;

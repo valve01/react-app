@@ -1,13 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import qs from 'qs';
-import EmptyCart from '../components/EmptyCart';
-import PizzaBlock from '../components/PizzaBlock';
-import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import Pagination from '../components/Pagination';
 import { useNavigate } from 'react-router-dom';
+
+import {
+	EmptyCart,
+	PizzaBlock,
+	SkeletonPizzaBlock,
+	Categories,
+	Sort,
+	Pagination,
+} from '../components';
+// import PizzaBlock from '../components/PizzaBlock';
+// import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
+// import Categories from '../components/Categories';
+// import Sort from '../components/Sort';
+// import Pagination from '../components/Pagination';
 
 // import { add } from '../utils/math';
 import { setActiveCategory, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
@@ -21,7 +29,6 @@ import { list } from '../components/Sort';
 import { useAppDispatch } from '../redux/store';
 // import { useWhyDidYouUpdate } from 'ahooks';
 const Home: React.FC = () => {
-
 	// import("../utils/math").then(math => {
 	// 	console.log(math.add(2222, 4444));
 	// });

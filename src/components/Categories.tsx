@@ -7,7 +7,7 @@ type CategoriesProps = {
 };
 
 
-const Categories: React.FC<CategoriesProps> = React.memo(({ activeCategory, onClickSetActiveCategory }) => {
+export const Categories: React.FC<CategoriesProps> = React.memo(({ activeCategory, onClickSetActiveCategory }) => {
 	// Вариант типизации похуже
 	// const Categories: React.FC = ({ activeCategory, onClickSetActiveCategory }: CategoriesProps) => {
 
@@ -36,4 +36,4 @@ const Categories: React.FC<CategoriesProps> = React.memo(({ activeCategory, onCl
 	);
 })
 
-export default Categories;
+

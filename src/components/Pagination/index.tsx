@@ -20,7 +20,7 @@ type PaginationBlockProps = { onChangePage: (page: number) => void };
 // Можно оставить вызов функции обязательными, сделать передачу параметров опциональными. Также испольузуется ? перед :
 // type PaginationBlockProps = { onChangePage: (page?: number) => void };
 
-const PaginationBlock: React.FC<PaginationBlockProps> = ({ onChangePage }) => {
+export const PaginationBlock: React.FC<PaginationBlockProps> = ({ onChangePage }) => {
 	// Помним что в value будет помещен номер страницы, это сделала библиотека '@mui/material/styles', потому что мы пользуемся ее компонентном Pagination
 
 	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -51,4 +51,4 @@ const PaginationBlock: React.FC<PaginationBlockProps> = ({ onChangePage }) => {
 	);
 };
 
-export default PaginationBlock;
+

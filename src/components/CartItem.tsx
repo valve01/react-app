@@ -14,7 +14,7 @@ type CartItemProps = {
 	count: number;
 };
 
-const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, type, count }) => {
+export const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, type, count }) => {
 	// const cartItems = useSelector((state) => state.cart.items);
 	const dispatch = useDispatch();
 
@@ -130,4 +130,3 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, imageUrl, size, t
 	);
 };
 
-export default CartItem;

@@ -18,7 +18,14 @@ type PizzaBlockProps = {
 	types: number[];
 };
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({
+	id,
+	title,
+	price,
+	imageUrl,
+	sizes,
+	types,
+}) => {
 	// function PizzaBlock(props) {
 
 	// Делаем логику счетчику на кнопке добавить
@@ -142,5 +149,3 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
 		</div>
 	);
 };
-
-export default PizzaBlock;

@@ -3131,11 +3131,39 @@ export { default as NotFoundBlock } from './NotFoundBlock'; -->
 	Pagination,
 } from '../components';
   -->
-    																														<!--  barrel export react  -->
+    																														<!--  barrel export   -->
 
 https://blog.logrocket.com/using-barrel-exports-organize-react-components/
+
+https://basarat.gitbook.io/typescript/main-1/barrel
+
+<!-- самый модный способ консолидации импортов в один файл -->
 <!-- 
 barrel позволяет нам консолидировать или объединять экспорт из нескольких файлов или модулей в один модуль. Баррелы оптимизируют импорт, упрощают экспорт и помогают нам избежать беспорядка в нашей кодовой базе.
+ -->
+
+<!-- Убираем экспорты по умолчанию в компонентах и делаем именованные экспорты -->
+<!-- + в index.ts в components делаем barrel export -->
+
+<!-- По сути это то же самое, что -->
+<!-- 
+import * as baz from './baz'; // import as a name
+export { baz }; // export the name
+ -->
+
+<!-- Только короче и вроде в бандл не будет лишнее грузится (а будет как при декларативном импорте(обычном импорте)) -->
+
+<!-- 
+export * from './PizzaBlock';
+export * from './PizzaBlock/Skeleton';
+export * from './CartItem';
+export * from './Categories';
+export * from './EmptyCart';
+export * from './FullPizza';
+export * from './Header';
+export * from './Sort';
+export * from './Pagination';
+export * from './NotFoundBlock';
  -->
 
 <!-- ========================================================================================================================================== -->

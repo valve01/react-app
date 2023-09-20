@@ -9,7 +9,7 @@ import {
 	SkeletonPizzaBlock,
 	Categories,
 	Sort,
-	Pagination,
+	PaginationBlock,
 } from '../components';
 // import PizzaBlock from '../components/PizzaBlock';
 // import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
 				) : (
 					<>
 						<h2 className="content__title">Все пиццы</h2>
-						<Pagination onChangePage={onChangePage} />
+						<PaginationBlock onChangePage={onChangePage} />
 						<div className="content__items">{status === 'success' ? pizzas : skeleton}</div>
 					</>
 				)}

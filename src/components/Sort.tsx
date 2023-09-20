@@ -15,7 +15,7 @@ export const list: SortItem[] = [
 	{ name: 'алфавиту (Я-А)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-const Sort: React.FC = React.memo(() => {
+export const Sort: React.FC = React.memo(() => {
 	const activeSort = useSelector(selectorSort);
 	// 	const activeSort = useSelector((state) => state.filter.sortType);
 	const dispatch = useDispatch();
@@ -109,4 +109,4 @@ const Sort: React.FC = React.memo(() => {
 		</div>
 	);
 });
-export default Sort;
+

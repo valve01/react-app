@@ -3064,7 +3064,79 @@ const FullPizza = React.lazy(() =>
 
     																														<!-- Reexport  -->
 <!-- Декларативный импорт из файлов хорош тем что грузится будет только то что надо и ничего лишнего, но при увеличении количества импортов растет и бандл -->
-<!-- Есть старый способ -->
+<!-- Есть старый способ. Делаем на примере Home.tsx -->
+
+<!-- // Удобный способ собрать все импорты в одном файле и брать их уже из любого места из него , так получается что в любом файле мы будем из одного импорта иметь доступ ко всем экспортированным компонентам или функциям
+
+// Раздельный реэкспорт компонентов или функций. Есть жирный минус: все импорты попадут в бандл (на каждой странице будут подгружаться ВСЕ чанки), т.к. мы используем их (export{}). Они у нас в объекте отправляются все
+
+// import PizzaBlock from './PizzaBlock';
+// import SkeletonPizzaBlock from './PizzaBlock/Skeleton';
+// import CartItem from './CartItem';
+// import Categories from './Categories';
+// import EmptyCart from './EmptyCart';
+// import { FullPizza } from './FullPizza';
+// import Header from './Header';
+// import Sort from './Sort';
+// import PaginationBlock from './Pagination';
+// import NotFoundBlock from './NotFoundBlock';
+// const Pagination = PaginationBlock;
+
+// export {
+// 	PizzaBlock,
+// 	SkeletonPizzaBlock,
+// 	CartItem,
+// 	Categories,
+// 	EmptyCart,
+// 	FullPizza,
+// 	Header,
+// 	Sort,
+// 	Pagination,
+// 	NotFoundBlock,
+// };
+
+// Более короткая форма записи кода, что выше. Он тоже засул в бандл все подряд
+
+
+export { default as PizzaBlock } from './PizzaBlock';
+export { default as SkeletonPizzaBlock } from './PizzaBlock/Skeleton';
+export { default as CartItem } from './CartItem';
+export { default as Categories } from './Categories';
+export { default as EmptyCart } from './EmptyCart';
+export { FullPizza } from './FullPizza';
+export { default as Header } from './Header';
+export { default as Sort } from './Sort';
+export { default as Pagination } from './Pagination';
+export { default as NotFoundBlock } from './NotFoundBlock'; -->
+
+<!-- Изменения в Home.tsx -->
+
+<!-- Было так -->
+<!-- 
+// import PizzaBlock from '../components/PizzaBlock';
+// import SkeletonPizzaBlock from '../components/PizzaBlock/Skeleton';
+// import Categories from '../components/Categories';
+// import Sort from '../components/Sort';
+// import Pagination from '../components/Pagination';
+ -->
+
+ <!-- стало так -->
+ <!-- 
+ import {
+	EmptyCart,
+	PizzaBlock,
+	SkeletonPizzaBlock,
+	Categories,
+	Sort,
+	Pagination,
+} from '../components';
+  -->
+    																														<!--  barrel export react  -->
+
+https://blog.logrocket.com/using-barrel-exports-organize-react-components/
+<!-- 
+barrel позволяет нам консолидировать или объединять экспорт из нескольких файлов или модулей в один модуль. Баррелы оптимизируют импорт, упрощают экспорт и помогают нам избежать беспорядка в нашей кодовой базе.
+ -->
 
 <!-- ========================================================================================================================================== -->
 <!-- ========================================================================================================================================== -->

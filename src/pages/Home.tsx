@@ -22,9 +22,9 @@ import { useAppDispatch } from '../redux/store';
 // import { useWhyDidYouUpdate } from 'ahooks';
 const Home: React.FC = () => {
 
-	import("../utils/math").then(math => {
-		console.log(math.add(2222, 4444));
-	});
+	// import("../utils/math").then(math => {
+	// 	console.log(math.add(2222, 4444));
+	// });
 
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -35,6 +35,7 @@ const Home: React.FC = () => {
 	// add(7777, 9999);
 	const onClickSetActiveCategory = React.useCallback((index: number) => {
 		dispatch(setActiveCategory(index));
+		// eslint-disable-next-line
 	}, []);
 
 	const onChangePage = (value: number) => {

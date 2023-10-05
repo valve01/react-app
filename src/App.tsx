@@ -26,7 +26,7 @@ function App() {
 	return (
 		<Routes>
 			<Route
-				path="/react-app-study"
+				path="/"
 				element={<MainLayout />}
 			>
 				<Route

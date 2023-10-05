@@ -1,7 +1,7 @@
 {
 	"name": "react-app-for-study",
 	"version": "0.1.0",
-	"private": true,
+	"private": false,
 	"homepage": "https://valve01.github.io/react-app-study",
 	"dependencies": {
 		"@emotion/react": "^11.11.1",

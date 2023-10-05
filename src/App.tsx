@@ -17,7 +17,7 @@ const Cart = Loadable({
 });
 
 const FullPizza = React.lazy(() => import(/*webpackChunkName: "FullPizza"*/ './components/FullPizza'));
-
+// const FullPizzaPage="FullPizza"
 // const FullPizzaPage="FullPizza"
 // const FullPizza = React.lazy(() => import(/*webpackChunkName: "[request]"*/`./components/${FullPizzaPage}`));
 

@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/react-app-study/static/css/main.e492112b.css",
-    "main.js": "/react-app-study/static/js/main.5e9c74ce.js",
-    "Cart.js": "/react-app-study/static/js/Cart.be6ac9ac.chunk.js",
-    "FullPizza.js": "/react-app-study/static/js/FullPizza.0ad77d5a.chunk.js",
+    "main.js": "/react-app-study/static/js/main.3fc2828f.js",
+    "Cart.js": "/react-app-study/static/js/Cart.ad05c0bd.chunk.js",
+    "FullPizza.js": "/react-app-study/static/js/FullPizza.90db5681.chunk.js",
     "NotFound.js": "/react-app-study/static/js/NotFound.54779879.chunk.js",
     "static/media/empty-cart.png": "/react-app-study/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/roboto-latin-500-normal.woff2": "/react-app-study/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
@@ -67,13 +67,13 @@
     "index.html": "/react-app-study/index.html",
     "static/media/close.svg": "/react-app-study/static/media/close.3721b02ec61c1015e90388746e266d15.svg",
     "main.e492112b.css.map": "/react-app-study/static/css/main.e492112b.css.map",
-    "main.5e9c74ce.js.map": "/react-app-study/static/js/main.5e9c74ce.js.map",
-    "Cart.be6ac9ac.chunk.js.map": "/react-app-study/static/js/Cart.be6ac9ac.chunk.js.map",
-    "FullPizza.0ad77d5a.chunk.js.map": "/react-app-study/static/js/FullPizza.0ad77d5a.chunk.js.map",
+    "main.3fc2828f.js.map": "/react-app-study/static/js/main.3fc2828f.js.map",
+    "Cart.ad05c0bd.chunk.js.map": "/react-app-study/static/js/Cart.ad05c0bd.chunk.js.map",
+    "FullPizza.90db5681.chunk.js.map": "/react-app-study/static/js/FullPizza.90db5681.chunk.js.map",
     "NotFound.54779879.chunk.js.map": "/react-app-study/static/js/NotFound.54779879.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e492112b.css",
-    "static/js/main.5e9c74ce.js"
+    "static/js/main.3fc2828f.js"
   ]
 }

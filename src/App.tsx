@@ -30,7 +30,7 @@ function App() {
 				element={<MainLayout />}
 			>
 				<Route
-					path=""
+					path="/react-app-study"
 					element={<Home />}
 				/>
 				<Route

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-app-study/static/css/main.e492112b.css",
-    "main.js": "/react-app-study/static/js/main.8b9301e2.js",
+    "main.js": "/react-app-study/static/js/main.be993a58.js",
     "static/media/empty-cart.png": "/react-app-study/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/roboto-latin-500-normal.woff2": "/react-app-study/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
     "static/media/roboto-latin-700-normal.woff2": "/react-app-study/static/media/roboto-latin-700-normal.227c93190fe7f82de3f8.woff2",
@@ -64,10 +64,10 @@
     "index.html": "/react-app-study/index.html",
     "static/media/close.svg": "/react-app-study/static/media/close.3721b02ec61c1015e90388746e266d15.svg",
     "main.e492112b.css.map": "/react-app-study/static/css/main.e492112b.css.map",
-    "main.8b9301e2.js.map": "/react-app-study/static/js/main.8b9301e2.js.map"
+    "main.be993a58.js.map": "/react-app-study/static/js/main.be993a58.js.map"
   },
   "entrypoints": [
     "static/css/main.e492112b.css",
-    "static/js/main.8b9301e2.js"
+    "static/js/main.be993a58.js"
   ]
 }

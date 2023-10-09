@@ -1,7 +1,7 @@
 // import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-// import { HashRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { store } from './redux/store';
@@ -19,14 +19,14 @@ if (rootElem) {
 	root.render(
 		// Все наше приложение должно быть обернуто в <BrowserRouter></BrowserRouter>, так все приложение получает доступ к возможностям react-router и к его логике
 		<Provider store={store}>
-			{/* <HashRouter> */}
+			<HashRouter>
 				{/* <BrowserRouter> */}
-				<BrowserRouter basename='/react-app-study'>
+				{/* <BrowserRouter basename='/react-app-study'> */}
 				{/* <React.StrictMode> */}
 				<App />
 				{/* </React.StrictMode> */}
-				</BrowserRouter>
-			{/* </HashRouter> */}
+				{/* </BrowserRouter> */}
+			</HashRouter>
 		</Provider>,
 	);
 }

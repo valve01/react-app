@@ -20,8 +20,8 @@ if (rootElem) {
 		// Все наше приложение должно быть обернуто в <BrowserRouter></BrowserRouter>, так все приложение получает доступ к возможностям react-router и к его логике
 		<Provider store={store}>
 			{/* <HashRouter> */}
-				<BrowserRouter>
-				{/* <BrowserRouter basename='/react-app-study'> */}
+				{/* <BrowserRouter> */}
+				<BrowserRouter basename='/react-app-study'>
 				{/* <React.StrictMode> */}
 				<App />
 				{/* </React.StrictMode> */}

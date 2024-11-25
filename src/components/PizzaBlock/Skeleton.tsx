@@ -1,8 +1,8 @@
-import React from 'react';
+
 import ContentLoader from 'react-content-loader';
 // Чтобы воспользоваться скелетоном нужно установить библиотеку react-content-loader
 // npm i react-content-loader
-const SkeletonPizzaBlock = (props) => (
+export const SkeletonPizzaBlock: React.FC = (props:any) => (
 	<ContentLoader
 		// Чтобы наш скелетон имел те же стили, что и конечный контент- добавим ему тот же класс, что и у контента
 		className="pizza-block"
@@ -55,4 +55,4 @@ const SkeletonPizzaBlock = (props) => (
 	</ContentLoader>
 );
 
-export default SkeletonPizzaBlock;
+

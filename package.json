@@ -23,7 +23,7 @@
 		"axios": "^1.4.0",
 		"build": "^0.1.4",
 		"clsx": "^2.0.0",
-		"gh-pages": "^6.0.0",
+		"gh-pages": "^6.2.0",
 		"localforage": "^1.10.0",
 		"lodash.debounce": "^4.0.8",
 		"match-sorter": "^6.3.1",

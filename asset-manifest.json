@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-app-study/static/css/main.e492112b.css",
-    "main.js": "/react-app-study/static/js/main.8b9301e2.js",
+    "main.css": "/react-app-study/static/css/main.ee6d138b.css",
+    "main.js": "/react-app-study/static/js/main.bb0562bd.js",
     "static/media/empty-cart.png": "/react-app-study/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/roboto-latin-500-normal.woff2": "/react-app-study/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
     "static/media/roboto-latin-700-normal.woff2": "/react-app-study/static/media/roboto-latin-700-normal.227c93190fe7f82de3f8.woff2",
@@ -63,11 +63,11 @@
     "static/media/search.svg": "/react-app-study/static/media/search.729e04b0698c757fc36eceab3010c36b.svg",
     "index.html": "/react-app-study/index.html",
     "static/media/close.svg": "/react-app-study/static/media/close.3721b02ec61c1015e90388746e266d15.svg",
-    "main.e492112b.css.map": "/react-app-study/static/css/main.e492112b.css.map",
-    "main.8b9301e2.js.map": "/react-app-study/static/js/main.8b9301e2.js.map"
+    "main.ee6d138b.css.map": "/react-app-study/static/css/main.ee6d138b.css.map",
+    "main.bb0562bd.js.map": "/react-app-study/static/js/main.bb0562bd.js.map"
   },
   "entrypoints": [
-    "static/css/main.e492112b.css",
-    "static/js/main.8b9301e2.js"
+    "static/css/main.ee6d138b.css",
+    "static/js/main.bb0562bd.js"
   ]
 }

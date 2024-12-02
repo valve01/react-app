@@ -7,9 +7,9 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
 import FullPizza from './components/FullPizza';
-import NotFound from './pages/NotFound';
-import Cart from './pages/Cart';
-import FullPizza from './components/FullPizza';
+// import NotFound from './pages/NotFound';
+// import Cart from './pages/Cart';
+// import FullPizza from './components/FullPizza';
 import MainLayout from './layouts/MainLayout';
 import './scss/app.scss';
 
